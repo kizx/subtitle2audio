@@ -5,9 +5,9 @@ import sys
 import os
 
 """ 填入你的 百度云 APPID AK SK """
-APP_ID = ''
-API_KEY = ''
-SECRET_KEY = ''
+APP_ID = '18339246'
+API_KEY = 'FpGBWCRoUEtwZ3SYcMvz2SDG'
+SECRET_KEY = 'PoxdxWuaRnVZhPElDSMUVqaosXR27G7y'
 client = AipSpeech(APP_ID, API_KEY, SECRET_KEY)
 
 """
@@ -15,7 +15,7 @@ spd: 语速 pit: 音调 vol: 音量
 per：0为度小美女声，1为度小宇男声，3为情感合成-度逍遥，4为情感合成-度丫丫
 建议先去 https://ai.baidu.com/tech/speech/tts 试听确定合适的参数
 """
-options = {'spd': 5, 'pit': 5, 'vol': 5, 'per': 0}
+options = {'spd': 5, 'pit': 5, 'vol': 5, 'per': 1}
 
 
 def audio_download(text, file_name):

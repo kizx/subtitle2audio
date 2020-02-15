@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh">
+  <head>
+    <meta charset="UTF-8" />
+    <title>字幕朗读</title>
+    <link rel="stylesheet" href="../static/sub2audio.css" type="text/css" />
+  </head>
+  <body>
+    <article>
+      <div class="caption">
+        百度
+      </div>
+      <form action="sub2audio/save/baidu" method="POST">
+        <div>
+          <a
+            href="https://console.bce.baidu.com/ai/?_=1550569312984#/ai/speech/app/list"
+            target="_blank"
+            >百度密钥获取</a
+          >
+        </div>
+        <div>
+          <a href="https://ai.baidu.com/tech/speech/tts" target="_blank"
+            >百度语音试听</a
+          >
+        </div>
+        <div>App ID</div>
+        <div><input name="app_id" type="text" /></div>
+        <div>App Key</div>
+        <div><input name="app_key" type="text" /></div>
+        <div>Secret Key</div>
+        <div><input name="secret_key" type="password" /></div>
+        <div><button type="submit">保 存</button></div>
+      </form>
+    </article>
+  </body>
+</html>

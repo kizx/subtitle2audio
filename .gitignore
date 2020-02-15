@@ -132,3 +132,7 @@ audio/*.mp3
 output.mp3
 .idea
 .vscode
+setting.json
+test.py
+tempCodeRunnerFile.py
+sub.srt
