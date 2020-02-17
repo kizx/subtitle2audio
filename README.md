@@ -2,6 +2,7 @@
 
 字幕朗读，由字幕生成音频 | Subtitle reading, generated audio from subtitles  
 更多细节见[我的博客](https://www.2bboy.com/archives/151.html)
+
 ![](https://pan.2bboy.com/img/2020/02/0217145126.jpg)
 
 ## 使用
