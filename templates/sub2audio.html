@@ -21,12 +21,12 @@
             <div><input name="secret_key" type="password" value="{{baidu.get('secret_key','')}}" required /></div>
             <div><button type="submit">保 存</button></div>
         </form>
-        <form class="options">
+        <form action="sub2audio/generate/baidu" class="options" method="POST" enctype="multipart/form-data">
             <div>发音人</div>
-            <div class=""><label>度小宇（标准男声）<input type="radio" name="sex" value="1"></label></div>
-            <div class=""><label>度小美（标准女声）<input type="radio" name="sex" value="0"></label></div>
-            <div class=""><label>度逍遥（情感男声）<input type="radio" name="sex" value="3"></label></div>
-            <div class=""><label>度丫丫（情感女声）<input type="radio" name="sex" value="4"></label></div>
+            <div class=""><label>度小宇（标准男声）<input type="radio" name="per" value="1" checked /></label></div>
+            <div class=""><label>度小美（标准女声）<input type="radio" name="per" value="0" /></label></div>
+            <div class=""><label>度逍遥（情感男声）<input type="radio" name="per" value="3" /></label></div>
+            <div class=""><label>度丫丫（情感女声）<input type="radio" name="per" value="4" /></label></div>
             <div>语速</div>
             <div><input type="range" name="spd" min="0" max="15" value="5" /></div>
             <div>音调</div>
@@ -34,7 +34,7 @@
             <div>音量</div>
             <div><input type="range" name="vol" min="0" max="15" value="5" /></div>
             <div>文件</div>
-            <div><input type="file" name="file" accept=".srt" /></div>
+            <div><input type="file" name="file" accept=".srt" required /></div>
             <div><button type="submit">点击生成</button></div>
         </form>
     </article>

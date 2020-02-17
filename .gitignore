@@ -128,11 +128,9 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-audio/*.mp3
-output.mp3
+output/
 .idea
 .vscode
 setting.json
 test.py
 tempCodeRunnerFile.py
-sub.srt
