@@ -1,4 +1,4 @@
 baidu-aip
 pydub
 srt
-Flask
+pyside2
