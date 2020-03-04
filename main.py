@@ -33,7 +33,7 @@ class Stats:
         self.load_setting()
 
     def note(self, info):
-        QMessageBox.warning(self.ui, "提示", info)
+        QMessageBox.information(self.ui, "提示", info)
 
     def save(self):
         app_id = self.ui.app_id.text()
@@ -68,32 +68,43 @@ class Stats:
             self.ui.file_path.setText(file)
 
     def generate(self):
-        per = self.ui.per.checkedId()
-        spd = self.ui.spd.value()
-        vol = self.ui.vol.value()
-        pit = self.ui.pit.value()
-        srt_file = self.ui.file_path.text()
-        if not srt_file:
-            self.note('未找到字幕文件')
-            return
-        with open(srt_file, encoding='utf-8') as sub:
-            subtitle = list(srt.parse(sub))
-        options = {'per': per, 'spd': spd, 'vol': vol, 'pit': pit}
-        file_path = os.path.dirname(srt_file)
-        if not os.path.exists(f'{file_path}/audio/'):
-            os.mkdir(f'{file_path}/audio/')
-        audio = AudioSegment.silent(0)
-        bf_end = 0
-        for i in subtitle:
-            file_name = f'{file_path}/audio/{i.index}-{i.content}.mp3'
-            baidu(i.content, options, file_name)
-            silence_time = i.start.total_seconds() - bf_end
-            silence_audio = AudioSegment.silent(silence_time * 1000)
-            audio += silence_audio
-            audio += AudioSegment.from_mp3(file_name)
-            bf_end = audio.duration_seconds
-        audio.export(f'{srt_file}.mp3', format='mp3')
-        self.note('完成！输出文件在字幕文件夹下')
+        try:
+            per = self.ui.per.checkedId()
+            spd = self.ui.spd.value()
+            vol = self.ui.vol.value()
+            pit = self.ui.pit.value()
+            srt_file = self.ui.file_path.text()
+            if not srt_file:
+                self.note('未找到字幕文件')
+                return
+            with open(srt_file, encoding='utf-8') as sub:
+                subtitle = list(srt.parse(sub))
+            options = {'per': per, 'spd': spd, 'vol': vol, 'pit': pit}
+            file_path = os.path.dirname(srt_file)
+            if not os.path.exists(f'{file_path}/audio/'):
+                os.mkdir(f'{file_path}/audio/')
+            audio = AudioSegment.silent(0)
+            bf_end = 0
+            step = 50 / len(subtitle)
+            pbar = 0
+            for i in subtitle:
+                pbar += step
+                self.ui.progressBar.setValue(pbar)
+                file_name = f'{file_path}/audio/{i.index}-{i.content}.mp3'
+                baidu(i.content, options, file_name)
+                silence_time = i.start.total_seconds() - bf_end
+                silence_audio = AudioSegment.silent(silence_time * 1000)
+                audio += silence_audio
+                audio += AudioSegment.from_mp3(file_name)
+                bf_end = audio.duration_seconds
+                pbar += step
+                self.ui.progressBar.setValue(pbar)
+            else:
+                audio.export(f'{srt_file}.mp3', format='mp3')
+                self.note("完成！输出文件在字幕文件夹下")
+        except Exception as e:
+            print(e)
+            self.note(str(e))
 
 
 if __name__ == '__main__':
