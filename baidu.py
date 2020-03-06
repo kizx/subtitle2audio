@@ -3,20 +3,26 @@ import json
 from aip import AipSpeech
 
 
-def baidu(text, options, file_name=''):
-    with open('setting.json', 'r') as f:
-        setting = json.load(f)
-        baidu_setting = setting.get('baidu', {})
-    client = AipSpeech(baidu_setting.get('app_id', ''), baidu_setting.get(
-        'app_key', ''), baidu_setting.get('secret_key', ''))
-    result = client.synthesis(text=text, lang='zh', ctp=1, options=options)
-    if not isinstance(result, dict):
-        if file_name:
+class Baidu:
+    def __init__(self, baidu_setting, options=None):
+        if options is None:
+            options = {'spd': 5, 'pit': 5, 'vol': 5, 'per': 1}
+        self.setting = baidu_setting
+        self.options = options
+        self.client = AipSpeech(self.setting.get('app_id', ''), self.setting.get('app_key', ''),
+                                self.setting.get('secret_key', ''))
+
+    def process(self, text, file_name):
+        result = self.client.synthesis(text=text, lang='zh', ctp=1, options=self.options)
+        if not isinstance(result, dict):
             with open(file_name, 'wb') as f:
                 f.write(result)
-    return result
+        return result
 
 
 if __name__ == '__main__':
-    opt = {'spd': 5, 'pit': 5, 'vol': 5, 'per': 1}
-    baidu('百度你好', opt, '百度你好.mp3')
+    with open('setting.json', 'r') as ff:
+        setting = json.load(ff)
+        bd_st = setting.get('baidu', {})
+    baidu = Baidu(bd_st)
+    baidu.process('百度你好', '百度语音.mp3')

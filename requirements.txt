@@ -1,3 +1,4 @@
+aliyun-python-sdk-core
 baidu-aip
 pydub
 srt
