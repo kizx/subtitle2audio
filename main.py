@@ -1,11 +1,13 @@
 import json
 import os
 import webbrowser
+import time
 
 import srt
 from PySide2.QtGui import QIcon
 from PySide2.QtUiTools import QUiLoader
-from PySide2.QtWidgets import QApplication, QMessageBox, QFileDialog, QLineEdit
+from PySide2.QtWidgets import QApplication, QMessageBox, QFileDialog, QLineEdit, QProgressDialog
+from PySide2.QtCore import Qt
 from pydub import AudioSegment
 
 from ali import Ali
@@ -116,6 +118,16 @@ class Stats:
             self.ui.file_path.setText(file)
             self.ui.file_path_ali.setText(file)
 
+    def progress(self, num):
+        progress = QProgressDialog(self.ui)
+        progress.setWindowTitle("请稍等")
+        progress.setLabelText("正在操作...")
+        progress.setCancelButtonText("取消")
+        progress.setMinimumDuration(0)
+        progress.setWindowModality(Qt.WindowModal)
+        progress.setRange(0, num)
+        return progress
+
     def baidu_process(self):
         try:
             per = self.ui.per.checkedId()
@@ -140,29 +152,31 @@ class Stats:
                 os.mkdir(f'{file_path}/audio/')
             audio = AudioSegment.silent(0)
             bf_end = 0
-            step = 50 / len(subtitle)
-            pbar = 0
             baidu = Baidu(bd_setting, options)
-            for i in subtitle:
-                file_name = f'{file_path}/audio/{i.index}-{i.content}.mp3'
-                baidu.process(i.content, file_name)
-                pbar += step
-                self.ui.progressBar.setValue(pbar)
-                silence_time = i.start.total_seconds() - bf_end
-                silence_audio = AudioSegment.silent(silence_time * 1000)
-                audio += silence_audio
-                audio += AudioSegment.from_mp3(file_name)
-                bf_end = audio.duration_seconds
-                pbar += step
-                self.ui.progressBar.setValue(pbar)
+            progress = self.progress(len(subtitle))
+            start = time.clock()
+            for index, i in enumerate(subtitle):
+                if progress.wasCanceled():
+                    QMessageBox.warning(self.ui, "提示", "操作取消")
+                    break
+                else:
+                    file_name = f'{file_path}/audio/{i.index}-{i.content}.mp3'
+                    baidu.process(i.content, file_name)
+                    silence_time = i.start.total_seconds() - bf_end
+                    silence_audio = AudioSegment.silent(silence_time * 1000)
+                    audio += silence_audio
+                    audio += AudioSegment.from_mp3(file_name)
+                    bf_end = audio.duration_seconds
+                    progress.setValue(index + 1)
             else:
                 audio.export(f'{srt_file}.mp3', format='mp3')
-                self.note("完成！输出文件在字幕文件夹下")
+                end = time.clock()
+                self.note(f"完成！共计用时{round(end - start, 2)}秒")
         except Exception as e:
             print(e)
             self.note(str(e))
 
-    # 直接复制粘贴上面的是不是不太优雅
+    # 复制粘贴大法好
     def ali_process(self):
         try:
             per = self.ui.per_ali.checkedButton().objectName()
@@ -187,24 +201,26 @@ class Stats:
                 os.mkdir(f'{file_path}/audio/')
             audio = AudioSegment.silent(0)
             bf_end = 0
-            step = 50 / len(subtitle)
-            pbar = 0
             ali = Ali(ali_setting, options)
-            for i in subtitle:
-                pbar += step
-                self.ui.progressBar_ali.setValue(pbar)
-                file_name = f'{file_path}/audio/{i.index}-{i.content}.mp3'
-                ali.process(i.content, file_name)
-                pbar += step
-                self.ui.progressBar_ali.setValue(pbar)
-                silence_time = i.start.total_seconds() - bf_end
-                silence_audio = AudioSegment.silent(silence_time * 1000)
-                audio += silence_audio
-                audio += AudioSegment.from_mp3(file_name)
-                bf_end = audio.duration_seconds
+            progress = self.progress(len(subtitle))
+            start = time.clock()
+            for index, i in enumerate(subtitle):
+                if progress.wasCanceled():
+                    QMessageBox.warning(self.ui, "提示", "操作取消")
+                    break
+                else:
+                    file_name = f'{file_path}/audio/{i.index}-{i.content}.mp3'
+                    ali.process(i.content, file_name)
+                    silence_time = i.start.total_seconds() - bf_end
+                    silence_audio = AudioSegment.silent(silence_time * 1000)
+                    audio += silence_audio
+                    audio += AudioSegment.from_mp3(file_name)
+                    bf_end = audio.duration_seconds
+                    progress.setValue(index + 1)
             else:
                 audio.export(f'{srt_file}.mp3', format='mp3')
-                self.note("完成！输出文件在字幕文件夹下")
+                end = time.clock()
+                self.note(f"完成！共计用时{round(end - start, 2)}秒")
         except Exception as e:
             print(e)
             self.note(str(e))

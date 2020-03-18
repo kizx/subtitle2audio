@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>612</width>
-    <height>579</height>
+    <width>606</width>
+    <height>553</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -118,6 +118,9 @@
              <width>0</width>
              <height>30</height>
             </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true"/>
            </property>
            <property name="text">
             <string>保存</string>
@@ -422,13 +425,6 @@
           </widget>
          </item>
         </layout>
-       </item>
-       <item>
-        <widget class="QProgressBar" name="progressBar">
-         <property name="value">
-          <number>0</number>
-         </property>
-        </widget>
        </item>
       </layout>
      </widget>
@@ -1245,13 +1241,6 @@
           </widget>
          </item>
         </layout>
-       </item>
-       <item>
-        <widget class="QProgressBar" name="progressBar_ali">
-         <property name="value">
-          <number>0</number>
-         </property>
-        </widget>
        </item>
       </layout>
      </widget>
