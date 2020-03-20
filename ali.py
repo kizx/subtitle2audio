@@ -1,4 +1,6 @@
 import json
+import threading
+import time
 
 import ali_speech
 from ali_speech.callbacks import SpeechSynthesizerCallback
@@ -63,6 +65,17 @@ class Ali:
         finally:
             synthesizer.close()
 
+    def process_multithread(self, sub, name):
+        thread_list = []
+        for index, i in enumerate(sub):
+            audio_name = f"{name}{index + 1}.mp3"
+            thread = threading.Thread(target=self.process, args=(i, audio_name))
+            thread_list.append(thread)
+            thread.start()
+            time.sleep(0.5)
+        for thread in thread_list:
+            thread.join()
+
 
 if __name__ == "__main__":
     with open('setting.json', 'r') as ff:
@@ -71,4 +84,5 @@ if __name__ == "__main__":
     my_text = "今天天气不错"
     my_audio_name = '阿里语音.mp3'
     ali = Ali(ali_st)
-    ali.process(my_text, my_audio_name)
+    # ali.process(my_text, my_audio_name)
+    ali.process_multithread(['这是第一句', '今天天气不错', '嘟嘟嘟嘟'], 'audio/')

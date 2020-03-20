@@ -2,6 +2,7 @@ import json
 import os
 import webbrowser
 import time
+import threading
 
 import srt
 from PySide2.QtGui import QIcon
@@ -23,13 +24,34 @@ def value_change(obj, obje):
     obje.setValue(obj.value())
 
 
+class MyQLine(QLineEdit):
+    """实现文件拖放功能"""
+
+    def __init__(self):
+        super().__init__()
+        self.setAcceptDrops(True)
+
+    def dragEnterEvent(self, e):
+        if e.mimeData().text().endswith('.srt'):
+            e.accept()
+        else:
+            e.ignore()
+
+    def dropEvent(self, e):
+        path = e.mimeData().text().replace('file:///', '')
+        self.setText(path)
+
+
 class Stats:
 
     def __init__(self):
         self.ui = QUiLoader().load('static/main.ui')
 
-        self.ui.secret_key_bd.setEchoMode(QLineEdit.Password)
-        self.ui.access_key_secret_ali.setEchoMode(QLineEdit.Password)
+        self.ui.file_path.deleteLater()  # 删除原有的路径框
+        self.ui.file_path = MyQLine()  # 新建自己的替换原有的
+        self.ui.file_path.setPlaceholderText('浏览或拖拽SRT字幕文件到这里')
+        self.ui.horizontalLayout_2.addWidget(self.ui.file_path)
+        self.ui.horizontalLayout_2.addWidget(self.ui.file)
 
         self.ui.per.setId(self.ui.per_0, 0)
         self.ui.per.setId(self.ui.per_1, 1)
@@ -44,13 +66,11 @@ class Stats:
                         'https://usercenter.console.aliyun.com/#/manage/ak'))
         self.ui.aliai.clicked.connect(lambda: web('https://ai.aliyun.com/nls/tts'))
 
+        self.load_setting()
         self.ui.save_bd.clicked.connect(self.save_bd)
         self.ui.save_ali.clicked.connect(self.save_ali)
         self.ui.file.clicked.connect(self.openfile)
-        self.ui.file_ali.clicked.connect(self.openfile)
-        self.ui.generate.clicked.connect(self.baidu_process)
-        self.ui.generate_ali.clicked.connect(self.ali_process)
-        self.load_setting()
+        self.ui.generate.clicked.connect(self.generate)
 
         self.ui.spd_bd.valueChanged.connect(lambda: value_change(self.ui.spd_bd, self.ui.spd_spin_bd))
         self.ui.spd_spin_bd.valueChanged.connect(lambda: value_change(self.ui.spd_spin_bd, self.ui.spd_bd))
@@ -116,114 +136,108 @@ class Stats:
         file, _ = QFileDialog.getOpenFileName(self.ui, '选择字幕文件', './', "Srt File(*.srt)")
         if file:
             self.ui.file_path.setText(file)
-            self.ui.file_path_ali.setText(file)
 
-    def progress(self, num):
+    def generate(self):
+        # try:
+        srt_file = self.ui.file_path.text()
+        if not srt_file:
+            self.note('未找到字幕文件')
+            return
+        with open(srt_file, encoding='utf-8') as sub:
+            subtitle = list(srt.parse(sub))
+        file_path = os.path.dirname(srt_file)
+        if not os.path.exists(f'{file_path}/audio/'):
+            os.mkdir(f'{file_path}/audio/')
+
+        start = time.perf_counter()
+        index = self.ui.tabWidget.currentIndex()
+        if index == 0:
+            self.baidu_process(file_path, subtitle)
+        elif index == 1:
+            self.ali_process(file_path, subtitle)
+        end = time.perf_counter()
+        self.note(f"完成！\n共计用时{round(end - start, 2)}秒")
+
+    # except Exception as e:
+    #     print(e)
+    #     self.note(str(e))
+
+    def corn(self, api, file_path, subtitle, flag=0):
+        audio = AudioSegment.silent(0)
+        bf_end = 0
+
         progress = QProgressDialog(self.ui)
         progress.setWindowTitle("请稍等")
         progress.setLabelText("正在操作...")
         progress.setCancelButtonText("取消")
         progress.setMinimumDuration(0)
         progress.setWindowModality(Qt.WindowModal)
-        progress.setRange(0, num)
-        return progress
+        progress.setRange(0, len(subtitle))
 
-    def baidu_process(self):
-        try:
-            per = self.ui.per.checkedId()
-            spd = self.ui.spd_bd.value()
-            vol = self.ui.vol_bd.value()
-            pit = self.ui.pit_bd.value()
-            options = {'per': per, 'spd': spd, 'vol': vol, 'pit': pit}
-
-            srt_file = self.ui.file_path.text()
-            if not srt_file:
-                self.note('未找到字幕文件')
-                return
-            with open(srt_file, encoding='utf-8') as sub:
-                subtitle = list(srt.parse(sub))
-
-            with open('setting.json', 'r') as ff:
-                setting = json.load(ff)
-                bd_setting = setting.get('baidu', {})
-
-            file_path = os.path.dirname(srt_file)
-            if not os.path.exists(f'{file_path}/audio/'):
-                os.mkdir(f'{file_path}/audio/')
-            audio = AudioSegment.silent(0)
-            bf_end = 0
-            baidu = Baidu(bd_setting, options)
-            progress = self.progress(len(subtitle))
-            start = time.clock()
-            for index, i in enumerate(subtitle):
-                if progress.wasCanceled():
-                    QMessageBox.warning(self.ui, "提示", "操作取消")
-                    break
-                else:
-                    file_name = f'{file_path}/audio/{i.index}-{i.content}.mp3'
-                    baidu.process(i.content, file_name)
-                    silence_time = i.start.total_seconds() - bf_end
-                    silence_audio = AudioSegment.silent(silence_time * 1000)
-                    audio += silence_audio
-                    audio += AudioSegment.from_mp3(file_name)
-                    bf_end = audio.duration_seconds
-                    progress.setValue(index + 1)
+        for index, i in enumerate(subtitle):
+            if progress.wasCanceled():
+                QMessageBox.warning(self.ui, "提示", "操作取消")
+                break
             else:
-                audio.export(f'{srt_file}.mp3', format='mp3')
-                end = time.clock()
-                self.note(f"完成！共计用时{round(end - start, 2)}秒")
-        except Exception as e:
-            print(e)
-            self.note(str(e))
+                file_name = f'{file_path}/audio/{i.index}.mp3'
+                if flag == 0:
+                    api.process(i.content, file_name)
+                silence_time = i.start.total_seconds() - bf_end
+                silence_audio = AudioSegment.silent(silence_time * 1000)
+                audio += silence_audio
+                audio += AudioSegment.from_mp3(file_name)
+                bf_end = audio.duration_seconds
+                progress.setValue(index + 1)
+        else:
+            audio.export(f'{file_path}/输出.mp3', format='mp3')
 
-    # 复制粘贴大法好
-    def ali_process(self):
-        try:
-            per = self.ui.per_ali.checkedButton().objectName()
-            spd = self.ui.spd_ali.value()
-            vol = self.ui.vol_ali.value()
-            pit = self.ui.pit_ali.value()
-            options = {'per': per, 'spd': spd, 'vol': vol, 'pit': pit}
+    def baidu_process(self, file_path, subtitle):
+        per = self.ui.per.checkedId()
+        spd = self.ui.spd_bd.value()
+        vol = self.ui.vol_bd.value()
+        pit = self.ui.pit_bd.value()
+        options = {'per': per, 'spd': spd, 'vol': vol, 'pit': pit}
 
-            srt_file = self.ui.file_path_ali.text()
-            if not srt_file:
-                self.note('未找到字幕文件')
-                return
-            with open(srt_file, encoding='utf-8') as sub:
-                subtitle = list(srt.parse(sub))
+        with open('setting.json', 'r') as ff:
+            setting = json.load(ff)
+            bd_setting = setting.get('baidu', {})
 
-            with open('setting.json', 'r') as ff:
-                setting = json.load(ff)
-                ali_setting = setting.get('ali', {})
+        baidu = Baidu(bd_setting, options)
+        self.corn(baidu, file_path, subtitle)
 
-            file_path = os.path.dirname(srt_file)
-            if not os.path.exists(f'{file_path}/audio/'):
-                os.mkdir(f'{file_path}/audio/')
-            audio = AudioSegment.silent(0)
-            bf_end = 0
-            ali = Ali(ali_setting, options)
-            progress = self.progress(len(subtitle))
-            start = time.clock()
-            for index, i in enumerate(subtitle):
-                if progress.wasCanceled():
-                    QMessageBox.warning(self.ui, "提示", "操作取消")
-                    break
-                else:
-                    file_name = f'{file_path}/audio/{i.index}-{i.content}.mp3'
-                    ali.process(i.content, file_name)
-                    silence_time = i.start.total_seconds() - bf_end
-                    silence_audio = AudioSegment.silent(silence_time * 1000)
-                    audio += silence_audio
-                    audio += AudioSegment.from_mp3(file_name)
-                    bf_end = audio.duration_seconds
-                    progress.setValue(index + 1)
-            else:
-                audio.export(f'{srt_file}.mp3', format='mp3')
-                end = time.clock()
-                self.note(f"完成！共计用时{round(end - start, 2)}秒")
-        except Exception as e:
-            print(e)
-            self.note(str(e))
+    def ali_process(self, file_path, subtitle):
+        per = self.ui.per_ali.checkedButton().objectName()
+        spd = self.ui.spd_ali.value()
+        vol = self.ui.vol_ali.value()
+        pit = self.ui.pit_ali.value()
+        options = {'per': per, 'spd': spd, 'vol': vol, 'pit': pit}
+
+        with open('setting.json', 'r') as ff:
+            setting = json.load(ff)
+            ali_setting = setting.get('ali', {})
+
+        ali = Ali(ali_setting, options)
+        sub = [i.content for i in subtitle]
+        # ali.process_multithread(sub, f'{file_path}/audio/')
+        # 为了避免无响应，只有把多线程移到这里
+        progress = QProgressDialog("正在下载语音文件...", "请稍等", 0, 2 * len(sub), self.ui)
+        progress.setWindowTitle("操作中")
+        progress.setWindowModality(Qt.WindowModal)
+        name = f'{file_path}/audio/'
+        num = len(sub)
+        thread_list = []
+        for index, i in enumerate(sub):
+            audio_name = f"{name}{index + 1}.mp3"
+            thread = threading.Thread(target=ali.process, args=(i, audio_name))
+            thread_list.append(thread)
+            thread.start()
+            time.sleep(0.5)
+            progress.setValue(index + 1)
+        for thread in thread_list:
+            thread.join()
+            num += 1
+            progress.setValue(num)
+        self.corn(ali, file_path, subtitle, flag=1)
 
 
 if __name__ == '__main__':

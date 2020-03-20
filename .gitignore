@@ -134,7 +134,6 @@ output/
 setting.json
 test.py
 tempCodeRunnerFile.py
-ffmpeg.exe
 /alibabacloud-nls-python-sdk/
 /build/
 /dist/
