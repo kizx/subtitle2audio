@@ -8,7 +8,7 @@ import srt
 from PySide2.QtGui import QIcon
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtWidgets import QApplication, QMessageBox, QFileDialog, QLineEdit, QProgressDialog
-from PySide2.QtCore import Qt
+from PySide2.QtCore import Qt, Signal, QObject
 from pydub import AudioSegment
 
 from ali import Ali
@@ -20,8 +20,8 @@ def web(*url):
         webbrowser.open(i)
 
 
-def value_change(obj, obje):
-    obje.setValue(obj.value())
+def value_change(obj1, obj2):
+    obj2.setValue(obj1.value())
 
 
 class MyQLine(QLineEdit):
@@ -42,9 +42,10 @@ class MyQLine(QLineEdit):
         self.setText(path)
 
 
-class Stats:
+class Stats(QObject):
 
     def __init__(self):
+        super().__init__()
         self.ui = QUiLoader().load('static/main.ui')
 
         self.ui.file_path.deleteLater()  # 删除原有的路径框
@@ -67,8 +68,8 @@ class Stats:
         self.ui.aliai.clicked.connect(lambda: web('https://ai.aliyun.com/nls/tts'))
 
         self.load_setting()
-        self.ui.save_bd.clicked.connect(self.save_bd)
-        self.ui.save_ali.clicked.connect(self.save_ali)
+        self.ui.save_bd.clicked.connect(self.save_setting)
+        self.ui.save_ali.clicked.connect(self.save_setting)
         self.ui.file.clicked.connect(self.openfile)
         self.ui.generate.clicked.connect(self.generate)
 
@@ -89,27 +90,22 @@ class Stats:
     def note(self, info):
         QMessageBox.information(self.ui, "提示", info)
 
-    def save_bd(self):
-        app_id = self.ui.app_id_bd.text()
-        app_key = self.ui.app_key_bd.text()
-        secret_key = self.ui.secret_key_bd.text()
-        baidu_setting = {'app_id': app_id, 'app_key': app_key, 'secret_key': secret_key}
+    def save_setting(self):
+        sender = self.sender()
         with open('setting.json', 'r+') as f:
             setting = json.load(f)
-            setting['baidu'] = baidu_setting
-            f.seek(0)
-            f.truncate()
-            json.dump(setting, f, indent=2)
-            self.note('保存设置成功')
-
-    def save_ali(self):
-        app_key = self.ui.app_key_ali.text()
-        access_key = self.ui.access_key_ali.text()
-        access_key_secret = self.ui.access_key_secret_ali.text()
-        ali_setting = {'app_key': app_key, 'access_key': access_key, 'access_key_secret': access_key_secret}
-        with open('setting.json', 'r+') as f:
-            setting = json.load(f)
-            setting['ali'] = ali_setting
+            if sender.objectName() == 'save_bd':
+                app_id = self.ui.app_id_bd.text()
+                app_key = self.ui.app_key_bd.text()
+                secret_key = self.ui.secret_key_bd.text()
+                baidu_setting = {'app_id': app_id, 'app_key': app_key, 'secret_key': secret_key}
+                setting['baidu'] = baidu_setting
+            if sender.objectName() == 'save_ali':
+                app_key = self.ui.app_key_ali.text()
+                access_key = self.ui.access_key_ali.text()
+                access_key_secret = self.ui.access_key_secret_ali.text()
+                ali_setting = {'app_key': app_key, 'access_key': access_key, 'access_key_secret': access_key_secret}
+                setting['ali'] = ali_setting
             f.seek(0)
             f.truncate()
             json.dump(setting, f, indent=2)
@@ -138,41 +134,37 @@ class Stats:
             self.ui.file_path.setText(file)
 
     def generate(self):
-        # try:
-        srt_file = self.ui.file_path.text()
-        if not srt_file:
-            self.note('未找到字幕文件')
-            return
-        with open(srt_file, encoding='utf-8') as sub:
-            subtitle = list(srt.parse(sub))
-        file_path = os.path.dirname(srt_file)
-        if not os.path.exists(f'{file_path}/audio/'):
-            os.mkdir(f'{file_path}/audio/')
+        try:
+            srt_file = self.ui.file_path.text()
+            if not srt_file:
+                self.note('未找到字幕文件')
+                return
+            with open(srt_file, encoding='utf-8') as sub:
+                subtitle = list(srt.parse(sub))
+            file_path = os.path.dirname(srt_file)
+            if not os.path.exists(f'{file_path}/audio/'):
+                os.mkdir(f'{file_path}/audio/')
 
-        start = time.perf_counter()
-        index = self.ui.tabWidget.currentIndex()
-        if index == 0:
-            self.baidu_process(file_path, subtitle)
-        elif index == 1:
-            self.ali_process(file_path, subtitle)
-        end = time.perf_counter()
-        self.note(f"完成！\n共计用时{round(end - start, 2)}秒")
-
-    # except Exception as e:
-    #     print(e)
-    #     self.note(str(e))
+            start = time.perf_counter()
+            index = self.ui.tabWidget.currentIndex()
+            if index == 0:
+                self.baidu_process(file_path, subtitle)
+            elif index == 1:
+                self.ali_process(file_path, subtitle)
+            end = time.perf_counter()
+            self.note(f"完成！\n共计用时{round(end - start, 2)}秒")
+        except Exception as e:
+            print(e)
+            self.note(str(e))
 
     def corn(self, api, file_path, subtitle, flag=0):
         audio = AudioSegment.silent(0)
         bf_end = 0
 
-        progress = QProgressDialog(self.ui)
+        progress = QProgressDialog("正在操作...", "取消", 0, len(subtitle), self.ui)
         progress.setWindowTitle("请稍等")
-        progress.setLabelText("正在操作...")
-        progress.setCancelButtonText("取消")
         progress.setMinimumDuration(0)
         progress.setWindowModality(Qt.WindowModal)
-        progress.setRange(0, len(subtitle))
 
         for index, i in enumerate(subtitle):
             if progress.wasCanceled():
@@ -218,30 +210,25 @@ class Stats:
 
         ali = Ali(ali_setting, options)
         sub = [i.content for i in subtitle]
-        # ali.process_multithread(sub, f'{file_path}/audio/')
-        # 为了避免无响应，只有把多线程移到这里
-        progress = QProgressDialog("正在下载语音文件...", "请稍等", 0, 2 * len(sub), self.ui)
-        progress.setWindowTitle("操作中")
-        progress.setWindowModality(Qt.WindowModal)
-        name = f'{file_path}/audio/'
-        num = len(sub)
-        thread_list = []
-        for index, i in enumerate(sub):
-            audio_name = f"{name}{index + 1}.mp3"
-            thread = threading.Thread(target=ali.process, args=(i, audio_name))
-            thread_list.append(thread)
-            thread.start()
-            time.sleep(0.5)
-            progress.setValue(index + 1)
-        for thread in thread_list:
-            thread.join()
-            num += 1
-            progress.setValue(num)
+        self.progress = QProgressDialog("正在下载语音文件...", "请稍等", 0, 2 * len(sub), self.ui)
+        self.progress.setWindowTitle("操作中")
+        self.progress.setMinimumDuration(0)
+        self.progress.setWindowModality(Qt.WindowModal)
+        self.sgn = MySignal()
+        self.sgn.progress_update.connect(self.setprogress)
+        ali.process_multithread(sub, f'{file_path}/audio/', self.sgn)
         self.corn(ali, file_path, subtitle, flag=1)
+
+    def setprogress(self, value):
+        self.progress.setValue(value)
+
+
+class MySignal(QObject):
+    progress_update = Signal(int)
 
 
 if __name__ == '__main__':
-    app = QApplication([])
+    app = QApplication()
     app.setWindowIcon(QIcon('static/logo.png'))
     stats = Stats()
     stats.ui.show()

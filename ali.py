@@ -65,7 +65,7 @@ class Ali:
         finally:
             synthesizer.close()
 
-    def process_multithread(self, sub, name):
+    def process_multithread(self, sub, name, sgn=None):
         thread_list = []
         for index, i in enumerate(sub):
             audio_name = f"{name}{index + 1}.mp3"
@@ -73,8 +73,14 @@ class Ali:
             thread_list.append(thread)
             thread.start()
             time.sleep(0.5)
+            if sgn:
+                sgn.progress_update.emit(index + 1)
+        num = len(sub)
         for thread in thread_list:
             thread.join()
+            if sgn:
+                num += 1
+                sgn.progress_update.emit(num)
 
 
 if __name__ == "__main__":
