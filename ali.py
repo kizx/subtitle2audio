@@ -65,14 +65,14 @@ class Ali:
         finally:
             synthesizer.close()
 
-    def process_multithread(self, sub, name, sgn=None):
+    def process_multithread(self, sub, name, sgn=None, sleeptime=1):
         thread_list = []
         for index, i in enumerate(sub):
             audio_name = f"{name}{index + 1}.mp3"
             thread = threading.Thread(target=self.process, args=(i, audio_name))
             thread_list.append(thread)
             thread.start()
-            time.sleep(0.5)
+            time.sleep(sleeptime)  # 阿里限制请求频率
             if sgn:
                 sgn.progress_update.emit(index + 1)
         num = len(sub)
@@ -90,5 +90,5 @@ if __name__ == "__main__":
     my_text = "今天天气不错"
     my_audio_name = '阿里语音.mp3'
     ali = Ali(ali_st)
-    # ali.process(my_text, my_audio_name)
-    ali.process_multithread(['这是第一句', '今天天气不错', '嘟嘟嘟嘟'], 'audio/')
+    ali.process(my_text, my_audio_name)
+    # ali.process_multithread(['这是第一句', '今天天气不错', '嘟嘟嘟嘟'], 'audio/')

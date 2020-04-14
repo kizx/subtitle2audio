@@ -20,10 +20,6 @@ def web(*url):
         webbrowser.open(i)
 
 
-def value_change(obj1, obj2):
-    obj2.setValue(obj1.value())
-
-
 class MyQLine(QLineEdit):
     """实现文件拖放功能"""
 
@@ -42,7 +38,7 @@ class MyQLine(QLineEdit):
         self.setText(path)
 
 
-class Stats(QObject):
+class MainWindow(QObject):
 
     def __init__(self):
         super().__init__()
@@ -72,20 +68,6 @@ class Stats(QObject):
         self.ui.save_ali.clicked.connect(self.save_setting)
         self.ui.file.clicked.connect(self.openfile)
         self.ui.generate.clicked.connect(self.generate)
-
-        self.ui.spd_bd.valueChanged.connect(lambda: value_change(self.ui.spd_bd, self.ui.spd_spin_bd))
-        self.ui.spd_spin_bd.valueChanged.connect(lambda: value_change(self.ui.spd_spin_bd, self.ui.spd_bd))
-        self.ui.pit_bd.valueChanged.connect(lambda: value_change(self.ui.pit_bd, self.ui.pit_spin_bd))
-        self.ui.pit_spin_bd.valueChanged.connect(lambda: value_change(self.ui.pit_spin_bd, self.ui.pit_bd))
-        self.ui.vol_bd.valueChanged.connect(lambda: value_change(self.ui.vol_bd, self.ui.vol_spin_bd))
-        self.ui.vol_spin_bd.valueChanged.connect(lambda: value_change(self.ui.vol_spin_bd, self.ui.vol_bd))
-
-        self.ui.spd_ali.valueChanged.connect(lambda: value_change(self.ui.spd_ali, self.ui.spd_spin_ali))
-        self.ui.spd_spin_ali.valueChanged.connect(lambda: value_change(self.ui.spd_spin_ali, self.ui.spd_ali))
-        self.ui.pit_ali.valueChanged.connect(lambda: value_change(self.ui.pit_ali, self.ui.pit_spin_ali))
-        self.ui.pit_spin_ali.valueChanged.connect(lambda: value_change(self.ui.pit_spin_ali, self.ui.pit_ali))
-        self.ui.vol_ali.valueChanged.connect(lambda: value_change(self.ui.vol_ali, self.ui.vol_spin_ali))
-        self.ui.vol_spin_ali.valueChanged.connect(lambda: value_change(self.ui.vol_spin_ali, self.ui.vol_ali))
 
     def note(self, info):
         QMessageBox.information(self.ui, "提示", info)
@@ -141,6 +123,9 @@ class Stats(QObject):
                 return
             with open(srt_file, encoding='utf-8') as sub:
                 subtitle = list(srt.parse(sub))
+                for index, i in enumerate(subtitle[:]):  # 删除空字幕块
+                    if i.content.isspace() or i.content == '':
+                        subtitle.remove(i)
             file_path = os.path.dirname(srt_file)
             if not os.path.exists(f'{file_path}/audio/'):
                 os.mkdir(f'{file_path}/audio/')
@@ -209,18 +194,40 @@ class Stats(QObject):
             ali_setting = setting.get('ali', {})
 
         ali = Ali(ali_setting, options)
-        sub = [i.content for i in subtitle]
-        self.progress = QProgressDialog("正在下载语音文件...", "请稍等", 0, 2 * len(sub), self.ui)
-        self.progress.setWindowTitle("操作中")
-        self.progress.setMinimumDuration(0)
-        self.progress.setWindowModality(Qt.WindowModal)
-        self.sgn = MySignal()
-        self.sgn.progress_update.connect(self.setprogress)
-        ali.process_multithread(sub, f'{file_path}/audio/', self.sgn)
-        self.corn(ali, file_path, subtitle, flag=1)
+        is_multi = self.ui.ali_multi.isChecked()
+        if is_multi:  # 多线程
+            self.progress = QProgressDialog("正在下载语音文件...", "取消", 0, len(subtitle), self.ui)
+            self.progress.setWindowTitle("下载中")
+            self.progress.setMinimumDuration(0)
+            self.progress.setWindowModality(Qt.WindowModal)
+            self.sgn = MySignal()
+            self.sgn.progress_update.connect(self.setprogress)
+            sleeptime = self.ui.sleeptime.value()
+            ok = self.process_multithread(ali, subtitle, f'{file_path}/audio/', sleeptime=sleeptime)
+            if ok:
+                self.corn(ali, file_path, subtitle, flag=1)
+        else:  # 单线程
+            self.corn(ali, file_path, subtitle)
 
     def setprogress(self, value):
         self.progress.setValue(value)
+
+    def process_multithread(self, api, sub, name, sleeptime=1):
+        thread_list = []
+        for index, i in enumerate(sub):
+            if self.progress.wasCanceled():
+                QMessageBox.warning(self.ui, "提示", "操作取消")
+                return 0
+            audio_name = f"{name}{i.index}.mp3"
+            thread = threading.Thread(target=api.process, args=(i.content, audio_name))
+            thread_list.append(thread)
+            thread.start()
+            time.sleep(sleeptime)  # 阿里限制请求频率
+            if self.sgn:
+                self.sgn.progress_update.emit(index + 1)
+        for thread in thread_list:
+            thread.join()
+        return 1
 
 
 class MySignal(QObject):
@@ -228,8 +235,8 @@ class MySignal(QObject):
 
 
 if __name__ == '__main__':
-    app = QApplication()
+    app = QApplication([])
     app.setWindowIcon(QIcon('static/logo.png'))
-    stats = Stats()
-    stats.ui.show()
+    mainwindow = MainWindow()
+    mainwindow.ui.show()
     app.exec_()
