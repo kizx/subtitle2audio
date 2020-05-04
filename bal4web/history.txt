@@ -1,0 +1,27 @@
+Balabolka (Command Line Utility for Online Text-To-Speech Using)
+Copyright (c) 2019-2020 Ilya Morozov
+All Rights Reserved
+
+
+*** History ***
+
+2020-03-12     v1.3
+[*] The using of Google TTS was updated.
+
+
+2019-12-29     v1.2
+[+] Small improvements.
+
+
+2019-08-17     v1.1
+[+] Small improvements.
+[*] The utility was renamed (thanks to Valur Heeke for his advice).
+
+
+2019-07-20     v1.0
+[-] The using of Bing TTS was disabled.
+[*] The LAME encoder was updated.
+
+
+2019-06-16     v0.9b
+[+] The console application is available for downloading.

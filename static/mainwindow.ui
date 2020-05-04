@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>字幕朗读器</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1285,6 +1285,259 @@
         </item>
        </layout>
       </widget>
+      <widget class="QWidget" name="bal">
+       <attribute name="title">
+        <string>Balabolka</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_7">
+        <item>
+         <widget class="QGroupBox" name="service_group">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>1</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="statusTip">
+           <string>不是所有语音都好使</string>
+          </property>
+          <property name="title">
+           <string>发音</string>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_11">
+           <item>
+            <widget class="QRadioButton" name="google">
+             <property name="text">
+              <string>谷歌</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+             <property name="service" stdset="0">
+              <string>google</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">service</string>
+             </attribute>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="baidu_2">
+             <property name="text">
+              <string>百度</string>
+             </property>
+             <property name="service" stdset="0">
+              <string>baidu</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">service</string>
+             </attribute>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="youdao">
+             <property name="text">
+              <string>有道</string>
+             </property>
+             <property name="service" stdset="0">
+              <string>youdao</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">service</string>
+             </attribute>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="language_group">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>2</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="title">
+           <string>语言</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="0" column="1">
+            <widget class="QRadioButton" name="radioButton_5">
+             <property name="text">
+              <string>中文-香港</string>
+             </property>
+             <property name="language" stdset="0">
+              <string>zh-HK</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">language</string>
+             </attribute>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QRadioButton" name="radioButton_8">
+             <property name="text">
+              <string>英文-英国</string>
+             </property>
+             <property name="language" stdset="0">
+              <string>en-GB</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">language</string>
+             </attribute>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QRadioButton" name="znCN">
+             <property name="text">
+              <string>中文-简体</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+             <property name="language" stdset="0">
+              <string>zh-CN</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">language</string>
+             </attribute>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QRadioButton" name="radioButton_6">
+             <property name="text">
+              <string>中文-台湾</string>
+             </property>
+             <property name="language" stdset="0">
+              <string>zh-TW</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">language</string>
+             </attribute>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QRadioButton" name="radioButton_9">
+             <property name="text">
+              <string>英文-澳大利亚</string>
+             </property>
+             <property name="language" stdset="0">
+              <string>en-AU</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">language</string>
+             </attribute>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QRadioButton" name="radioButton_7">
+             <property name="text">
+              <string>英文-美国</string>
+             </property>
+             <property name="language" stdset="0">
+              <string>en-US</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">language</string>
+             </attribute>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QRadioButton" name="radioButton_10">
+             <property name="text">
+              <string>日语</string>
+             </property>
+             <property name="language" stdset="0">
+              <string>ja-JP</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">language</string>
+             </attribute>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QGroupBox" name="gender_group">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>1</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="statusTip">
+           <string>性别选项只对谷歌的部分语言（日语）有效</string>
+          </property>
+          <property name="title">
+           <string>性别</string>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_17">
+           <item>
+            <widget class="QRadioButton" name="male">
+             <property name="toolTip">
+              <string>此选项只对部分语言有效</string>
+             </property>
+             <property name="text">
+              <string>男</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">gender</string>
+             </attribute>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="female">
+             <property name="toolTip">
+              <string>此选项只对部分语言有效</string>
+             </property>
+             <property name="text">
+              <string>女</string>
+             </property>
+             <attribute name="buttonGroup">
+              <string notr="true">gender</string>
+             </attribute>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item>
+         <widget class="QCheckBox" name="bal_multi">
+          <property name="text">
+           <string>开启多线程</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer_3">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>注意！本语音库来自：http://balabolka.site/bconsole.htm 遵循自由软件许可，请勿商用</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
      </widget>
     </item>
     <item>
@@ -1333,7 +1586,7 @@
             <string>打开一个SRT字幕文件</string>
            </property>
            <property name="text">
-            <string>浏览</string>
+            <string>打开</string>
            </property>
           </widget>
          </item>
@@ -1419,7 +1672,7 @@
   </action>
   <action name="opensrt">
    <property name="text">
-    <string>打开字幕</string>
+    <string>浏览字幕</string>
    </property>
    <property name="toolTip">
     <string>用文本编辑器打开字幕文件</string>
@@ -1430,7 +1683,7 @@
   </action>
   <action name="opendir">
    <property name="text">
-    <string>打开文件夹</string>
+    <string>打开输出文件夹</string>
    </property>
    <property name="statusTip">
     <string>打开输出文件夹</string>
@@ -1635,5 +1888,8 @@
  <buttongroups>
   <buttongroup name="per"/>
   <buttongroup name="per_ali"/>
+  <buttongroup name="service"/>
+  <buttongroup name="gender"/>
+  <buttongroup name="language"/>
  </buttongroups>
 </ui>

@@ -13,6 +13,7 @@ from pydub import AudioSegment
 
 from ali import Ali
 from baidu import Baidu
+from bala import Bala
 
 
 def web(*url):
@@ -150,7 +151,7 @@ class MainWindow(QObject):
         html = """<html><head><meta name="qrichtext" content="1" /><style type="text/css"> p, li { white-space: 
         pre-wrap; } </style></head><body style=" font-family:'SimSun'; font-size:9pt; font-weight:400; 
         font-style:normal;"> <p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; 
-        -qt-block-indent:0; text-indent:0px;">当前版本：V2.3.2</p> <p style=" margin-top:0px; margin-bottom:0px; 
+        -qt-block-indent:0; text-indent:0px;">当前版本：V2.4</p> <p style=" margin-top:0px; margin-bottom:0px; 
         margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">开源地址：<a 
         href="https://github.com/kizx/subtitle2audio"><span style=" text-decoration: underline; 
         color:#0000ff;">https://github.com/kizx/subtitle2audio</span></a></p> <p style=" margin-top:0px; 
@@ -180,10 +181,12 @@ class MainWindow(QObject):
             self.baidu_process(file_path, subtitle)
         elif index == 1:
             self.ali_process(file_path, subtitle)
+        elif index == 2:
+            self.bal_process(file_path, subtitle)
         end = time.perf_counter()
         self.note(f"完成！\n共计用时{round(end - start, 2)}秒")
 
-    def corn(self, api, file_path, subtitle, flag=0):
+    def corn(self, api, file_path, subtitle, flag=0, wav=0):
         audio = AudioSegment.silent(0)
         bf_end = 0
 
@@ -198,18 +201,27 @@ class MainWindow(QObject):
                 QMessageBox.warning(self.ui, "提示", "操作取消")
                 break
             else:
-                file_name = f'{file_path}/audio/{i.index}.mp3'
+                if wav == 0:
+                    file_name = f'{file_path}/audio/{i.index}.mp3'
+                else:
+                    file_name = f'{file_path}/audio/{i.index}.wav'
                 if flag == 0:
                     self.ui.statusBar().showMessage(f'正在下载第{i.index}句：{i.content}')
                     api.process(i.content, file_name)
                 silence_time = i.start.total_seconds() - bf_end
                 silence_audio = AudioSegment.silent(silence_time * 1000)
                 audio += silence_audio
-                audio += AudioSegment.from_mp3(file_name)
+                if wav == 0:
+                    audio += AudioSegment.from_mp3(file_name)
+                else:
+                    audio += AudioSegment.from_wav(file_name)
                 bf_end = audio.duration_seconds
                 progress.setValue(index + 1)
         else:
-            audio.export(f'{file_path}/输出.mp3', format='mp3')
+            if wav == 0:
+                audio.export(f'{file_path}/输出.mp3', format='mp3')
+            else:
+                audio.export(f'{file_path}/输出.wav', format='wav')
             self.ui.statusBar().showMessage('下载完成', 5000)
 
     def baidu_process(self, file_path, subtitle):
@@ -240,12 +252,6 @@ class MainWindow(QObject):
         ali = Ali(ali_setting, options)
         is_multi = self.ui.ali_multi.isChecked()
         if is_multi:  # 多线程
-            self.progress = QProgressDialog("正在下载语音文件...", "取消", 0, len(subtitle), self.ui)
-            self.progress.setWindowTitle("下载中")
-            self.progress.setMinimumDuration(0)
-            self.progress.setWindowModality(Qt.WindowModal)
-            self.sgn = MySignal()
-            self.sgn.progress_update.connect(self.setprogress)
             sleeptime = self.ui.sleeptime.value()
             ok = self.process_multithread(ali, subtitle, f'{file_path}/audio/', sleeptime=sleeptime)
             if ok:
@@ -253,24 +259,48 @@ class MainWindow(QObject):
         else:  # 单线程
             self.corn(ali, file_path, subtitle)
 
+    def bal_process(self, file_path, subtitle):
+        service = self.ui.service.checkedButton().property('service')
+        gender = self.ui.gender.checkedButton().objectName()
+        language = self.ui.language.checkedButton().property('language')
+        bala = Bala(service=service, language=language, gender=gender)
+        is_multi = self.ui.bal_multi.isChecked()
+        if is_multi:
+            ok = self.process_multithread(bala, subtitle, f'{file_path}/audio/', sleeptime=0, wav=1)
+            if ok:
+                self.corn(bala, file_path, subtitle, flag=1, wav=1)
+        else:
+            self.corn(bala, file_path, subtitle, wav=1)
+
     def setprogress(self, value):
         self.progress.setValue(value)
 
-    def process_multithread(self, api, sub, name, sleeptime=1):
+    def process_multithread(self, api, sub, name, sleeptime=1, wav=0):
+        self.progress = QProgressDialog("正在下载语音文件...", "取消", 0, len(sub), self.ui)
+        self.progress.setWindowTitle("下载中")
+        self.progress.setMinimumDuration(0)
+        self.progress.setWindowModality(Qt.WindowModal)
+        self.sgn = MySignal()
+        self.sgn.progress_update.connect(self.setprogress)
         thread_list = []
         for index, i in enumerate(sub):
             if self.progress.wasCanceled():
                 QMessageBox.warning(self.ui, "提示", "操作取消")
                 return 0
-            audio_name = f"{name}{i.index}.mp3"
+            if wav:
+                audio_name = f"{name}{i.index}.wav"
+            else:
+                audio_name = f"{name}{i.index}.mp3"
             thread = threading.Thread(target=api.process, args=(i.content, audio_name))
             self.ui.statusBar().showMessage(f'正在下载第{i.index}句：{i.content}')
             thread_list.append(thread)
             thread.start()
-            time.sleep(sleeptime)  # 阿里限制请求频率
-            if self.sgn:
+            time.sleep(sleeptime)  # 限制请求频率
+            if not wav:
                 self.sgn.progress_update.emit(index + 1)
-        for thread in thread_list:
+        for index, thread in enumerate(thread_list):
+            if wav:
+                self.sgn.progress_update.emit(index + 1)
             thread.join()
         return 1
 
