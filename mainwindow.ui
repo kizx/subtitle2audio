@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>607</width>
-    <height>612</height>
+    <height>617</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1559,12 +1559,12 @@
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="file_path">
+          <widget class="MyQLine" name="file_path">
            <property name="dragEnabled">
             <bool>false</bool>
            </property>
            <property name="placeholderText">
-            <string>点击浏览或拖拽SRT字幕文件到这里</string>
+            <string>浏览或拖拽SRT字幕文件到这里</string>
            </property>
           </widget>
          </item>
@@ -1578,8 +1578,8 @@
            </property>
            <property name="minimumSize">
             <size>
-             <width>50</width>
-             <height>25</height>
+             <width>80</width>
+             <height>30</height>
             </size>
            </property>
            <property name="statusTip">
@@ -1595,6 +1595,28 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
+          <widget class="QPushButton" name="download">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="statusTip">
+            <string>先下载再合成</string>
+           </property>
+           <property name="text">
+            <string>下载</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="generate">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -1607,6 +1629,9 @@
              <width>0</width>
              <height>30</height>
             </size>
+           </property>
+           <property name="statusTip">
+            <string>当前平台要选择正确</string>
            </property>
            <property name="text">
             <string>合成</string>
@@ -1690,6 +1715,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MyQLine</class>
+   <extends>QLineEdit</extends>
+   <header>MyWidget</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections>
   <connection>
@@ -1886,10 +1918,10 @@
   </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="per"/>
-  <buttongroup name="per_ali"/>
-  <buttongroup name="service"/>
   <buttongroup name="gender"/>
+  <buttongroup name="per"/>
+  <buttongroup name="service"/>
   <buttongroup name="language"/>
+  <buttongroup name="per_ali"/>
  </buttongroups>
 </ui>

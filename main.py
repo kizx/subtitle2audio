@@ -10,6 +10,7 @@ from PySide2.QtUiTools import QUiLoader
 from PySide2.QtWidgets import QApplication, QMessageBox, QFileDialog, QLineEdit, QProgressDialog
 from PySide2.QtCore import Qt, Signal, QObject, QUrl
 from pydub import AudioSegment
+from MyWidget import MyQLine
 
 from ali import Ali
 from baidu import Baidu
@@ -19,24 +20,6 @@ from bala import Bala
 def web(*url):
     for i in url:
         webbrowser.open(i)
-
-
-class MyQLine(QLineEdit):
-    """实现文件拖放功能"""
-
-    def __init__(self):
-        super().__init__()
-        self.setAcceptDrops(True)
-
-    def dragEnterEvent(self, e):
-        if e.mimeData().text().endswith('.srt'):
-            e.accept()
-        else:
-            e.ignore()
-
-    def dropEvent(self, e):
-        path = e.mimeData().text().replace('file:///', '')
-        self.setText(path)
 
 
 def trybug(fun):
@@ -54,13 +37,9 @@ class MainWindow(QObject):
 
     def __init__(self):
         super().__init__()
-        self.ui = QUiLoader().load('static/mainwindow.ui')
-
-        self.ui.file_path.deleteLater()  # 删除原有的路径框
-        self.ui.file_path = MyQLine()  # 新建自己的替换原有的
-        self.ui.file_path.setPlaceholderText('浏览或拖拽SRT字幕文件到这里')
-        self.ui.horizontalLayout_2.addWidget(self.ui.file_path)
-        self.ui.horizontalLayout_2.addWidget(self.ui.file)
+        loader = QUiLoader()
+        loader.registerCustomWidget(MyQLine)
+        self.ui = loader.load('mainwindow.ui')
 
         self.ui.per.setId(self.ui.per_0, 0)
         self.ui.per.setId(self.ui.per_1, 1)
@@ -68,8 +47,8 @@ class MainWindow(QObject):
         self.ui.per.setId(self.ui.per_4, 4)
 
         self.ui.baiduapi.clicked.connect(
-            lambda: web('https://console.bce.baidu.com/ai/?fromai=1#/ai/speech/overview/index'))
-        self.ui.baiduai.clicked.connect(lambda: web('https://ai.baidu.com/tech/speech/tts'))
+            lambda: web('https://ai.baidu.com/tech/speech/tts'))
+        self.ui.baiduai.clicked.connect(lambda: web('https://developer.baidu.com/vcast'))
         self.ui.aliapi.clicked.connect(
             lambda: web('https://nls-portal.console.aliyun.com/applist',
                         'https://usercenter.console.aliyun.com/#/manage/ak'))
@@ -79,12 +58,16 @@ class MainWindow(QObject):
         self.ui.save_bd.clicked.connect(self.save_setting)
         self.ui.save_ali.clicked.connect(self.save_setting)
         self.ui.file.clicked.connect(self.openfile)
+        self.ui.download.clicked.connect(self.download)
         self.ui.generate.clicked.connect(self.generate)
 
         self.ui.openfile.triggered.connect(self.openfile)
         self.ui.opensrt.triggered.connect(self.opensrt)
         self.ui.opendir.triggered.connect(self.opendir)
         self.ui.about.triggered.connect(self.about)
+
+        self.file_path = ''
+        self.subtitle = ''
 
     def note(self, info):
         QMessageBox.information(self.ui, "提示", info)
@@ -151,7 +134,7 @@ class MainWindow(QObject):
         html = """<html><head><meta name="qrichtext" content="1" /><style type="text/css"> p, li { white-space: 
         pre-wrap; } </style></head><body style=" font-family:'SimSun'; font-size:9pt; font-weight:400; 
         font-style:normal;"> <p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; 
-        -qt-block-indent:0; text-indent:0px;">当前版本：V2.4</p> <p style=" margin-top:0px; margin-bottom:0px; 
+        -qt-block-indent:0; text-indent:0px;">当前版本：V2.4.2</p> <p style=" margin-top:0px; margin-bottom:0px; 
         margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">开源地址：<a 
         href="https://github.com/kizx/subtitle2audio"><span style=" text-decoration: underline; 
         color:#0000ff;">https://github.com/kizx/subtitle2audio</span></a></p> <p style=" margin-top:0px; 
@@ -160,33 +143,55 @@ class MainWindow(QObject):
         color:#0000ff;">https://www.2bboy.com/archives/151.html</span></a></p></body></html> """
         QMessageBox.about(self.ui, '关于', html)
 
-    @trybug
-    def generate(self):
+    def preprocess(self):
+        """字幕预处理"""
         srt_file = self.ui.file_path.text()
         if not srt_file:
             self.note('未找到字幕文件')
-            return
+            return 0
         with open(srt_file, encoding='utf-8') as sub:
-            subtitle = list(srt.parse(sub))
-            for index, i in enumerate(subtitle[:]):  # 删除空字幕块
+            self.subtitle = list(srt.parse(sub))
+            for index, i in enumerate(self.subtitle[:]):  # 删除空字幕块
                 if i.content.isspace() or i.content == '':
-                    subtitle.remove(i)
-        file_path = os.path.dirname(srt_file)
-        if not os.path.exists(f'{file_path}/audio/'):
-            os.mkdir(f'{file_path}/audio/')
+                    self.subtitle.remove(i)
+        self.file_path = os.path.dirname(srt_file)
+        if not os.path.exists(f'{self.file_path}/audio/'):
+            os.mkdir(f'{self.file_path}/audio/')
+        return 1
 
+    @trybug
+    def download(self):
+        ok = self.preprocess()
+        if not ok:
+            return
         start = time.perf_counter()
         index = self.ui.tabWidget.currentIndex()
         if index == 0:
-            self.baidu_process(file_path, subtitle)
+            self.baidu_process()
         elif index == 1:
-            self.ali_process(file_path, subtitle)
+            self.ali_process()
         elif index == 2:
-            self.bal_process(file_path, subtitle)
+            self.bal_process()
         end = time.perf_counter()
         self.note(f"完成！\n共计用时{round(end - start, 2)}秒")
 
-    def corn(self, api, file_path, subtitle, flag=0, wav=0):
+    @trybug
+    def generate(self):
+        ok = self.preprocess()
+        if not ok:
+            return
+        start = time.perf_counter()
+        index = self.ui.tabWidget.currentIndex()
+        if index == 2:
+            self.corn(wav=1)
+        else:
+            self.corn()
+        end = time.perf_counter()
+        self.note(f"完成！\n共计用时{round(end - start, 2)}秒")
+
+    def corn(self, wav=0):
+        file_path = self.file_path
+        subtitle = self.subtitle
         audio = AudioSegment.silent(0)
         bf_end = 0
 
@@ -205,9 +210,7 @@ class MainWindow(QObject):
                     file_name = f'{file_path}/audio/{i.index}.mp3'
                 else:
                     file_name = f'{file_path}/audio/{i.index}.wav'
-                if flag == 0:
-                    self.ui.statusBar().showMessage(f'正在下载第{i.index}句：{i.content}')
-                    api.process(i.content, file_name)
+                self.ui.statusBar().showMessage(f'正在合并第{i.index}句：{i.content}')
                 silence_time = i.start.total_seconds() - bf_end
                 silence_audio = AudioSegment.silent(silence_time * 1000)
                 audio += silence_audio
@@ -224,7 +227,9 @@ class MainWindow(QObject):
                 audio.export(f'{file_path}/输出.wav', format='wav')
             self.ui.statusBar().showMessage('下载完成', 5000)
 
-    def baidu_process(self, file_path, subtitle):
+    def baidu_process(self):
+        file_path = self.file_path
+        subtitle = self.subtitle
         per = self.ui.per.checkedId()
         spd = self.ui.spd_bd.value()
         vol = self.ui.vol_bd.value()
@@ -236,9 +241,14 @@ class MainWindow(QObject):
             bd_setting = setting.get('baidu', {})
 
         baidu = Baidu(bd_setting, options)
-        self.corn(baidu, file_path, subtitle)
+        for index, i in enumerate(subtitle):
+            file_name = f'{file_path}/audio/{i.index}.mp3'
+            self.ui.statusBar().showMessage(f'正在下载第{i.index}句：{i.content}')
+            baidu.process(i.content, file_name)
 
-    def ali_process(self, file_path, subtitle):
+    def ali_process(self):
+        file_path = self.file_path
+        subtitle = self.subtitle
         per = self.ui.per_ali.checkedButton().objectName()
         spd = self.ui.spd_ali.value()
         vol = self.ui.vol_ali.value()
@@ -253,29 +263,33 @@ class MainWindow(QObject):
         is_multi = self.ui.ali_multi.isChecked()
         if is_multi:  # 多线程
             sleeptime = self.ui.sleeptime.value()
-            ok = self.process_multithread(ali, subtitle, f'{file_path}/audio/', sleeptime=sleeptime)
-            if ok:
-                self.corn(ali, file_path, subtitle, flag=1)
+            self.process_multithread(ali, subtitle, f'{file_path}/audio/', sleeptime=sleeptime)
         else:  # 单线程
-            self.corn(ali, file_path, subtitle)
+            for index, i in enumerate(subtitle):
+                file_name = f'{file_path}/audio/{i.index}.mp3'
+                self.ui.statusBar().showMessage(f'正在下载第{i.index}句：{i.content}')
+                ali.process(i.content, file_name)
 
-    def bal_process(self, file_path, subtitle):
+    def bal_process(self):
+        file_path = self.file_path
+        subtitle = self.subtitle
         service = self.ui.service.checkedButton().property('service')
         gender = self.ui.gender.checkedButton().objectName()
         language = self.ui.language.checkedButton().property('language')
         bala = Bala(service=service, language=language, gender=gender)
         is_multi = self.ui.bal_multi.isChecked()
         if is_multi:
-            ok = self.process_multithread(bala, subtitle, f'{file_path}/audio/', sleeptime=0, wav=1)
-            if ok:
-                self.corn(bala, file_path, subtitle, flag=1, wav=1)
+            self.process_multithread(bala, subtitle, f'{file_path}/audio/', sleeptime=0.1, wav=1)
         else:
-            self.corn(bala, file_path, subtitle, wav=1)
+            for index, i in enumerate(subtitle):
+                file_name = f'{file_path}/audio/{i.index}.wav'
+                self.ui.statusBar().showMessage(f'正在下载第{i.index}句：{i.content}')
+                bala.process(i.content, file_name)
 
     def setprogress(self, value):
         self.progress.setValue(value)
 
-    def process_multithread(self, api, sub, name, sleeptime=1, wav=0):
+    def process_multithread(self, api, sub, name, sleeptime=1.0, wav=0):
         self.progress = QProgressDialog("正在下载语音文件...", "取消", 0, len(sub), self.ui)
         self.progress.setWindowTitle("下载中")
         self.progress.setMinimumDuration(0)
@@ -296,13 +310,10 @@ class MainWindow(QObject):
             thread_list.append(thread)
             thread.start()
             time.sleep(sleeptime)  # 限制请求频率
-            if not wav:
-                self.sgn.progress_update.emit(index + 1)
+            self.sgn.progress_update.emit(index + 1)
         for index, thread in enumerate(thread_list):
-            if wav:
-                self.sgn.progress_update.emit(index + 1)
+            self.sgn.progress_update.emit(index + 1)
             thread.join()
-        return 1
 
 
 class MySignal(QObject):
