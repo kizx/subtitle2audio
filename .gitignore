@@ -139,3 +139,7 @@ tempCodeRunnerFile.py
 /dist/
 sample.srt
 *.mp3
+*.wav
+ffmpeg.exe
+ffplay.exe
+ffprobe.exe

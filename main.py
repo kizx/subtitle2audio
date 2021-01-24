@@ -1,17 +1,17 @@
 import json
 import os
-import webbrowser
-import time
 import threading
+import time
+import webbrowser
 
 import srt
+from PySide2.QtCore import Qt, Signal, QObject, QUrl
 from PySide2.QtGui import QIcon, QDesktopServices
 from PySide2.QtUiTools import QUiLoader
-from PySide2.QtWidgets import QApplication, QMessageBox, QFileDialog, QLineEdit, QProgressDialog
-from PySide2.QtCore import Qt, Signal, QObject, QUrl
+from PySide2.QtWidgets import QApplication, QMessageBox, QFileDialog, QProgressDialog
 from pydub import AudioSegment
-from MyWidget import MyQLine
 
+from MyWidget import MyQLine
 from ali import Ali
 from baidu import Baidu
 from bala import Bala
@@ -279,7 +279,7 @@ class MainWindow(QObject):
         bala = Bala(service=service, language=language, gender=gender)
         is_multi = self.ui.bal_multi.isChecked()
         if is_multi:
-            self.process_multithread(bala, subtitle, f'{file_path}/audio/', sleeptime=0.1, wav=1)
+            self.process_multithread(bala, subtitle, f'{file_path}/audio/', sleeptime=0.2, wav=1)
         else:
             for index, i in enumerate(subtitle):
                 file_name = f'{file_path}/audio/{i.index}.wav'

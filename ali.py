@@ -1,69 +1,78 @@
+import http.client
 import json
 import threading
 import time
 
-import ali_speech
-from ali_speech.callbacks import SpeechSynthesizerCallback
-from ali_speech.constant import TTSFormat
-from ali_speech.constant import TTSSampleRate
+from aliyunsdkcore.client import AcsClient
+from aliyunsdkcore.request import CommonRequest
 
 
-class MyCallback(SpeechSynthesizerCallback):
-    # 参数name用于指定保存音频的文件
-    def __init__(self, name):
-        self._name = name
-        self._fout = open(name, 'wb')
+def get_token(access_key, access_key_secret):
+    # 创建AcsClient实例
+    client = AcsClient(
+        access_key,
+        access_key_secret,
+        "cn-shanghai"
+    )
+    # 创建request，并设置参数
+    request = CommonRequest()
+    request.set_method('POST')
+    request.set_domain('nls-meta.cn-shanghai.aliyuncs.com')
+    request.set_version('2019-02-28')
+    request.set_action_name('CreateToken')
+    response = client.do_action_with_exception(request)
+    return json.loads(response)["Token"]["Id"]
 
-    def on_binary_data_received(self, raw):
-        print('MyCallback.on_binary_data_received: %s' % len(raw))
-        self._fout.write(raw)
 
-    def on_completed(self, message):
-        print('MyCallback.OnRecognitionCompleted: %s' % message)
-        self._fout.close()
-
-    def on_task_failed(self, message):
-        print('MyCallback.OnRecognitionTaskFailed-task_id:%s, status_text:%s' % (
-            message['header']['task_id'], message['header']['status_text']))
-        self._fout.close()
-
-    def on_channel_closed(self):
-        print('MyCallback.OnRecognitionChannelClosed')
+def processPOSTRequest(appkey, token, text, audioSaveFile, options):
+    host = 'nls-gateway.cn-shanghai.aliyuncs.com'
+    url = 'https://' + host + '/stream/v1/tts'
+    # 设置HTTPS Headers。
+    httpHeaders = {
+        'Content-Type': 'application/json'
+    }
+    # 设置HTTPS Body。
+    body = {
+        'appkey': appkey,
+        'token': token,
+        'text': text,
+        'format': 'mp3',
+        'voice': options.get('per'),  # 发音人
+        'volume': options.get('vol'),  # 音量
+        'speech_rate': options.get('spd'),  # 语速
+        'pitch_rate': options.get('pit')  # 语调
+    }
+    body = json.dumps(body)
+    # print('The POST request body content: ' + body)
+    # Python 3.x请使用http.client。
+    conn = http.client.HTTPSConnection(host)
+    conn.request(method='POST', url=url, body=body, headers=httpHeaders)
+    # 处理服务端返回的响应。
+    response = conn.getresponse()
+    # print(response.status, response.reason)
+    contentType = response.getheader('Content-Type')
+    body = response.read()
+    if 'audio/mpeg' == contentType:
+        with open(audioSaveFile, mode='wb') as f:
+            f.write(body)
+        print(audioSaveFile, 'The POST request succeed!')
+    else:
+        print('The POST request failed: ' + str(body))
+    conn.close()
 
 
 class Ali:
-    def __init__(self, ali_setting, options=None):
-        self.client = ali_speech.NlsClient()
-        # 设置输出日志信息的级别：DEBUG、INFO、WARNING、ERROR
-        self.client.set_log_level('ERROR')
+    def __init__(self, ali_setting, options):
         self.setting = ali_setting
         self.options = options
-        ali_speech.NlsClient.set_log_level('ERROR')
-        self.token, expire_time = ali_speech.NlsClient.create_token(self.setting.get('access_key'),
-                                                                    self.setting.get('access_key_secret'))
+        self.appKey = self.setting.get("app_key")
+        self.access_key = self.setting.get("access_key")
+        self.access_key_secret = self.setting.get("access_key_secret")
+        self.token = get_token(self.access_key, self.access_key_secret)
 
     def process(self, text, audio_name):
-        callback = MyCallback(audio_name)
-        synthesizer = self.client.create_synthesizer(callback)
-        synthesizer.set_appkey(self.setting.get('app_key'))
-        synthesizer.set_token(self.token)
-        synthesizer.set_format(TTSFormat.MP3)
-        synthesizer.set_sample_rate(TTSSampleRate.SAMPLE_RATE_16K)
-        if self.options is not None:
-            synthesizer.set_voice(self.options.get('per'))
-            synthesizer.set_speech_rate(self.options.get('spd'))
-            synthesizer.set_pitch_rate(self.options.get('pit'))
-            synthesizer.set_volume(self.options.get('vol'))
-        synthesizer.set_text(text)
-        try:
-            ret = synthesizer.start()
-            if ret < 0:
-                return ret
-            synthesizer.wait_completed()
-        except Exception as e:
-            print(e)
-        finally:
-            synthesizer.close()
+        audioSaveFile = audio_name
+        processPOSTRequest(self.appKey, self.token, text, audioSaveFile, self.options)
 
     def process_multithread(self, sub, name, sgn=None, sleeptime=1):
         thread_list = []
@@ -89,6 +98,12 @@ if __name__ == "__main__":
         ali_st = setting.get('ali', {})
     my_text = "今天天气不错"
     my_audio_name = '阿里语音.mp3'
-    ali = Ali(ali_st)
+    ops = {
+        'per': 'xiaoyun',
+        'vol': 50,
+        'spd': 0,
+        'pit': 0
+    }
+    ali = Ali(ali_st, ops)
     ali.process(my_text, my_audio_name)
-    # ali.process_multithread(['这是第一句', '今天天气不错', '嘟嘟嘟嘟'], 'audio/')
+    # ali.process_multithread(['这是第一句', '今天天气不错', '嘟嘟嘟嘟'], '')

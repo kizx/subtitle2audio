@@ -1,5 +1,5 @@
 aliyun-python-sdk-core
 baidu-aip
-pydub
-srt
-pyside2
+pydub~=0.24.1
+srt~=3.4.1
+pyside2~=5.15.2

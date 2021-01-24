@@ -26,4 +26,4 @@ class Bala:
 
 if __name__ == "__main__":
     test = Bala(service='google', gender='female')
-    test.process(text='今天好热啊', wav='1.wav')
+    test.process(text='今天好冷啊', wav='1.wav')

@@ -1,5 +1,5 @@
-Balabolka (Command Line Utility for Online Text-To-Speech Using), version 1.3
-Copyright (c) 2019-2020 Ilya Morozov
+Balabolka (Command Line Utility for Online Text-To-Speech Using), version 1.11
+Copyright (c) 2019-2021 Ilya Morozov
 All Rights Reserved
 
 WWW: http://balabolka.site/bconsole.htm
@@ -32,7 +32,7 @@ bal4web [options ...]
    Prints the list of supported languages (and genders, if available) for the online TTS service.
 
 -f <file_name>
-   Sets the name of the input text file.
+   Sets the name of the input text file. The command line may contain few options [-f].
 
 -w <file_name>
    Sets the name of the output file in WAV format.
@@ -41,10 +41,13 @@ bal4web [options ...]
    Takes the text input from clipboard.
 
 -t <text>
-   Takes the text from the command line.
+   Takes the text from the command line. The command line may contain few options [-t].
 
 -i
    Takes the text input from STDIN.
+
+--encoding <encoding> or -enc <encoding>
+   Sets the input text encoding ("ansi", "utf8" or "unicode"). The default encoding for STDIN is "ansi".
 
 -ln <integer>
    Selects a line from the text file by using of a line number. The line numbering starts at "1".
@@ -52,8 +55,17 @@ bal4web [options ...]
    The command line may contain few options [-ln].
 
 -d <file_name>
-   Uses a dictionary for pronunciation correction (*.BXD, *.DIC or *.REX). The command line may contain few options [-d].
+   Applies a dictionary for pronunciation correction (*.BXD, *.DIC or *.REX). The command line may contain few options [-d].
    You may use the desktop application 'Balabolka' to edit a dictionary.
+
+-lrc
+   Creates the LRC file. Lyrics will be synchronized with the speech in the output audio file.
+
+-srt
+   Creates the SRT file. Subtitles will be synchronized with the speech in the output audio file.
+
+-sub
+   Input text will be processed as subtitles. The option may be useful, when the options [-i] or [-c] are specified.
 
 -host <host_name>
    Sets the hostname of the proxy server.
@@ -61,8 +73,8 @@ bal4web [options ...]
 -port <integer>
    Sets the port number of the proxy server.
 
---encoding <encoding> or -enc <encoding>
-   Sets the input text encoding ("ansi", "utf8" or "unicode"). The default encoding for STDIN is "ansi".
+-p
+   Display progress information in a console window.
 
 --ignore-square-brackets or -isb
    Ignore text in [square brackets].
@@ -76,18 +88,60 @@ bal4web [options ...]
 --ignore-round-brackets or -irb
    Ignore text in (round brackets).
 
+--ignore-url or -iu
+   Ignore URLs.
+
 --ignore-comments or -ic
    Ignore comments in text. Single-line comments start with // and continue until the end of the line. Multiline comments start with /* and end with */.
 
 -? or -h
    Prints the list of available command line options.
 
+--lrc-length <integer>
+   Sets the maximal length of text lines for the LRC file (in characters).
+
+--lrc-fname <file_name>
+   Sets the name of the LRC file that will be created. The option may be useful, when the option [-o] is specified.
+
+--lrc-enc <encoding>
+   Sets the encoding for the LRC file ("ansi", "utf8" or "unicode"). The default is "ansi".
+
+--lrc-offset <integer>
+   Sets the time shift for the LRC file (in milliseconds).
+
+--lrc-artist <text>
+   Sets the ID tag for the LRC file: artist.
+
+--lrc-album <text>
+   Sets the ID tag for the LRC file: album.
+
+--lrc-title <text>
+   Sets the ID tag for the LRC file: title.
+
+--lrc-author <text>
+   Sets the ID tag for the LRC file: author.
+
+--lrc-creator <text>
+   Sets the ID tag for the LRC file: creator of the LRC file.
+
+--srt-length <integer>
+   Sets the maximal length of text lines for the SRT file (in characters).
+
+--srt-fname <file_name>
+   Sets the name of the SRT file. The option may be useful, when the option [-o] is specified.
+
+--srt-enc <encoding>
+   Sets the encoding for the SRT file ("ansi", "utf8" or "unicode"). The default is "ansi".
+
+--sub-format <text>
+   Sets the format of input subtitles ("srt", "lrc", "ssa", "ass", "smi" or "vtt"). If the option is not specified, the format will be determined through the file extension.
+
 
 *** Examples ***
 
-Create the text file LANGUAGE.TXT with the list of the supported languages and genders for the Bing TTS service:
+Create the text file LANGUAGE.TXT with the list of the supported languages and genders for the Google TTS service:
 
-bal4web -s Bing -m > language.txt
+bal4web -s Google -m > language.txt
 
 
 Convert text from BOOK.TXT to speech and save as BOOK.WAV:
@@ -147,6 +201,6 @@ One hundred twenty milliseconds of silence {{Pause=120}} just occurred.
 
 *** Licence ***
 
-You are free to use and distribute software for noncommercial purposes. For commercial use or distribution, you need to get permission from the copyright holder.
+You are free to use and distribute software for noncommercial purposes. For commercial use or distribution, you need to get permission from the copyright holder. The application can not be used on the territory of Belarus, Cuba, Iran, North Korea, Syria, and the Crimea Region.
 
 ###

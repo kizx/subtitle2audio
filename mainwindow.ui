@@ -6,22 +6,125 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>607</width>
-    <height>617</height>
+    <width>606</width>
+    <height>621</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>字幕朗读器</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout_2">
-    <item>
+   <layout class="QGridLayout" name="gridLayout_6">
+    <item row="1" column="0">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="title">
+       <string/>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="leftMargin">
+          <number>5</number>
+         </property>
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="text">
+            <string>字幕文件</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="MyQLine" name="file_path">
+           <property name="dragEnabled">
+            <bool>false</bool>
+           </property>
+           <property name="placeholderText">
+            <string>浏览或拖拽SRT字幕文件到这里</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QToolButton" name="file">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>80</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="statusTip">
+            <string>打开一个SRT字幕文件</string>
+           </property>
+           <property name="text">
+            <string>打开</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QPushButton" name="download">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="statusTip">
+            <string>先下载再合成</string>
+           </property>
+           <property name="text">
+            <string>下载</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="generate">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="minimumSize">
+            <size>
+             <width>0</width>
+             <height>30</height>
+            </size>
+           </property>
+           <property name="statusTip">
+            <string>当前平台要选择正确</string>
+           </property>
+           <property name="text">
+            <string>合成</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="acceptDrops">
        <bool>false</bool>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="baidu">
        <attribute name="title">
@@ -573,13 +676,13 @@
              <string/>
             </property>
             <property name="statusTip">
-             <string>说明：CE表示支持中英文混合，C表示只支持中文，E表示只支持英文，*表示试用版</string>
+             <string>说明：CE表示支持中英文混合，C表示只支持中文，E表示只支持英文</string>
             </property>
             <property name="whatsThis">
              <string/>
             </property>
             <property name="currentIndex">
-             <number>0</number>
+             <number>5</number>
             </property>
             <widget class="QWidget" name="tab_1">
              <attribute name="title">
@@ -729,7 +832,7 @@
               <item row="2" column="3">
                <widget class="QRadioButton" name="Aishuo">
                 <property name="text">
-                 <string>*艾硕 自然男声C</string>
+                 <string>艾硕 自然男声CE</string>
                 </property>
                 <attribute name="buttonGroup">
                  <string notr="true">per_ali</string>
@@ -1003,7 +1106,7 @@
               <item row="2" column="2">
                <widget class="QRadioButton" name="Lydia">
                 <property name="text">
-                 <string>*Lydia 英中双语女声E</string>
+                 <string>Lydia 英中双语女声CE</string>
                 </property>
                 <attribute name="buttonGroup">
                  <string notr="true">per_ali</string>
@@ -1016,8 +1119,8 @@
              <attribute name="title">
               <string>方言场景</string>
              </attribute>
-             <layout class="QHBoxLayout" name="horizontalLayout_9">
-              <item>
+             <layout class="QGridLayout" name="gridLayout_7">
+              <item row="0" column="0">
                <widget class="QRadioButton" name="Shanshan">
                 <property name="text">
                  <string>姗姗 粤语女声CE</string>
@@ -1027,10 +1130,77 @@
                 </attribute>
                </widget>
               </item>
-              <item>
+              <item row="0" column="1">
                <widget class="QRadioButton" name="Xiaoyue">
                 <property name="text">
-                 <string>*小玥 四川话女声CE</string>
+                 <string>小玥 四川话女声CE</string>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">per_ali</string>
+                </attribute>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QRadioButton" name="Qingqing">
+                <property name="text">
+                 <string>青青 台湾话女声</string>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">per_ali</string>
+                </attribute>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QRadioButton" name="Cuijie">
+                <property name="text">
+                 <string>翠姐 东北话女声</string>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">per_ali</string>
+                </attribute>
+               </widget>
+              </item>
+              <item row="1" column="0" colspan="2">
+               <widget class="QRadioButton" name="Xiaoze">
+                <property name="text">
+                 <string>小泽 湖南重口音男声</string>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">per_ali</string>
+                </attribute>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+            <widget class="QWidget" name="tab_6">
+             <attribute name="title">
+              <string>文学场景</string>
+             </attribute>
+             <layout class="QGridLayout" name="gridLayout_8">
+              <item row="0" column="0">
+               <widget class="QRadioButton" name="Tomoka">
+                <property name="text">
+                 <string>智香 日语女生</string>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">per_ali</string>
+                </attribute>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QRadioButton" name="Tomoya">
+                <property name="text">
+                 <string>智也 日语男声</string>
+                </property>
+                <attribute name="buttonGroup">
+                 <string notr="true">per_ali</string>
+                </attribute>
+               </widget>
+              </item>
+              <item row="1" column="0" colspan="2">
+               <widget class="QRadioButton" name="Tomoya_2">
+                <property name="text">
+                 <string>Annie 美语女声</string>
                 </property>
                 <attribute name="buttonGroup">
                  <string notr="true">per_ali</string>
@@ -1363,7 +1533,7 @@
           </property>
           <layout class="QGridLayout" name="gridLayout_5">
            <item row="0" column="1">
-            <widget class="QRadioButton" name="radioButton_5">
+            <widget class="QRadioButton" name="zh_HK">
              <property name="text">
               <string>中文-香港</string>
              </property>
@@ -1376,7 +1546,7 @@
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QRadioButton" name="radioButton_8">
+            <widget class="QRadioButton" name="en_GB">
              <property name="text">
               <string>英文-英国</string>
              </property>
@@ -1389,7 +1559,7 @@
             </widget>
            </item>
            <item row="0" column="0">
-            <widget class="QRadioButton" name="znCN">
+            <widget class="QRadioButton" name="zh_CN">
              <property name="text">
               <string>中文-简体</string>
              </property>
@@ -1405,7 +1575,7 @@
             </widget>
            </item>
            <item row="0" column="2">
-            <widget class="QRadioButton" name="radioButton_6">
+            <widget class="QRadioButton" name="zh_TW">
              <property name="text">
               <string>中文-台湾</string>
              </property>
@@ -1418,7 +1588,7 @@
             </widget>
            </item>
            <item row="1" column="2">
-            <widget class="QRadioButton" name="radioButton_9">
+            <widget class="QRadioButton" name="en_AU">
              <property name="text">
               <string>英文-澳大利亚</string>
              </property>
@@ -1431,7 +1601,7 @@
             </widget>
            </item>
            <item row="1" column="0">
-            <widget class="QRadioButton" name="radioButton_7">
+            <widget class="QRadioButton" name="en_US">
              <property name="text">
               <string>英文-美国</string>
              </property>
@@ -1444,7 +1614,7 @@
             </widget>
            </item>
            <item row="2" column="0">
-            <widget class="QRadioButton" name="radioButton_10">
+            <widget class="QRadioButton" name="ja_JP">
              <property name="text">
               <string>日语</string>
              </property>
@@ -1468,7 +1638,7 @@
            </sizepolicy>
           </property>
           <property name="statusTip">
-           <string>性别选项只对谷歌的部分语言（日语）有效</string>
+           <string>性别选项只对谷歌的部分语言有效</string>
           </property>
           <property name="title">
            <string>性别</string>
@@ -1511,9 +1681,6 @@
           <property name="text">
            <string>开启多线程</string>
           </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
          </widget>
         </item>
         <item>
@@ -1536,111 +1703,15 @@
           </property>
          </widget>
         </item>
+        <item>
+         <widget class="QLabel" name="label_4">
+          <property name="text">
+           <string>本语音库无需注册相关平台账号，但不保证所有选项可用，也不保证所有文本和网络环境下可用</string>
+          </property>
+         </widget>
+        </item>
        </layout>
       </widget>
-     </widget>
-    </item>
-    <item>
-     <widget class="QGroupBox" name="groupBox">
-      <property name="title">
-       <string/>
-      </property>
-      <layout class="QVBoxLayout" name="verticalLayout_5">
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <property name="leftMargin">
-          <number>5</number>
-         </property>
-         <item>
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>字幕文件</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="MyQLine" name="file_path">
-           <property name="dragEnabled">
-            <bool>false</bool>
-           </property>
-           <property name="placeholderText">
-            <string>浏览或拖拽SRT字幕文件到这里</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="file">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>80</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="statusTip">
-            <string>打开一个SRT字幕文件</string>
-           </property>
-           <property name="text">
-            <string>打开</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_4">
-         <item>
-          <widget class="QPushButton" name="download">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="statusTip">
-            <string>先下载再合成</string>
-           </property>
-           <property name="text">
-            <string>下载</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="generate">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="statusTip">
-            <string>当前平台要选择正确</string>
-           </property>
-           <property name="text">
-            <string>合成</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-      </layout>
      </widget>
     </item>
    </layout>
@@ -1650,8 +1721,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>607</width>
-     <height>21</height>
+     <width>606</width>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
@@ -1918,10 +1989,10 @@
   </connection>
  </connections>
  <buttongroups>
+  <buttongroup name="per_ali"/>
   <buttongroup name="gender"/>
-  <buttongroup name="per"/>
   <buttongroup name="service"/>
   <buttongroup name="language"/>
-  <buttongroup name="per_ali"/>
+  <buttongroup name="per"/>
  </buttongroups>
 </ui>
