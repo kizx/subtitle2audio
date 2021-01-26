@@ -5,16 +5,18 @@ import time
 import webbrowser
 
 import srt
-from PySide2.QtCore import Qt, Signal, QObject, QUrl
+from PySide2.QtCore import Qt, QObject, QUrl
 from PySide2.QtGui import QIcon, QDesktopServices
 from PySide2.QtUiTools import QUiLoader
 from PySide2.QtWidgets import QApplication, QMessageBox, QFileDialog, QProgressDialog
 from pydub import AudioSegment
 
-from MyWidget import MyQLine
+from MySignal import mysgn
+from MyWidget import MyQLine, MyQPlainTextEdit
 from ali import Ali
 from baidu import Baidu
 from bala import Bala
+from xfyun import XF
 
 
 def web(*url):
@@ -37,8 +39,11 @@ class MainWindow(QObject):
 
     def __init__(self):
         super().__init__()
+        self.sgn = mysgn
+        self.sgn.drop_srt.connect(self.dropsrt)
         loader = QUiLoader()
         loader.registerCustomWidget(MyQLine)
+        loader.registerCustomWidget(MyQPlainTextEdit)
         self.ui = loader.load('mainwindow.ui')
 
         self.ui.per.setId(self.ui.per_0, 0)
@@ -48,19 +53,24 @@ class MainWindow(QObject):
 
         self.ui.baiduapi.clicked.connect(
             lambda: web('https://ai.baidu.com/tech/speech/tts'))
-        self.ui.baiduai.clicked.connect(lambda: web('https://developer.baidu.com/vcast'))
         self.ui.aliapi.clicked.connect(
             lambda: web('https://nls-portal.console.aliyun.com/applist',
-                        'https://usercenter.console.aliyun.com/#/manage/ak'))
+                        'https://usercenter.console.aliyun.com/'))
         self.ui.aliai.clicked.connect(lambda: web('https://ai.aliyun.com/nls/tts'))
+        self.ui.xfai.clicked.connect(lambda: web('https://www.xfyun.cn/services/online_tts'))
+        self.ui.xfapi.clicked.connect(lambda: web('https://console.xfyun.cn/app/myapp'))
 
         self.load_setting()
         self.ui.save_bd.clicked.connect(self.save_setting)
         self.ui.save_ali.clicked.connect(self.save_setting)
+        self.ui.save_xf.clicked.connect(self.save_setting)
         self.ui.file.clicked.connect(self.openfile)
+        self.ui.editsub.clicked.connect(self.editsub)
+        self.ui.file_path.textChanged.connect(self.preprocess)
+        self.ui.save_sub.clicked.connect(self.savesrt)
+
         self.ui.download.clicked.connect(self.download)
         self.ui.generate.clicked.connect(self.generate)
-
         self.ui.openfile.triggered.connect(self.openfile)
         self.ui.opensrt.triggered.connect(self.opensrt)
         self.ui.opendir.triggered.connect(self.opendir)
@@ -88,6 +98,12 @@ class MainWindow(QObject):
                 access_key_secret = self.ui.access_key_secret_ali.text()
                 ali_setting = {'app_key': app_key, 'access_key': access_key, 'access_key_secret': access_key_secret}
                 setting['ali'] = ali_setting
+            if sender.objectName() == 'save_xf':
+                app_id = self.ui.app_id_xf.text()
+                api_secret = self.ui.api_secret_xf.text()
+                api_key = self.ui.api_key_xf.text()
+                xf_setting = {'app_id': app_id, 'api_secret': api_secret, 'api_key': api_key}
+                setting['xf'] = xf_setting
             f.seek(0)
             f.truncate()
             json.dump(setting, f, indent=2)
@@ -101,6 +117,7 @@ class MainWindow(QObject):
             setting = json.load(f)
             baidu_setting = setting.get('baidu', {})
             ali_setting = setting.get('ali', {})
+            xf_setting = setting.get('xf', {})
 
         self.ui.app_id_bd.setText(baidu_setting.get('app_id', ''))
         self.ui.app_key_bd.setText(baidu_setting.get('app_key', ''))
@@ -110,12 +127,18 @@ class MainWindow(QObject):
         self.ui.access_key_ali.setText(ali_setting.get('access_key', ''))
         self.ui.access_key_secret_ali.setText(ali_setting.get('access_key_secret', ''))
 
+        self.ui.app_id_xf.setText(xf_setting.get('app_id', ''))
+        self.ui.api_secret_xf.setText(xf_setting.get('api_secret', ''))
+        self.ui.api_key_xf.setText(xf_setting.get('api_key', ''))
+
     def openfile(self):
+        """打开字幕文件路径"""
         file, _ = QFileDialog.getOpenFileName(self.ui, '选择字幕文件', './', "Srt File(*.srt)")
         if file:
             self.ui.file_path.setText(file)
 
     def opensrt(self):
+        """用记事本打开文件"""
         path = self.ui.file_path.text()
         if path:
             QDesktopServices.openUrl(QUrl('file:///' + path))
@@ -123,6 +146,7 @@ class MainWindow(QObject):
             self.note('未找到字幕文件')
 
     def opendir(self):
+        """打开输出目录"""
         path = self.ui.file_path.text()
         file_path = os.path.dirname(path)
         if file_path:
@@ -130,11 +154,24 @@ class MainWindow(QObject):
         else:
             self.note('未找到文件')
 
+    def dropsrt(self, path):
+        """多行文本拖放触发事件"""
+        self.ui.file_path.setText(path)
+
+    def savesrt(self):
+        with open(self.ui.file_path.text(), 'w', encoding='utf-8') as f:
+            f.write(self.ui.subtext.toPlainText())
+        self.note('保存字幕成功！')
+
+    def editsub(self):
+        self.subtitle = list(srt.parse(self.ui.subtext.toPlainText()))
+        self.note('修改成功！')
+
     def about(self):
         html = """<html><head><meta name="qrichtext" content="1" /><style type="text/css"> p, li { white-space: 
         pre-wrap; } </style></head><body style=" font-family:'SimSun'; font-size:9pt; font-weight:400; 
         font-style:normal;"> <p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; 
-        -qt-block-indent:0; text-indent:0px;">当前版本：V2.4.2</p> <p style=" margin-top:0px; margin-bottom:0px; 
+        -qt-block-indent:0; text-indent:0px;">当前版本：V 3.0.0</p> <p style=" margin-top:0px; margin-bottom:0px; 
         margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">开源地址：<a 
         href="https://github.com/kizx/subtitle2audio"><span style=" text-decoration: underline; 
         color:#0000ff;">https://github.com/kizx/subtitle2audio</span></a></p> <p style=" margin-top:0px; 
@@ -143,6 +180,7 @@ class MainWindow(QObject):
         color:#0000ff;">https://www.2bboy.com/archives/151.html</span></a></p></body></html> """
         QMessageBox.about(self.ui, '关于', html)
 
+    @trybug
     def preprocess(self):
         """字幕预处理"""
         srt_file = self.ui.file_path.text()
@@ -154,6 +192,7 @@ class MainWindow(QObject):
             for index, i in enumerate(self.subtitle[:]):  # 删除空字幕块
                 if i.content.isspace() or i.content == '':
                     self.subtitle.remove(i)
+        self.ui.subtext.setPlainText(srt.compose(self.subtitle))  # 显示字幕
         self.file_path = os.path.dirname(srt_file)
         if not os.path.exists(f'{self.file_path}/audio/'):
             os.mkdir(f'{self.file_path}/audio/')
@@ -161,9 +200,7 @@ class MainWindow(QObject):
 
     @trybug
     def download(self):
-        ok = self.preprocess()
-        if not ok:
-            return
+        """下载"""
         start = time.perf_counter()
         index = self.ui.tabWidget.currentIndex()
         if index == 0:
@@ -171,23 +208,22 @@ class MainWindow(QObject):
         elif index == 1:
             self.ali_process()
         elif index == 2:
-            self.bal_process()
+            self.xf_process()
         end = time.perf_counter()
         self.note(f"完成！\n共计用时{round(end - start, 2)}秒")
 
     @trybug
     def generate(self):
-        ok = self.preprocess()
-        if not ok:
-            return
+        """合成"""
         start = time.perf_counter()
         index = self.ui.tabWidget.currentIndex()
-        if index == 2:
+        if index == 3:
             self.corn(wav=1)
         else:
             self.corn()
         end = time.perf_counter()
         self.note(f"完成！\n共计用时{round(end - start, 2)}秒")
+        self.opendir()
 
     def corn(self, wav=0):
         file_path = self.file_path
@@ -245,6 +281,7 @@ class MainWindow(QObject):
             file_name = f'{file_path}/audio/{i.index}.mp3'
             self.ui.statusBar().showMessage(f'正在下载第{i.index}句：{i.content}')
             baidu.process(i.content, file_name)
+        self.ui.statusBar().showMessage(f'下载完成！')
 
     def ali_process(self):
         file_path = self.file_path
@@ -270,6 +307,31 @@ class MainWindow(QObject):
                 self.ui.statusBar().showMessage(f'正在下载第{i.index}句：{i.content}')
                 ali.process(i.content, file_name)
 
+    def xf_process(self):
+        file_path = self.file_path
+        subtitle = self.subtitle
+        per = self.ui.per_xf.checkedButton().objectName()
+        if per == 'tsvcn':
+            per = self.ui.xfvcn.text()
+            if per == '':
+                self.note('特色发音人参数为空')
+                return
+        spd = self.ui.spd_xf.value()
+        vol = self.ui.vol_xf.value()
+        pit = self.ui.pit_xf.value()
+        options = {'per': per, 'spd': spd, 'vol': vol, 'pit': pit}
+
+        with open('setting.json', 'r') as ff:
+            setting = json.load(ff)
+            xf_setting = setting.get('xf', {})
+
+        xf = XF(xf_setting, options)
+        for index, i in enumerate(subtitle):
+            file_name = f'{file_path}/audio/{i.index}.mp3'
+            self.ui.statusBar().showMessage(f'正在下载第{i.index}句：{i.content}')
+            xf.process(i.content, file_name)
+        self.ui.statusBar().showMessage(f'下载完成！')
+
     def bal_process(self):
         file_path = self.file_path
         subtitle = self.subtitle
@@ -294,7 +356,6 @@ class MainWindow(QObject):
         self.progress.setWindowTitle("下载中")
         self.progress.setMinimumDuration(0)
         self.progress.setWindowModality(Qt.WindowModal)
-        self.sgn = MySignal()
         self.sgn.progress_update.connect(self.setprogress)
         thread_list = []
         for index, i in enumerate(sub):
@@ -314,10 +375,6 @@ class MainWindow(QObject):
         for index, thread in enumerate(thread_list):
             self.sgn.progress_update.emit(index + 1)
             thread.join()
-
-
-class MySignal(QObject):
-    progress_update = Signal(int)
 
 
 if __name__ == '__main__':

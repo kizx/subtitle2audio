@@ -13,13 +13,14 @@ from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 
 from MyWidget import MyQLine
+from MyWidget import MyQPlainTextEdit
 
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(606, 621)
+        MainWindow.resize(1097, 606)
         self.openfile = QAction(MainWindow)
         self.openfile.setObjectName(u"openfile")
         self.about = QAction(MainWindow)
@@ -30,10 +31,15 @@ class Ui_MainWindow(object):
         self.opendir.setObjectName(u"opendir")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.gridLayout_6 = QGridLayout(self.centralwidget)
-        self.gridLayout_6.setObjectName(u"gridLayout_6")
+        self.horizontalLayout_20 = QHBoxLayout(self.centralwidget)
+        self.horizontalLayout_20.setObjectName(u"horizontalLayout_20")
         self.groupBox = QGroupBox(self.centralwidget)
         self.groupBox.setObjectName(u"groupBox")
+        sizePolicy = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.groupBox.sizePolicy().hasHeightForWidth())
+        self.groupBox.setSizePolicy(sizePolicy)
         self.verticalLayout_5 = QVBoxLayout(self.groupBox)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.horizontalLayout_2 = QHBoxLayout()
@@ -46,17 +52,18 @@ class Ui_MainWindow(object):
 
         self.file_path = MyQLine(self.groupBox)
         self.file_path.setObjectName(u"file_path")
-        self.file_path.setDragEnabled(False)
+        self.file_path.setMinimumSize(QSize(0, 25))
+        self.file_path.setReadOnly(True)
 
         self.horizontalLayout_2.addWidget(self.file_path)
 
         self.file = QToolButton(self.groupBox)
         self.file.setObjectName(u"file")
-        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.file.sizePolicy().hasHeightForWidth())
-        self.file.setSizePolicy(sizePolicy)
+        sizePolicy1 = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy1.setHorizontalStretch(0)
+        sizePolicy1.setVerticalStretch(0)
+        sizePolicy1.setHeightForWidth(self.file.sizePolicy().hasHeightForWidth())
+        self.file.setSizePolicy(sizePolicy1)
         self.file.setMinimumSize(QSize(80, 30))
 
         self.horizontalLayout_2.addWidget(self.file)
@@ -64,89 +71,91 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_5.addLayout(self.horizontalLayout_2)
 
-        self.horizontalLayout_4 = QHBoxLayout()
-        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.download = QPushButton(self.groupBox)
-        self.download.setObjectName(u"download")
-        sizePolicy.setHeightForWidth(self.download.sizePolicy().hasHeightForWidth())
-        self.download.setSizePolicy(sizePolicy)
-        self.download.setMinimumSize(QSize(0, 30))
+        self.subtext = MyQPlainTextEdit(self.groupBox)
+        self.subtext.setObjectName(u"subtext")
+        font = QFont()
+        font.setFamily(u"Microsoft YaHei UI")
+        font.setPointSize(10)
+        self.subtext.setFont(font)
 
-        self.horizontalLayout_4.addWidget(self.download)
+        self.verticalLayout_5.addWidget(self.subtext)
 
-        self.generate = QPushButton(self.groupBox)
-        self.generate.setObjectName(u"generate")
-        sizePolicy.setHeightForWidth(self.generate.sizePolicy().hasHeightForWidth())
-        self.generate.setSizePolicy(sizePolicy)
-        self.generate.setMinimumSize(QSize(0, 30))
+        self.horizontalLayout_21 = QHBoxLayout()
+        self.horizontalLayout_21.setObjectName(u"horizontalLayout_21")
+        self.editsub = QPushButton(self.groupBox)
+        self.editsub.setObjectName(u"editsub")
+        self.editsub.setMinimumSize(QSize(0, 45))
 
-        self.horizontalLayout_4.addWidget(self.generate)
+        self.horizontalLayout_21.addWidget(self.editsub)
+
+        self.save_sub = QPushButton(self.groupBox)
+        self.save_sub.setObjectName(u"save_sub")
+        sizePolicy2 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        sizePolicy2.setHorizontalStretch(0)
+        sizePolicy2.setVerticalStretch(0)
+        sizePolicy2.setHeightForWidth(self.save_sub.sizePolicy().hasHeightForWidth())
+        self.save_sub.setSizePolicy(sizePolicy2)
+        self.save_sub.setMinimumSize(QSize(0, 45))
+
+        self.horizontalLayout_21.addWidget(self.save_sub)
 
 
-        self.verticalLayout_5.addLayout(self.horizontalLayout_4)
+        self.verticalLayout_5.addLayout(self.horizontalLayout_21)
 
 
-        self.gridLayout_6.addWidget(self.groupBox, 1, 0, 1, 1)
+        self.horizontalLayout_20.addWidget(self.groupBox)
 
-        self.tabWidget = QTabWidget(self.centralwidget)
+        self.groupBox_2 = QGroupBox(self.centralwidget)
+        self.groupBox_2.setObjectName(u"groupBox_2")
+        self.verticalLayout_10 = QVBoxLayout(self.groupBox_2)
+        self.verticalLayout_10.setObjectName(u"verticalLayout_10")
+        self.tabWidget = QTabWidget(self.groupBox_2)
         self.tabWidget.setObjectName(u"tabWidget")
+        sizePolicy3 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
+        sizePolicy3.setHorizontalStretch(0)
+        sizePolicy3.setVerticalStretch(0)
+        sizePolicy3.setHeightForWidth(self.tabWidget.sizePolicy().hasHeightForWidth())
+        self.tabWidget.setSizePolicy(sizePolicy3)
         self.tabWidget.setAcceptDrops(False)
         self.baidu = QWidget()
         self.baidu.setObjectName(u"baidu")
         self.verticalLayout_3 = QVBoxLayout(self.baidu)
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.horizontalLayout = QHBoxLayout()
-        self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.baiduapi = QPushButton(self.baidu)
-        self.baiduapi.setObjectName(u"baiduapi")
-        sizePolicy.setHeightForWidth(self.baiduapi.sizePolicy().hasHeightForWidth())
-        self.baiduapi.setSizePolicy(sizePolicy)
-        self.baiduapi.setMinimumSize(QSize(100, 30))
-
-        self.horizontalLayout.addWidget(self.baiduapi)
-
-        self.baiduai = QPushButton(self.baidu)
-        self.baiduai.setObjectName(u"baiduai")
-        sizePolicy.setHeightForWidth(self.baiduai.sizePolicy().hasHeightForWidth())
-        self.baiduai.setSizePolicy(sizePolicy)
-        self.baiduai.setMinimumSize(QSize(100, 30))
-
-        self.horizontalLayout.addWidget(self.baiduai)
-
-
-        self.verticalLayout_3.addLayout(self.horizontalLayout)
-
+        self.groupBox_4 = QGroupBox(self.baidu)
+        self.groupBox_4.setObjectName(u"groupBox_4")
+        self.verticalLayout = QVBoxLayout(self.groupBox_4)
+        self.verticalLayout.setObjectName(u"verticalLayout")
         self.formLayout = QFormLayout()
         self.formLayout.setObjectName(u"formLayout")
         self.formLayout.setLabelAlignment(Qt.AlignCenter)
-        self.lable_app_id = QLabel(self.baidu)
+        self.lable_app_id = QLabel(self.groupBox_4)
         self.lable_app_id.setObjectName(u"lable_app_id")
 
         self.formLayout.setWidget(0, QFormLayout.LabelRole, self.lable_app_id)
 
-        self.app_id_bd = QLineEdit(self.baidu)
+        self.app_id_bd = QLineEdit(self.groupBox_4)
         self.app_id_bd.setObjectName(u"app_id_bd")
         self.app_id_bd.setClearButtonEnabled(False)
 
         self.formLayout.setWidget(0, QFormLayout.FieldRole, self.app_id_bd)
 
-        self.lable_app_key = QLabel(self.baidu)
+        self.lable_app_key = QLabel(self.groupBox_4)
         self.lable_app_key.setObjectName(u"lable_app_key")
 
         self.formLayout.setWidget(1, QFormLayout.LabelRole, self.lable_app_key)
 
-        self.app_key_bd = QLineEdit(self.baidu)
+        self.app_key_bd = QLineEdit(self.groupBox_4)
         self.app_key_bd.setObjectName(u"app_key_bd")
         self.app_key_bd.setClearButtonEnabled(False)
 
         self.formLayout.setWidget(1, QFormLayout.FieldRole, self.app_key_bd)
 
-        self.lable_secret_key = QLabel(self.baidu)
+        self.lable_secret_key = QLabel(self.groupBox_4)
         self.lable_secret_key.setObjectName(u"lable_secret_key")
 
         self.formLayout.setWidget(2, QFormLayout.LabelRole, self.lable_secret_key)
 
-        self.secret_key_bd = QLineEdit(self.baidu)
+        self.secret_key_bd = QLineEdit(self.groupBox_4)
         self.secret_key_bd.setObjectName(u"secret_key_bd")
         self.secret_key_bd.setEchoMode(QLineEdit.PasswordEchoOnEdit)
         self.secret_key_bd.setClearButtonEnabled(False)
@@ -154,34 +163,40 @@ class Ui_MainWindow(object):
         self.formLayout.setWidget(2, QFormLayout.FieldRole, self.secret_key_bd)
 
 
-        self.verticalLayout_3.addLayout(self.formLayout)
+        self.verticalLayout.addLayout(self.formLayout)
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.save_bd = QPushButton(self.baidu)
+        self.baiduapi = QPushButton(self.groupBox_4)
+        self.baiduapi.setObjectName(u"baiduapi")
+        sizePolicy1.setHeightForWidth(self.baiduapi.sizePolicy().hasHeightForWidth())
+        self.baiduapi.setSizePolicy(sizePolicy1)
+        self.baiduapi.setMinimumSize(QSize(100, 30))
+
+        self.horizontalLayout_3.addWidget(self.baiduapi)
+
+        self.save_bd = QPushButton(self.groupBox_4)
         self.save_bd.setObjectName(u"save_bd")
-        sizePolicy.setHeightForWidth(self.save_bd.sizePolicy().hasHeightForWidth())
-        self.save_bd.setSizePolicy(sizePolicy)
-        self.save_bd.setMinimumSize(QSize(0, 30))
+        sizePolicy1.setHeightForWidth(self.save_bd.sizePolicy().hasHeightForWidth())
+        self.save_bd.setSizePolicy(sizePolicy1)
+        self.save_bd.setMinimumSize(QSize(100, 30))
         self.save_bd.setStyleSheet(u"")
-        self.save_bd.setCheckable(False)
-        self.save_bd.setAutoDefault(False)
-        self.save_bd.setFlat(False)
 
         self.horizontalLayout_3.addWidget(self.save_bd)
 
 
-        self.verticalLayout_3.addLayout(self.horizontalLayout_3)
+        self.verticalLayout.addLayout(self.horizontalLayout_3)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-        self.verticalLayout_3.addItem(self.verticalSpacer)
+        self.verticalLayout_3.addWidget(self.groupBox_4)
 
-        self.verticalLayout = QVBoxLayout()
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(0, -1, -1, -1)
         self.person = QGroupBox(self.baidu)
         self.person.setObjectName(u"person")
+        sizePolicy4 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy4.setHorizontalStretch(0)
+        sizePolicy4.setVerticalStretch(1)
+        sizePolicy4.setHeightForWidth(self.person.sizePolicy().hasHeightForWidth())
+        self.person.setSizePolicy(sizePolicy4)
         self.horizontalLayout_5 = QHBoxLayout(self.person)
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
         self.per_1 = QRadioButton(self.person)
@@ -213,23 +228,21 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.addWidget(self.per_4)
 
 
-        self.verticalLayout.addWidget(self.person)
+        self.verticalLayout_3.addWidget(self.person)
 
-
-        self.verticalLayout_3.addLayout(self.verticalLayout)
-
-        self.formLayout_2 = QFormLayout()
-        self.formLayout_2.setObjectName(u"formLayout_2")
-        self.formLayout_2.setLabelAlignment(Qt.AlignCenter)
-        self.label_5 = QLabel(self.baidu)
+        self.groupBox_3 = QGroupBox(self.baidu)
+        self.groupBox_3.setObjectName(u"groupBox_3")
+        self.verticalLayout_11 = QVBoxLayout(self.groupBox_3)
+        self.verticalLayout_11.setObjectName(u"verticalLayout_11")
+        self.horizontalLayout_14 = QHBoxLayout()
+        self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
+        self.label_5 = QLabel(self.groupBox_3)
         self.label_5.setObjectName(u"label_5")
         self.label_5.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
 
-        self.formLayout_2.setWidget(0, QFormLayout.LabelRole, self.label_5)
+        self.horizontalLayout_14.addWidget(self.label_5)
 
-        self.horizontalLayout_14 = QHBoxLayout()
-        self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
-        self.spd_bd = QSlider(self.baidu)
+        self.spd_bd = QSlider(self.groupBox_3)
         self.spd_bd.setObjectName(u"spd_bd")
         self.spd_bd.setMaximum(9)
         self.spd_bd.setValue(5)
@@ -238,7 +251,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_14.addWidget(self.spd_bd)
 
-        self.spd_spin_bd = QSpinBox(self.baidu)
+        self.spd_spin_bd = QSpinBox(self.groupBox_3)
         self.spd_spin_bd.setObjectName(u"spd_spin_bd")
         self.spd_spin_bd.setMinimumSize(QSize(45, 0))
         self.spd_spin_bd.setMaximum(9)
@@ -247,22 +260,22 @@ class Ui_MainWindow(object):
         self.horizontalLayout_14.addWidget(self.spd_spin_bd)
 
 
-        self.formLayout_2.setLayout(0, QFormLayout.FieldRole, self.horizontalLayout_14)
-
-        self.label_6 = QLabel(self.baidu)
-        self.label_6.setObjectName(u"label_6")
-        sizePolicy1 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        sizePolicy1.setHorizontalStretch(0)
-        sizePolicy1.setVerticalStretch(0)
-        sizePolicy1.setHeightForWidth(self.label_6.sizePolicy().hasHeightForWidth())
-        self.label_6.setSizePolicy(sizePolicy1)
-        self.label_6.setAlignment(Qt.AlignCenter)
-
-        self.formLayout_2.setWidget(1, QFormLayout.LabelRole, self.label_6)
+        self.verticalLayout_11.addLayout(self.horizontalLayout_14)
 
         self.horizontalLayout_15 = QHBoxLayout()
         self.horizontalLayout_15.setObjectName(u"horizontalLayout_15")
-        self.pit_bd = QSlider(self.baidu)
+        self.label_6 = QLabel(self.groupBox_3)
+        self.label_6.setObjectName(u"label_6")
+        sizePolicy5 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy5.setHorizontalStretch(0)
+        sizePolicy5.setVerticalStretch(0)
+        sizePolicy5.setHeightForWidth(self.label_6.sizePolicy().hasHeightForWidth())
+        self.label_6.setSizePolicy(sizePolicy5)
+        self.label_6.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout_15.addWidget(self.label_6)
+
+        self.pit_bd = QSlider(self.groupBox_3)
         self.pit_bd.setObjectName(u"pit_bd")
         self.pit_bd.setMaximum(9)
         self.pit_bd.setValue(5)
@@ -271,7 +284,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_15.addWidget(self.pit_bd)
 
-        self.pit_spin_bd = QSpinBox(self.baidu)
+        self.pit_spin_bd = QSpinBox(self.groupBox_3)
         self.pit_spin_bd.setObjectName(u"pit_spin_bd")
         self.pit_spin_bd.setMinimumSize(QSize(45, 0))
         self.pit_spin_bd.setMaximum(9)
@@ -280,16 +293,16 @@ class Ui_MainWindow(object):
         self.horizontalLayout_15.addWidget(self.pit_spin_bd)
 
 
-        self.formLayout_2.setLayout(1, QFormLayout.FieldRole, self.horizontalLayout_15)
-
-        self.label_7 = QLabel(self.baidu)
-        self.label_7.setObjectName(u"label_7")
-
-        self.formLayout_2.setWidget(2, QFormLayout.LabelRole, self.label_7)
+        self.verticalLayout_11.addLayout(self.horizontalLayout_15)
 
         self.horizontalLayout_16 = QHBoxLayout()
         self.horizontalLayout_16.setObjectName(u"horizontalLayout_16")
-        self.vol_bd = QSlider(self.baidu)
+        self.label_7 = QLabel(self.groupBox_3)
+        self.label_7.setObjectName(u"label_7")
+
+        self.horizontalLayout_16.addWidget(self.label_7)
+
+        self.vol_bd = QSlider(self.groupBox_3)
         self.vol_bd.setObjectName(u"vol_bd")
         self.vol_bd.setMaximum(15)
         self.vol_bd.setPageStep(10)
@@ -299,7 +312,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_16.addWidget(self.vol_bd)
 
-        self.vol_spin_bd = QSpinBox(self.baidu)
+        self.vol_spin_bd = QSpinBox(self.groupBox_3)
         self.vol_spin_bd.setObjectName(u"vol_spin_bd")
         self.vol_spin_bd.setMinimumSize(QSize(45, 0))
         self.vol_spin_bd.setMaximum(15)
@@ -308,84 +321,83 @@ class Ui_MainWindow(object):
         self.horizontalLayout_16.addWidget(self.vol_spin_bd)
 
 
-        self.formLayout_2.setLayout(2, QFormLayout.FieldRole, self.horizontalLayout_16)
+        self.verticalLayout_11.addLayout(self.horizontalLayout_16)
 
 
-        self.verticalLayout_3.addLayout(self.formLayout_2)
+        self.verticalLayout_3.addWidget(self.groupBox_3)
 
         self.tabWidget.addTab(self.baidu, "")
         self.ali = QWidget()
         self.ali.setObjectName(u"ali")
         self.verticalLayout_4 = QVBoxLayout(self.ali)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.horizontalLayout_6 = QHBoxLayout()
-        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.aliapi = QPushButton(self.ali)
-        self.aliapi.setObjectName(u"aliapi")
-        sizePolicy.setHeightForWidth(self.aliapi.sizePolicy().hasHeightForWidth())
-        self.aliapi.setSizePolicy(sizePolicy)
-        self.aliapi.setMinimumSize(QSize(100, 30))
-
-        self.horizontalLayout_6.addWidget(self.aliapi)
-
-        self.aliai = QPushButton(self.ali)
-        self.aliai.setObjectName(u"aliai")
-        sizePolicy.setHeightForWidth(self.aliai.sizePolicy().hasHeightForWidth())
-        self.aliai.setSizePolicy(sizePolicy)
-        self.aliai.setMinimumSize(QSize(100, 30))
-
-        self.horizontalLayout_6.addWidget(self.aliai)
-
-
-        self.verticalLayout_4.addLayout(self.horizontalLayout_6)
-
+        self.groupBox_6 = QGroupBox(self.ali)
+        self.groupBox_6.setObjectName(u"groupBox_6")
+        self.verticalLayout_13 = QVBoxLayout(self.groupBox_6)
+        self.verticalLayout_13.setObjectName(u"verticalLayout_13")
         self.formLayout_3 = QFormLayout()
         self.formLayout_3.setObjectName(u"formLayout_3")
         self.formLayout_3.setLabelAlignment(Qt.AlignCenter)
-        self.lable_app_id_2 = QLabel(self.ali)
+        self.lable_app_id_2 = QLabel(self.groupBox_6)
         self.lable_app_id_2.setObjectName(u"lable_app_id_2")
 
         self.formLayout_3.setWidget(0, QFormLayout.LabelRole, self.lable_app_id_2)
 
-        self.app_key_ali = QLineEdit(self.ali)
+        self.app_key_ali = QLineEdit(self.groupBox_6)
         self.app_key_ali.setObjectName(u"app_key_ali")
         self.app_key_ali.setClearButtonEnabled(False)
 
         self.formLayout_3.setWidget(0, QFormLayout.FieldRole, self.app_key_ali)
 
-        self.access_key_ali = QLineEdit(self.ali)
+        self.access_key_ali = QLineEdit(self.groupBox_6)
         self.access_key_ali.setObjectName(u"access_key_ali")
         self.access_key_ali.setClearButtonEnabled(False)
 
         self.formLayout_3.setWidget(1, QFormLayout.FieldRole, self.access_key_ali)
 
-        self.lable_secret_key_2 = QLabel(self.ali)
+        self.lable_secret_key_2 = QLabel(self.groupBox_6)
         self.lable_secret_key_2.setObjectName(u"lable_secret_key_2")
 
         self.formLayout_3.setWidget(2, QFormLayout.LabelRole, self.lable_secret_key_2)
 
-        self.access_key_secret_ali = QLineEdit(self.ali)
+        self.access_key_secret_ali = QLineEdit(self.groupBox_6)
         self.access_key_secret_ali.setObjectName(u"access_key_secret_ali")
         self.access_key_secret_ali.setEchoMode(QLineEdit.PasswordEchoOnEdit)
         self.access_key_secret_ali.setClearButtonEnabled(False)
 
         self.formLayout_3.setWidget(2, QFormLayout.FieldRole, self.access_key_secret_ali)
 
-        self.lable_app_key_2 = QLabel(self.ali)
+        self.lable_app_key_2 = QLabel(self.groupBox_6)
         self.lable_app_key_2.setObjectName(u"lable_app_key_2")
 
         self.formLayout_3.setWidget(1, QFormLayout.LabelRole, self.lable_app_key_2)
 
 
-        self.verticalLayout_4.addLayout(self.formLayout_3)
+        self.verticalLayout_13.addLayout(self.formLayout_3)
 
         self.horizontalLayout_7 = QHBoxLayout()
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
-        self.save_ali = QPushButton(self.ali)
+        self.aliai = QPushButton(self.groupBox_6)
+        self.aliai.setObjectName(u"aliai")
+        sizePolicy1.setHeightForWidth(self.aliai.sizePolicy().hasHeightForWidth())
+        self.aliai.setSizePolicy(sizePolicy1)
+        self.aliai.setMinimumSize(QSize(100, 30))
+
+        self.horizontalLayout_7.addWidget(self.aliai)
+
+        self.aliapi = QPushButton(self.groupBox_6)
+        self.aliapi.setObjectName(u"aliapi")
+        sizePolicy1.setHeightForWidth(self.aliapi.sizePolicy().hasHeightForWidth())
+        self.aliapi.setSizePolicy(sizePolicy1)
+        self.aliapi.setMinimumSize(QSize(100, 30))
+
+        self.horizontalLayout_7.addWidget(self.aliapi)
+
+        self.save_ali = QPushButton(self.groupBox_6)
         self.save_ali.setObjectName(u"save_ali")
-        sizePolicy.setHeightForWidth(self.save_ali.sizePolicy().hasHeightForWidth())
-        self.save_ali.setSizePolicy(sizePolicy)
-        self.save_ali.setMinimumSize(QSize(0, 30))
+        sizePolicy1.setHeightForWidth(self.save_ali.sizePolicy().hasHeightForWidth())
+        self.save_ali.setSizePolicy(sizePolicy1)
+        self.save_ali.setMinimumSize(QSize(100, 30))
         self.save_ali.setCheckable(False)
         self.save_ali.setAutoDefault(False)
         self.save_ali.setFlat(False)
@@ -393,16 +405,20 @@ class Ui_MainWindow(object):
         self.horizontalLayout_7.addWidget(self.save_ali)
 
 
-        self.verticalLayout_4.addLayout(self.horizontalLayout_7)
+        self.verticalLayout_13.addLayout(self.horizontalLayout_7)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
-        self.verticalLayout_4.addItem(self.verticalSpacer_2)
+        self.verticalLayout_4.addWidget(self.groupBox_6)
 
         self.verticalLayout_6 = QVBoxLayout()
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
         self.PerTab = QTabWidget(self.ali)
         self.PerTab.setObjectName(u"PerTab")
+        sizePolicy6 = QSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        sizePolicy6.setHorizontalStretch(0)
+        sizePolicy6.setVerticalStretch(1)
+        sizePolicy6.setHeightForWidth(self.PerTab.sizePolicy().hasHeightForWidth())
+        self.PerTab.setSizePolicy(sizePolicy6)
         self.tab_1 = QWidget()
         self.tab_1.setObjectName(u"tab_1")
         self.gridLayout = QGridLayout(self.tab_1)
@@ -730,17 +746,20 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_4.addLayout(self.verticalLayout_6)
 
-        self.formLayout_4 = QFormLayout()
-        self.formLayout_4.setObjectName(u"formLayout_4")
-        self.formLayout_4.setLabelAlignment(Qt.AlignCenter)
-        self.label_9 = QLabel(self.ali)
-        self.label_9.setObjectName(u"label_9")
-
-        self.formLayout_4.setWidget(0, QFormLayout.LabelRole, self.label_9)
-
+        self.groupBox_5 = QGroupBox(self.ali)
+        self.groupBox_5.setObjectName(u"groupBox_5")
+        sizePolicy5.setHeightForWidth(self.groupBox_5.sizePolicy().hasHeightForWidth())
+        self.groupBox_5.setSizePolicy(sizePolicy5)
+        self.verticalLayout_12 = QVBoxLayout(self.groupBox_5)
+        self.verticalLayout_12.setObjectName(u"verticalLayout_12")
         self.horizontalLayout_10 = QHBoxLayout()
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
-        self.spd_ali = QSlider(self.ali)
+        self.label_9 = QLabel(self.groupBox_5)
+        self.label_9.setObjectName(u"label_9")
+
+        self.horizontalLayout_10.addWidget(self.label_9)
+
+        self.spd_ali = QSlider(self.groupBox_5)
         self.spd_ali.setObjectName(u"spd_ali")
         self.spd_ali.setMinimum(-500)
         self.spd_ali.setMaximum(500)
@@ -752,7 +771,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_10.addWidget(self.spd_ali)
 
-        self.spd_spin_ali = QSpinBox(self.ali)
+        self.spd_spin_ali = QSpinBox(self.groupBox_5)
         self.spd_spin_ali.setObjectName(u"spd_spin_ali")
         self.spd_spin_ali.setMinimumSize(QSize(55, 0))
         self.spd_spin_ali.setMinimum(-500)
@@ -762,19 +781,19 @@ class Ui_MainWindow(object):
         self.horizontalLayout_10.addWidget(self.spd_spin_ali)
 
 
-        self.formLayout_4.setLayout(0, QFormLayout.FieldRole, self.horizontalLayout_10)
-
-        self.label_10 = QLabel(self.ali)
-        self.label_10.setObjectName(u"label_10")
-        sizePolicy1.setHeightForWidth(self.label_10.sizePolicy().hasHeightForWidth())
-        self.label_10.setSizePolicy(sizePolicy1)
-        self.label_10.setAlignment(Qt.AlignCenter)
-
-        self.formLayout_4.setWidget(1, QFormLayout.LabelRole, self.label_10)
+        self.verticalLayout_12.addLayout(self.horizontalLayout_10)
 
         self.horizontalLayout_12 = QHBoxLayout()
         self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
-        self.pit_ali = QSlider(self.ali)
+        self.label_10 = QLabel(self.groupBox_5)
+        self.label_10.setObjectName(u"label_10")
+        sizePolicy5.setHeightForWidth(self.label_10.sizePolicy().hasHeightForWidth())
+        self.label_10.setSizePolicy(sizePolicy5)
+        self.label_10.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout_12.addWidget(self.label_10)
+
+        self.pit_ali = QSlider(self.groupBox_5)
         self.pit_ali.setObjectName(u"pit_ali")
         self.pit_ali.setMinimum(-500)
         self.pit_ali.setMaximum(500)
@@ -786,7 +805,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_12.addWidget(self.pit_ali)
 
-        self.pit_spin_ali = QSpinBox(self.ali)
+        self.pit_spin_ali = QSpinBox(self.groupBox_5)
         self.pit_spin_ali.setObjectName(u"pit_spin_ali")
         self.pit_spin_ali.setMinimumSize(QSize(55, 0))
         self.pit_spin_ali.setMinimum(-500)
@@ -796,16 +815,16 @@ class Ui_MainWindow(object):
         self.horizontalLayout_12.addWidget(self.pit_spin_ali)
 
 
-        self.formLayout_4.setLayout(1, QFormLayout.FieldRole, self.horizontalLayout_12)
-
-        self.label_11 = QLabel(self.ali)
-        self.label_11.setObjectName(u"label_11")
-
-        self.formLayout_4.setWidget(2, QFormLayout.LabelRole, self.label_11)
+        self.verticalLayout_12.addLayout(self.horizontalLayout_12)
 
         self.horizontalLayout_13 = QHBoxLayout()
         self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
-        self.vol_ali = QSlider(self.ali)
+        self.label_11 = QLabel(self.groupBox_5)
+        self.label_11.setObjectName(u"label_11")
+
+        self.horizontalLayout_13.addWidget(self.label_11)
+
+        self.vol_ali = QSlider(self.groupBox_5)
         self.vol_ali.setObjectName(u"vol_ali")
         self.vol_ali.setMaximum(100)
         self.vol_ali.setSingleStep(10)
@@ -816,7 +835,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_13.addWidget(self.vol_ali)
 
-        self.vol_spin_ali = QSpinBox(self.ali)
+        self.vol_spin_ali = QSpinBox(self.groupBox_5)
         self.vol_spin_ali.setObjectName(u"vol_spin_ali")
         self.vol_spin_ali.setMinimumSize(QSize(55, 0))
         self.vol_spin_ali.setMaximum(100)
@@ -825,10 +844,10 @@ class Ui_MainWindow(object):
         self.horizontalLayout_13.addWidget(self.vol_spin_ali)
 
 
-        self.formLayout_4.setLayout(2, QFormLayout.FieldRole, self.horizontalLayout_13)
+        self.verticalLayout_12.addLayout(self.horizontalLayout_13)
 
 
-        self.verticalLayout_4.addLayout(self.formLayout_4)
+        self.verticalLayout_4.addWidget(self.groupBox_5)
 
         self.horizontalLayout_8 = QHBoxLayout()
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
@@ -844,21 +863,21 @@ class Ui_MainWindow(object):
 
         self.label_2 = QLabel(self.ali)
         self.label_2.setObjectName(u"label_2")
-        sizePolicy2 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
-        sizePolicy2.setHorizontalStretch(0)
-        sizePolicy2.setVerticalStretch(0)
-        sizePolicy2.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
-        self.label_2.setSizePolicy(sizePolicy2)
+        sizePolicy7 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Preferred)
+        sizePolicy7.setHorizontalStretch(0)
+        sizePolicy7.setVerticalStretch(0)
+        sizePolicy7.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
+        self.label_2.setSizePolicy(sizePolicy7)
 
         self.horizontalLayout_8.addWidget(self.label_2)
 
         self.sleeptime = QDoubleSpinBox(self.ali)
         self.sleeptime.setObjectName(u"sleeptime")
-        sizePolicy3 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.sleeptime.sizePolicy().hasHeightForWidth())
-        self.sleeptime.setSizePolicy(sizePolicy3)
+        sizePolicy8 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Fixed)
+        sizePolicy8.setHorizontalStretch(0)
+        sizePolicy8.setVerticalStretch(0)
+        sizePolicy8.setHeightForWidth(self.sleeptime.sizePolicy().hasHeightForWidth())
+        self.sleeptime.setSizePolicy(sizePolicy8)
         self.sleeptime.setMinimum(0.500000000000000)
         self.sleeptime.setMaximum(10.000000000000000)
         self.sleeptime.setSingleStep(0.050000000000000)
@@ -870,15 +889,253 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.addLayout(self.horizontalLayout_8)
 
         self.tabWidget.addTab(self.ali, "")
+        self.tab = QWidget()
+        self.tab.setObjectName(u"tab")
+        self.verticalLayout_8 = QVBoxLayout(self.tab)
+        self.verticalLayout_8.setObjectName(u"verticalLayout_8")
+        self.formLayout_5 = QFormLayout()
+        self.formLayout_5.setObjectName(u"formLayout_5")
+        self.label_8 = QLabel(self.tab)
+        self.label_8.setObjectName(u"label_8")
+
+        self.formLayout_5.setWidget(0, QFormLayout.LabelRole, self.label_8)
+
+        self.app_id_xf = QLineEdit(self.tab)
+        self.app_id_xf.setObjectName(u"app_id_xf")
+
+        self.formLayout_5.setWidget(0, QFormLayout.FieldRole, self.app_id_xf)
+
+        self.label_12 = QLabel(self.tab)
+        self.label_12.setObjectName(u"label_12")
+
+        self.formLayout_5.setWidget(1, QFormLayout.LabelRole, self.label_12)
+
+        self.api_secret_xf = QLineEdit(self.tab)
+        self.api_secret_xf.setObjectName(u"api_secret_xf")
+        self.api_secret_xf.setEchoMode(QLineEdit.PasswordEchoOnEdit)
+
+        self.formLayout_5.setWidget(1, QFormLayout.FieldRole, self.api_secret_xf)
+
+        self.label_13 = QLabel(self.tab)
+        self.label_13.setObjectName(u"label_13")
+
+        self.formLayout_5.setWidget(2, QFormLayout.LabelRole, self.label_13)
+
+        self.api_key_xf = QLineEdit(self.tab)
+        self.api_key_xf.setObjectName(u"api_key_xf")
+
+        self.formLayout_5.setWidget(2, QFormLayout.FieldRole, self.api_key_xf)
+
+
+        self.verticalLayout_8.addLayout(self.formLayout_5)
+
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.xfai = QPushButton(self.tab)
+        self.xfai.setObjectName(u"xfai")
+        sizePolicy1.setHeightForWidth(self.xfai.sizePolicy().hasHeightForWidth())
+        self.xfai.setSizePolicy(sizePolicy1)
+        self.xfai.setMinimumSize(QSize(100, 30))
+
+        self.horizontalLayout.addWidget(self.xfai)
+
+        self.xfapi = QPushButton(self.tab)
+        self.xfapi.setObjectName(u"xfapi")
+        sizePolicy1.setHeightForWidth(self.xfapi.sizePolicy().hasHeightForWidth())
+        self.xfapi.setSizePolicy(sizePolicy1)
+        self.xfapi.setMinimumSize(QSize(100, 30))
+
+        self.horizontalLayout.addWidget(self.xfapi)
+
+        self.save_xf = QPushButton(self.tab)
+        self.save_xf.setObjectName(u"save_xf")
+        sizePolicy1.setHeightForWidth(self.save_xf.sizePolicy().hasHeightForWidth())
+        self.save_xf.setSizePolicy(sizePolicy1)
+        self.save_xf.setMinimumSize(QSize(100, 30))
+
+        self.horizontalLayout.addWidget(self.save_xf)
+
+
+        self.verticalLayout_8.addLayout(self.horizontalLayout)
+
+        self.tabWidget_2 = QTabWidget(self.tab)
+        self.tabWidget_2.setObjectName(u"tabWidget_2")
+        self.tab_7 = QWidget()
+        self.tab_7.setObjectName(u"tab_7")
+        self.gridLayout_9 = QGridLayout(self.tab_7)
+        self.gridLayout_9.setObjectName(u"gridLayout_9")
+        self.xiaoyan = QRadioButton(self.tab_7)
+        self.per_xf = QButtonGroup(MainWindow)
+        self.per_xf.setObjectName(u"per_xf")
+        self.per_xf.addButton(self.xiaoyan)
+        self.xiaoyan.setObjectName(u"xiaoyan")
+        self.xiaoyan.setChecked(True)
+
+        self.gridLayout_9.addWidget(self.xiaoyan, 0, 0, 1, 1)
+
+        self.aisjiuxu = QRadioButton(self.tab_7)
+        self.per_xf.addButton(self.aisjiuxu)
+        self.aisjiuxu.setObjectName(u"aisjiuxu")
+
+        self.gridLayout_9.addWidget(self.aisjiuxu, 0, 1, 1, 1)
+
+        self.aisxping = QRadioButton(self.tab_7)
+        self.per_xf.addButton(self.aisxping)
+        self.aisxping.setObjectName(u"aisxping")
+
+        self.gridLayout_9.addWidget(self.aisxping, 0, 2, 1, 1)
+
+        self.aisjinger = QRadioButton(self.tab_7)
+        self.per_xf.addButton(self.aisjinger)
+        self.aisjinger.setObjectName(u"aisjinger")
+
+        self.gridLayout_9.addWidget(self.aisjinger, 0, 3, 1, 1)
+
+        self.aisbabyxu = QRadioButton(self.tab_7)
+        self.per_xf.addButton(self.aisbabyxu)
+        self.aisbabyxu.setObjectName(u"aisbabyxu")
+
+        self.gridLayout_9.addWidget(self.aisbabyxu, 1, 0, 1, 1)
+
+        self.tabWidget_2.addTab(self.tab_7, "")
+        self.tab_8 = QWidget()
+        self.tab_8.setObjectName(u"tab_8")
+        self.verticalLayout_9 = QVBoxLayout(self.tab_8)
+        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
+        self.label_18 = QLabel(self.tab_8)
+        self.label_18.setObjectName(u"label_18")
+        sizePolicy2.setHeightForWidth(self.label_18.sizePolicy().hasHeightForWidth())
+        self.label_18.setSizePolicy(sizePolicy2)
+
+        self.verticalLayout_9.addWidget(self.label_18)
+
+        self.horizontalLayout_19 = QHBoxLayout()
+        self.horizontalLayout_19.setObjectName(u"horizontalLayout_19")
+        self.tsvcn = QRadioButton(self.tab_8)
+        self.per_xf.addButton(self.tsvcn)
+        self.tsvcn.setObjectName(u"tsvcn")
+        sizePolicy1.setHeightForWidth(self.tsvcn.sizePolicy().hasHeightForWidth())
+        self.tsvcn.setSizePolicy(sizePolicy1)
+
+        self.horizontalLayout_19.addWidget(self.tsvcn)
+
+        self.xfvcn = QLineEdit(self.tab_8)
+        self.xfvcn.setObjectName(u"xfvcn")
+        sizePolicy2.setHeightForWidth(self.xfvcn.sizePolicy().hasHeightForWidth())
+        self.xfvcn.setSizePolicy(sizePolicy2)
+
+        self.horizontalLayout_19.addWidget(self.xfvcn)
+
+
+        self.verticalLayout_9.addLayout(self.horizontalLayout_19)
+
+        self.tabWidget_2.addTab(self.tab_8, "")
+
+        self.verticalLayout_8.addWidget(self.tabWidget_2)
+
+        self.verticalLayout_2 = QVBoxLayout()
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.horizontalLayout_6 = QHBoxLayout()
+        self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
+        self.label_17 = QLabel(self.tab)
+        self.label_17.setObjectName(u"label_17")
+        self.label_17.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+
+        self.horizontalLayout_6.addWidget(self.label_17)
+
+        self.spd_xf = QSlider(self.tab)
+        self.spd_xf.setObjectName(u"spd_xf")
+        self.spd_xf.setMaximum(100)
+        self.spd_xf.setSingleStep(10)
+        self.spd_xf.setPageStep(10)
+        self.spd_xf.setValue(50)
+        self.spd_xf.setOrientation(Qt.Horizontal)
+        self.spd_xf.setTickPosition(QSlider.TicksBothSides)
+
+        self.horizontalLayout_6.addWidget(self.spd_xf)
+
+        self.vol_spin_ali_2 = QSpinBox(self.tab)
+        self.vol_spin_ali_2.setObjectName(u"vol_spin_ali_2")
+        self.vol_spin_ali_2.setMinimumSize(QSize(55, 0))
+        self.vol_spin_ali_2.setMaximum(100)
+        self.vol_spin_ali_2.setValue(50)
+
+        self.horizontalLayout_6.addWidget(self.vol_spin_ali_2)
+
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout_6)
+
+        self.horizontalLayout_9 = QHBoxLayout()
+        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
+        self.label_15 = QLabel(self.tab)
+        self.label_15.setObjectName(u"label_15")
+        sizePolicy5.setHeightForWidth(self.label_15.sizePolicy().hasHeightForWidth())
+        self.label_15.setSizePolicy(sizePolicy5)
+        self.label_15.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout_9.addWidget(self.label_15)
+
+        self.pit_xf = QSlider(self.tab)
+        self.pit_xf.setObjectName(u"pit_xf")
+        self.pit_xf.setMaximum(100)
+        self.pit_xf.setSingleStep(10)
+        self.pit_xf.setPageStep(10)
+        self.pit_xf.setValue(50)
+        self.pit_xf.setOrientation(Qt.Horizontal)
+        self.pit_xf.setTickPosition(QSlider.TicksBothSides)
+
+        self.horizontalLayout_9.addWidget(self.pit_xf)
+
+        self.vol_spin_ali_3 = QSpinBox(self.tab)
+        self.vol_spin_ali_3.setObjectName(u"vol_spin_ali_3")
+        self.vol_spin_ali_3.setMinimumSize(QSize(55, 0))
+        self.vol_spin_ali_3.setMaximum(100)
+        self.vol_spin_ali_3.setValue(50)
+
+        self.horizontalLayout_9.addWidget(self.vol_spin_ali_3)
+
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout_9)
+
+        self.horizontalLayout_18 = QHBoxLayout()
+        self.horizontalLayout_18.setObjectName(u"horizontalLayout_18")
+        self.label_16 = QLabel(self.tab)
+        self.label_16.setObjectName(u"label_16")
+
+        self.horizontalLayout_18.addWidget(self.label_16)
+
+        self.vol_xf = QSlider(self.tab)
+        self.vol_xf.setObjectName(u"vol_xf")
+        self.vol_xf.setMaximum(100)
+        self.vol_xf.setSingleStep(10)
+        self.vol_xf.setPageStep(10)
+        self.vol_xf.setValue(50)
+        self.vol_xf.setOrientation(Qt.Horizontal)
+        self.vol_xf.setTickPosition(QSlider.TicksBothSides)
+
+        self.horizontalLayout_18.addWidget(self.vol_xf)
+
+        self.vol_spin_ali_4 = QSpinBox(self.tab)
+        self.vol_spin_ali_4.setObjectName(u"vol_spin_ali_4")
+        self.vol_spin_ali_4.setMinimumSize(QSize(55, 0))
+        self.vol_spin_ali_4.setMaximum(100)
+        self.vol_spin_ali_4.setValue(50)
+
+        self.horizontalLayout_18.addWidget(self.vol_spin_ali_4)
+
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout_18)
+
+
+        self.verticalLayout_8.addLayout(self.verticalLayout_2)
+
+        self.tabWidget.addTab(self.tab, "")
         self.bal = QWidget()
         self.bal.setObjectName(u"bal")
         self.verticalLayout_7 = QVBoxLayout(self.bal)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
         self.service_group = QGroupBox(self.bal)
         self.service_group.setObjectName(u"service_group")
-        sizePolicy4 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        sizePolicy4.setHorizontalStretch(0)
-        sizePolicy4.setVerticalStretch(1)
         sizePolicy4.setHeightForWidth(self.service_group.sizePolicy().hasHeightForWidth())
         self.service_group.setSizePolicy(sizePolicy4)
         self.horizontalLayout_11 = QHBoxLayout(self.service_group)
@@ -909,11 +1166,11 @@ class Ui_MainWindow(object):
 
         self.language_group = QGroupBox(self.bal)
         self.language_group.setObjectName(u"language_group")
-        sizePolicy5 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
-        sizePolicy5.setHorizontalStretch(0)
-        sizePolicy5.setVerticalStretch(2)
-        sizePolicy5.setHeightForWidth(self.language_group.sizePolicy().hasHeightForWidth())
-        self.language_group.setSizePolicy(sizePolicy5)
+        sizePolicy9 = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+        sizePolicy9.setHorizontalStretch(0)
+        sizePolicy9.setVerticalStretch(2)
+        sizePolicy9.setHeightForWidth(self.language_group.sizePolicy().hasHeightForWidth())
+        self.language_group.setSizePolicy(sizePolicy9)
         self.gridLayout_5 = QGridLayout(self.language_group)
         self.gridLayout_5.setObjectName(u"gridLayout_5")
         self.zh_HK = QRadioButton(self.language_group)
@@ -1009,12 +1266,36 @@ class Ui_MainWindow(object):
 
         self.tabWidget.addTab(self.bal, "")
 
-        self.gridLayout_6.addWidget(self.tabWidget, 0, 0, 1, 1)
+        self.verticalLayout_10.addWidget(self.tabWidget)
+
+        self.horizontalLayout_4 = QHBoxLayout()
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.download = QPushButton(self.groupBox_2)
+        self.download.setObjectName(u"download")
+        sizePolicy2.setHeightForWidth(self.download.sizePolicy().hasHeightForWidth())
+        self.download.setSizePolicy(sizePolicy2)
+        self.download.setMinimumSize(QSize(0, 45))
+
+        self.horizontalLayout_4.addWidget(self.download)
+
+        self.generate = QPushButton(self.groupBox_2)
+        self.generate.setObjectName(u"generate")
+        sizePolicy2.setHeightForWidth(self.generate.sizePolicy().hasHeightForWidth())
+        self.generate.setSizePolicy(sizePolicy2)
+        self.generate.setMinimumSize(QSize(0, 45))
+
+        self.horizontalLayout_4.addWidget(self.generate)
+
+
+        self.verticalLayout_10.addLayout(self.horizontalLayout_4)
+
+
+        self.horizontalLayout_20.addWidget(self.groupBox_2)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 606, 23))
+        self.menubar.setGeometry(QRect(0, 0, 1097, 23))
         self.menu = QMenu(self.menubar)
         self.menu.setObjectName(u"menu")
         self.menu_2 = QMenu(self.menubar)
@@ -1045,11 +1326,17 @@ class Ui_MainWindow(object):
         self.pit_spin_ali.valueChanged.connect(self.pit_ali.setValue)
         self.vol_ali.valueChanged.connect(self.vol_spin_ali.setValue)
         self.vol_spin_ali.valueChanged.connect(self.vol_ali.setValue)
+        self.spd_xf.valueChanged.connect(self.vol_spin_ali_2.setValue)
+        self.vol_spin_ali_2.valueChanged.connect(self.spd_xf.setValue)
+        self.pit_xf.valueChanged.connect(self.vol_spin_ali_3.setValue)
+        self.vol_spin_ali_3.valueChanged.connect(self.pit_xf.setValue)
+        self.vol_xf.valueChanged.connect(self.vol_spin_ali_4.setValue)
+        self.vol_spin_ali_4.valueChanged.connect(self.vol_xf.setValue)
 
-        self.tabWidget.setCurrentIndex(2)
-        self.save_bd.setDefault(False)
+        self.tabWidget.setCurrentIndex(0)
         self.save_ali.setDefault(False)
-        self.PerTab.setCurrentIndex(5)
+        self.PerTab.setCurrentIndex(0)
+        self.tabWidget_2.setCurrentIndex(0)
 
 
         QMetaObject.connectSlotsByName(MainWindow)
@@ -1084,64 +1371,62 @@ class Ui_MainWindow(object):
 #endif // QT_CONFIG(statustip)
         self.groupBox.setTitle("")
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"\u5b57\u5e55\u6587\u4ef6", None))
-        self.file_path.setPlaceholderText(QCoreApplication.translate("MainWindow", u"\u6d4f\u89c8\u6216\u62d6\u62fdSRT\u5b57\u5e55\u6587\u4ef6\u5230\u8fd9\u91cc", None))
+        self.file_path.setPlaceholderText(QCoreApplication.translate("MainWindow", u"\u652f\u6301\u62d6\u62fdSRT\u5b57\u5e55\u6587\u4ef6\u5230\u8fd9\u91cc", None))
 #if QT_CONFIG(statustip)
         self.file.setStatusTip(QCoreApplication.translate("MainWindow", u"\u6253\u5f00\u4e00\u4e2aSRT\u5b57\u5e55\u6587\u4ef6", None))
 #endif // QT_CONFIG(statustip)
         self.file.setText(QCoreApplication.translate("MainWindow", u"\u6253\u5f00", None))
 #if QT_CONFIG(statustip)
-        self.download.setStatusTip(QCoreApplication.translate("MainWindow", u"\u5148\u4e0b\u8f7d\u518d\u5408\u6210", None))
+        self.subtext.setStatusTip(QCoreApplication.translate("MainWindow", u"\u6d4f\u89c8\u7f16\u8f91\u5b57\u5e55", None))
 #endif // QT_CONFIG(statustip)
-        self.download.setText(QCoreApplication.translate("MainWindow", u"\u4e0b\u8f7d", None))
+        self.subtext.setPlainText("")
 #if QT_CONFIG(statustip)
-        self.generate.setStatusTip(QCoreApplication.translate("MainWindow", u"\u5f53\u524d\u5e73\u53f0\u8981\u9009\u62e9\u6b63\u786e", None))
+        self.editsub.setStatusTip(QCoreApplication.translate("MainWindow", u"\u786e\u8ba4\u540e\u4fee\u6539\u624d\u4f1a\u751f\u6548", None))
 #endif // QT_CONFIG(statustip)
-        self.generate.setText(QCoreApplication.translate("MainWindow", u"\u5408\u6210", None))
-        self.baiduapi.setText(QCoreApplication.translate("MainWindow", u"\u5bc6\u94a5\u83b7\u53d6", None))
-#if QT_CONFIG(tooltip)
-        self.baiduai.setToolTip(QCoreApplication.translate("MainWindow", u"\u524d\u5f80\u5b98\u7f51\u8bd5\u542c", None))
-#endif // QT_CONFIG(tooltip)
+        self.editsub.setText(QCoreApplication.translate("MainWindow", u"\u786e\u8ba4\u4fee\u6539", None))
 #if QT_CONFIG(statustip)
-        self.baiduai.setStatusTip(QCoreApplication.translate("MainWindow", u"\u524d\u5f80\u5b98\u7f51\u8bd5\u542c", None))
+        self.save_sub.setStatusTip(QCoreApplication.translate("MainWindow", u"\u4fdd\u5b58\u4f1a\u8986\u76d6\u6e90\u6587\u4ef6", None))
 #endif // QT_CONFIG(statustip)
-        self.baiduai.setText(QCoreApplication.translate("MainWindow", u"\u8bed\u97f3\u8bd5\u542c", None))
+        self.save_sub.setText(QCoreApplication.translate("MainWindow", u"\u4fdd\u5b58\u5b57\u5e55", None))
+        self.groupBox_2.setTitle("")
+        self.groupBox_4.setTitle("")
         self.lable_app_id.setText(QCoreApplication.translate("MainWindow", u"App ID", None))
         self.lable_app_key.setText(QCoreApplication.translate("MainWindow", u"App Key", None))
         self.lable_secret_key.setText(QCoreApplication.translate("MainWindow", u"Secret Key", None))
-#if QT_CONFIG(tooltip)
-        self.save_bd.setToolTip(QCoreApplication.translate("MainWindow", u"\u5fc5\u987b\u5148\u4fdd\u5b58", None))
-#endif // QT_CONFIG(tooltip)
+        self.baiduapi.setText(QCoreApplication.translate("MainWindow", u"\u524d\u5f80\u5b98\u7f51", None))
+#if QT_CONFIG(statustip)
+        self.save_bd.setStatusTip(QCoreApplication.translate("MainWindow", u"\u5fc5\u987b\u5148\u4fdd\u5b58", None))
+#endif // QT_CONFIG(statustip)
         self.save_bd.setText(QCoreApplication.translate("MainWindow", u"\u4fdd\u5b58", None))
         self.person.setTitle(QCoreApplication.translate("MainWindow", u"\u53d1\u97f3\u4eba", None))
         self.per_1.setText(QCoreApplication.translate("MainWindow", u"\u5ea6\u5c0f\u5b87\uff08\u6807\u51c6\u7537\u58f0\uff09", None))
         self.per_0.setText(QCoreApplication.translate("MainWindow", u"\u5ea6\u5c0f\u7f8e\uff08\u6807\u51c6\u5973\u58f0\uff09", None))
         self.per_3.setText(QCoreApplication.translate("MainWindow", u"\u5ea6\u900d\u9065\uff08\u60c5\u611f\u7537\u58f0\uff09", None))
         self.per_4.setText(QCoreApplication.translate("MainWindow", u"\u5ea6\u4e2b\u4e2b\uff08\u60c5\u611f\u5973\u58f0\uff09", None))
+        self.groupBox_3.setTitle("")
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"\u8bed\u901f", None))
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"\u97f3\u8c03", None))
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"\u97f3\u91cf", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.baidu), QCoreApplication.translate("MainWindow", u"\u767e\u5ea6\u4e91", None))
-#if QT_CONFIG(tooltip)
-        self.aliapi.setToolTip(QCoreApplication.translate("MainWindow", u"\u9700\u8981\u5728\u4e24\u4e2a\u9875\u9762\u5206\u522b\u83b7\u53d6\u4ee5\u4e0b\u4fe1\u606f", None))
-#endif // QT_CONFIG(tooltip)
-#if QT_CONFIG(statustip)
-        self.aliapi.setStatusTip(QCoreApplication.translate("MainWindow", u"\u9700\u8981\u5728\u4e24\u4e2a\u9875\u9762\u5206\u522b\u83b7\u53d6\u4ee5\u4e0b\u4fe1\u606f", None))
-#endif // QT_CONFIG(statustip)
-        self.aliapi.setText(QCoreApplication.translate("MainWindow", u"\u5bc6\u94a5\u83b7\u53d6", None))
+        self.groupBox_6.setTitle("")
+        self.lable_app_id_2.setText(QCoreApplication.translate("MainWindow", u"App Key", None))
+        self.app_key_ali.setText("")
+        self.lable_secret_key_2.setText(QCoreApplication.translate("MainWindow", u"Access Key Secret", None))
+        self.lable_app_key_2.setText(QCoreApplication.translate("MainWindow", u"AccessKey ID", None))
 #if QT_CONFIG(tooltip)
         self.aliai.setToolTip(QCoreApplication.translate("MainWindow", u"\u524d\u5f80\u5b98\u7f51\u8bd5\u542c", None))
 #endif // QT_CONFIG(tooltip)
 #if QT_CONFIG(statustip)
         self.aliai.setStatusTip(QCoreApplication.translate("MainWindow", u"\u524d\u5f80\u5b98\u7f51\u8bd5\u542c", None))
 #endif // QT_CONFIG(statustip)
-        self.aliai.setText(QCoreApplication.translate("MainWindow", u"\u8bed\u97f3\u8bd5\u542c", None))
-        self.lable_app_id_2.setText(QCoreApplication.translate("MainWindow", u"App Key", None))
-        self.app_key_ali.setText("")
-        self.lable_secret_key_2.setText(QCoreApplication.translate("MainWindow", u"Access Key Secret", None))
-        self.lable_app_key_2.setText(QCoreApplication.translate("MainWindow", u"AccessKey ID", None))
+        self.aliai.setText(QCoreApplication.translate("MainWindow", u"\u5728\u7ebf\u8bd5\u542c", None))
 #if QT_CONFIG(tooltip)
-        self.save_ali.setToolTip(QCoreApplication.translate("MainWindow", u"\u5fc5\u987b\u5148\u4fdd\u5b58", None))
+        self.aliapi.setToolTip(QCoreApplication.translate("MainWindow", u"\u9700\u8981\u5728\u4e24\u4e2a\u9875\u9762\u5206\u522b\u83b7\u53d6\u4ee5\u4e0a\u4fe1\u606f", None))
 #endif // QT_CONFIG(tooltip)
+#if QT_CONFIG(statustip)
+        self.aliapi.setStatusTip(QCoreApplication.translate("MainWindow", u"\u9700\u8981\u5728\u4e24\u4e2a\u9875\u9762\u5206\u522b\u83b7\u53d6\u4ee5\u4e0a\u4fe1\u606f", None))
+#endif // QT_CONFIG(statustip)
+        self.aliapi.setText(QCoreApplication.translate("MainWindow", u"\u524d\u5f80\u63a7\u5236\u53f0", None))
 #if QT_CONFIG(statustip)
         self.save_ali.setStatusTip(QCoreApplication.translate("MainWindow", u"\u5fc5\u987b\u5148\u4fdd\u5b58", None))
 #endif // QT_CONFIG(statustip)
@@ -1209,6 +1494,7 @@ class Ui_MainWindow(object):
         self.Tomoya.setText(QCoreApplication.translate("MainWindow", u"\u667a\u4e5f \u65e5\u8bed\u7537\u58f0", None))
         self.Tomoya_2.setText(QCoreApplication.translate("MainWindow", u"Annie \u7f8e\u8bed\u5973\u58f0", None))
         self.PerTab.setTabText(self.PerTab.indexOf(self.tab_6), QCoreApplication.translate("MainWindow", u"\u6587\u5b66\u573a\u666f", None))
+        self.groupBox_5.setTitle("")
         self.label_9.setText(QCoreApplication.translate("MainWindow", u"\u8bed\u901f", None))
         self.label_10.setText(QCoreApplication.translate("MainWindow", u"\u97f3\u8c03", None))
         self.label_11.setText(QCoreApplication.translate("MainWindow", u"\u97f3\u91cf", None))
@@ -1218,6 +1504,28 @@ class Ui_MainWindow(object):
         self.sleeptime.setStatusTip(QCoreApplication.translate("MainWindow", u"\u8d8a\u5c0f\u8d8a\u5feb\uff0c\u592a\u5feb\u4f1a\u88ab\u963f\u91cc\u9650\u5236\u53d1\u751f\u4e0b\u8f7d\u9519\u8bef", None))
 #endif // QT_CONFIG(statustip)
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.ali), QCoreApplication.translate("MainWindow", u"\u963f\u91cc\u4e91", None))
+        self.label_8.setText(QCoreApplication.translate("MainWindow", u"APPID", None))
+        self.label_12.setText(QCoreApplication.translate("MainWindow", u"APISecret", None))
+        self.label_13.setText(QCoreApplication.translate("MainWindow", u"APIKey", None))
+        self.xfai.setText(QCoreApplication.translate("MainWindow", u"\u5728\u7ebf\u8bd5\u542c", None))
+        self.xfapi.setText(QCoreApplication.translate("MainWindow", u"\u524d\u5f80\u63a7\u5236\u53f0", None))
+#if QT_CONFIG(statustip)
+        self.save_xf.setStatusTip(QCoreApplication.translate("MainWindow", u"\u5fc5\u987b\u5148\u4fdd\u5b58", None))
+#endif // QT_CONFIG(statustip)
+        self.save_xf.setText(QCoreApplication.translate("MainWindow", u"\u4fdd\u5b58", None))
+        self.xiaoyan.setText(QCoreApplication.translate("MainWindow", u"\u5c0f\u71d5 \u751c\u7f8e\u5973\u751f", None))
+        self.aisjiuxu.setText(QCoreApplication.translate("MainWindow", u"\u8bb8\u4e45 \u4eb2\u5207\u7537\u58f0", None))
+        self.aisxping.setText(QCoreApplication.translate("MainWindow", u"\u5c0f\u840d \u77e5\u6027\u5973\u58f0", None))
+        self.aisjinger.setText(QCoreApplication.translate("MainWindow", u"\u5c0f\u5a67 \u4eb2\u5207\u5973\u58f0", None))
+        self.aisbabyxu.setText(QCoreApplication.translate("MainWindow", u"\u8bb8\u5c0f\u5b9d \u53ef\u7231\u7ae5\u58f0", None))
+        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_7), QCoreApplication.translate("MainWindow", u"\u57fa\u7840\u53d1\u97f3\u4eba", None))
+        self.label_18.setText(QCoreApplication.translate("MainWindow", u"\u7279\u8272\u53d1\u8a00\u4eba\u9700\u624b\u52a8\u5728\u63a7\u5236\u53f0\u6dfb\u52a0\uff0c\u6dfb\u52a0\u540e\u70b9\u51fb\u64cd\u4f5c\uff0c\u5c06\u53c2\u6570\u586b\u5165\u4e0b\u9762", None))
+        self.tsvcn.setText(QCoreApplication.translate("MainWindow", u"\u7279\u8272\u53d1\u97f3\u4eba\u53c2\u6570\uff08vcn/voice_name\uff09", None))
+        self.tabWidget_2.setTabText(self.tabWidget_2.indexOf(self.tab_8), QCoreApplication.translate("MainWindow", u"\u7279\u8272\u53d1\u97f3\u4eba", None))
+        self.label_17.setText(QCoreApplication.translate("MainWindow", u"\u8bed\u901f", None))
+        self.label_15.setText(QCoreApplication.translate("MainWindow", u"\u97f3\u8c03", None))
+        self.label_16.setText(QCoreApplication.translate("MainWindow", u"\u97f3\u91cf", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), QCoreApplication.translate("MainWindow", u"\u8baf\u98de", None))
 #if QT_CONFIG(statustip)
         self.service_group.setStatusTip(QCoreApplication.translate("MainWindow", u"\u4e0d\u662f\u6240\u6709\u8bed\u97f3\u90fd\u597d\u4f7f", None))
 #endif // QT_CONFIG(statustip)
@@ -1257,8 +1565,10 @@ class Ui_MainWindow(object):
         self.female.setText(QCoreApplication.translate("MainWindow", u"\u5973", None))
         self.bal_multi.setText(QCoreApplication.translate("MainWindow", u"\u5f00\u542f\u591a\u7ebf\u7a0b", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"\u6ce8\u610f\uff01\u672c\u8bed\u97f3\u5e93\u6765\u81ea\uff1ahttp://balabolka.site/bconsole.htm \u9075\u5faa\u81ea\u7531\u8f6f\u4ef6\u8bb8\u53ef\uff0c\u8bf7\u52ff\u5546\u7528", None))
-        self.label_4.setText(QCoreApplication.translate("MainWindow", u"\u672c\u8bed\u97f3\u5e93\u65e0\u9700\u6ce8\u518c\u76f8\u5173\u5e73\u53f0\u8d26\u53f7\uff0c\u4f46\u4e0d\u4fdd\u8bc1\u6240\u6709\u9009\u9879\u53ef\u7528\uff0c\u662f\u8fd9\u4e2a\u5e93\u672c\u8eab\u6216\u7f51\u7edc\u73af\u5883\u7684\u95ee\u9898", None))
+        self.label_4.setText(QCoreApplication.translate("MainWindow", u"\u672c\u8bed\u97f3\u5e93\u65e0\u9700\u6ce8\u518c\u76f8\u5173\u5e73\u53f0\u8d26\u53f7\uff0c\u4f46\u4e0d\u662f\u6240\u6709\u9009\u9879\u53ef\u7528\uff0c\u4e0d\u4fdd\u8bc1\u6240\u6709\u6587\u672c\u548c\u7f51\u7edc\u73af\u5883\u4e0b\u5747\u53ef\u7528", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.bal), QCoreApplication.translate("MainWindow", u"Balabolka", None))
+        self.download.setText(QCoreApplication.translate("MainWindow", u"\u5148\u70b9\u4e0b\u8f7d", None))
+        self.generate.setText(QCoreApplication.translate("MainWindow", u"\u518d\u70b9\u5408\u6210", None))
         self.menu.setTitle(QCoreApplication.translate("MainWindow", u"\u6587\u4ef6", None))
         self.menu_2.setTitle(QCoreApplication.translate("MainWindow", u"\u5e2e\u52a9", None))
     # retranslateUi

@@ -3,3 +3,5 @@ baidu-aip
 pydub~=0.24.1
 srt~=3.4.1
 pyside2~=5.15.2
+websocket~=0.2.1
+websocket-client~=0.57.0
