@@ -1,7 +1,7 @@
 # [subtitle2audio](https://github.com/kizx/subtitle2audio)
 
 字幕朗读，由字幕或文本生成语音 | Subtitle reading, generated audio from subtitles  
-更多说明见 [我的博客](https://www.2bboy.com/archives/120.html)
+更多说明见 [我的博客](https://www.2bboy.com/archives/210.html)
 
 ![](https://www.2bboy.com/usr/uploads/2021/01/2091177316.png)
 
