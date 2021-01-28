@@ -28,114 +28,300 @@
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <property name="leftMargin">
-          <number>5</number>
+        <widget class="QTabWidget" name="subtab">
+         <property name="currentIndex">
+          <number>0</number>
          </property>
-         <item>
-          <widget class="QLabel" name="label_3">
-           <property name="text">
-            <string>字幕文件</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="MyQLine" name="file_path">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>25</height>
-            </size>
-           </property>
-           <property name="readOnly">
-            <bool>true</bool>
-           </property>
-           <property name="placeholderText">
-            <string>支持拖拽SRT字幕文件到这里</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="file">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>80</width>
-             <height>30</height>
-            </size>
-           </property>
-           <property name="statusTip">
-            <string>打开一个SRT字幕文件</string>
-           </property>
-           <property name="text">
-            <string>打开</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="MyQPlainTextEdit" name="subtext">
-         <property name="font">
-          <font>
-           <family>Microsoft YaHei UI</family>
-           <pointsize>10</pointsize>
-          </font>
-         </property>
-         <property name="statusTip">
-          <string>浏览编辑字幕</string>
-         </property>
-         <property name="plainText">
-          <string/>
-         </property>
+         <widget class="QWidget" name="tab_9">
+          <attribute name="title">
+           <string>SRT字幕</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_14">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="leftMargin">
+              <number>5</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label_3">
+               <property name="text">
+                <string>字幕文件</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="MyQLine" name="srt_path">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="placeholderText">
+                <string>支持拖拽SRT字幕文件到这里</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="open_srt">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="statusTip">
+                <string>打开一个SRT字幕文件</string>
+               </property>
+               <property name="text">
+                <string>打开</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="MyQPlainTextEdit" name="srt_text">
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="statusTip">
+              <string>浏览编辑字幕</string>
+             </property>
+             <property name="plainText">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_21">
+             <item>
+              <widget class="QPushButton" name="edit_srt">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>45</height>
+                </size>
+               </property>
+               <property name="statusTip">
+                <string>确认后修改才会生效</string>
+               </property>
+               <property name="text">
+                <string>确认修改</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="save_srt">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>45</height>
+                </size>
+               </property>
+               <property name="statusTip">
+                <string>保存会覆盖源文件</string>
+               </property>
+               <property name="text">
+                <string>保存字幕</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="tab_10">
+          <attribute name="title">
+           <string>TXT文本</string>
+          </attribute>
+          <layout class="QVBoxLayout" name="verticalLayout_15">
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_22">
+             <property name="leftMargin">
+              <number>5</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label_14">
+               <property name="text">
+                <string>TXT文件</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="MyTXTLine" name="txt_path">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="placeholderText">
+                <string>支持拖拽TXT文本到这里</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QToolButton" name="open_txt">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="statusTip">
+                <string>打开一个SRT字幕文件</string>
+               </property>
+               <property name="text">
+                <string>打开</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="MyTXText" name="txt_text">
+             <property name="font">
+              <font>
+               <family>Microsoft YaHei UI</family>
+               <pointsize>10</pointsize>
+              </font>
+             </property>
+             <property name="statusTip">
+              <string>浏览编辑字幕</string>
+             </property>
+             <property name="plainText">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_24">
+             <property name="rightMargin">
+              <number>10</number>
+             </property>
+             <item>
+              <widget class="QLabel" name="label_19">
+               <property name="text">
+                <string>两句话间隔时间</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QDoubleSpinBox" name="silence_time">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>80</width>
+                 <height>25</height>
+                </size>
+               </property>
+               <property name="decimals">
+                <number>1</number>
+               </property>
+               <property name="singleStep">
+                <double>0.100000000000000</double>
+               </property>
+               <property name="value">
+                <double>1.000000000000000</double>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QLabel" name="label_20">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>秒</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_23">
+             <item>
+              <widget class="QPushButton" name="edit_txt">
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>45</height>
+                </size>
+               </property>
+               <property name="statusTip">
+                <string>确认后修改才会生效</string>
+               </property>
+               <property name="text">
+                <string>确认修改</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="save_txt">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>45</height>
+                </size>
+               </property>
+               <property name="statusTip">
+                <string>保存会覆盖源文件</string>
+               </property>
+               <property name="text">
+                <string>保存文本</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
         </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_21">
-         <item>
-          <widget class="QPushButton" name="editsub">
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>45</height>
-            </size>
-           </property>
-           <property name="statusTip">
-            <string>确认后修改才会生效</string>
-           </property>
-           <property name="text">
-            <string>确认修改</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QPushButton" name="save_sub">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>0</width>
-             <height>45</height>
-            </size>
-           </property>
-           <property name="statusTip">
-            <string>保存会覆盖源文件</string>
-           </property>
-           <property name="text">
-            <string>保存字幕</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
        </item>
       </layout>
      </widget>
@@ -1448,112 +1634,121 @@
            </item>
           </layout>
          </widget>
-         <widget class="QWidget" name="tab">
+         <widget class="QWidget" name="xf">
           <attribute name="title">
            <string>讯飞</string>
           </attribute>
           <layout class="QVBoxLayout" name="verticalLayout_8">
            <item>
-            <layout class="QFormLayout" name="formLayout_5">
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_8">
-               <property name="text">
-                <string>APPID</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="app_id_xf"/>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_12">
-               <property name="text">
-                <string>APISecret</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="api_secret_xf">
-               <property name="echoMode">
-                <enum>QLineEdit::PasswordEchoOnEdit</enum>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="0">
-              <widget class="QLabel" name="label_13">
-               <property name="text">
-                <string>APIKey</string>
-               </property>
-              </widget>
-             </item>
-             <item row="2" column="1">
-              <widget class="QLineEdit" name="api_key_xf"/>
-             </item>
-            </layout>
-           </item>
-           <item>
-            <layout class="QHBoxLayout" name="horizontalLayout">
-             <item>
-              <widget class="QPushButton" name="xfai">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>100</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>在线试听</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="xfapi">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>100</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="text">
-                <string>前往控制台</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="save_xf">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="minimumSize">
-                <size>
-                 <width>100</width>
-                 <height>30</height>
-                </size>
-               </property>
-               <property name="statusTip">
-                <string>必须先保存</string>
-               </property>
-               <property name="text">
-                <string>保存</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
+            <widget class="QGroupBox" name="groupBox_7">
+             <property name="title">
+              <string/>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_7">
+              <item>
+               <layout class="QFormLayout" name="formLayout_5">
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_8">
+                  <property name="text">
+                   <string>APPID</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="0" column="1">
+                 <widget class="QLineEdit" name="app_id_xf"/>
+                </item>
+                <item row="1" column="0">
+                 <widget class="QLabel" name="label_12">
+                  <property name="text">
+                   <string>APISecret</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="1">
+                 <widget class="QLineEdit" name="api_secret_xf">
+                  <property name="echoMode">
+                   <enum>QLineEdit::PasswordEchoOnEdit</enum>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QLabel" name="label_13">
+                  <property name="text">
+                   <string>APIKey</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="2" column="1">
+                 <widget class="QLineEdit" name="api_key_xf"/>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout">
+                <item>
+                 <widget class="QPushButton" name="xfai">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>在线试听</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="xfapi">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="text">
+                   <string>前往控制台</string>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="save_xf">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>100</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="statusTip">
+                   <string>必须先保存</string>
+                  </property>
+                  <property name="text">
+                   <string>保存</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </widget>
            </item>
            <item>
             <widget class="QTabWidget" name="tabWidget_2">
@@ -1673,423 +1868,175 @@
             </widget>
            </item>
            <item>
-            <layout class="QVBoxLayout" name="verticalLayout_2">
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_6">
-               <item>
-                <widget class="QLabel" name="label_17">
-                 <property name="text">
-                  <string>语速</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSlider" name="spd_xf">
-                 <property name="maximum">
-                  <number>100</number>
-                 </property>
-                 <property name="singleStep">
-                  <number>10</number>
-                 </property>
-                 <property name="pageStep">
-                  <number>10</number>
-                 </property>
-                 <property name="value">
-                  <number>50</number>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="tickPosition">
-                  <enum>QSlider::TicksBothSides</enum>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="vol_spin_ali_2">
-                 <property name="minimumSize">
-                  <size>
-                   <width>55</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximum">
-                  <number>100</number>
-                 </property>
-                 <property name="value">
-                  <number>50</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_9">
-               <item>
-                <widget class="QLabel" name="label_15">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="text">
-                  <string>音调</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSlider" name="pit_xf">
-                 <property name="maximum">
-                  <number>100</number>
-                 </property>
-                 <property name="singleStep">
-                  <number>10</number>
-                 </property>
-                 <property name="pageStep">
-                  <number>10</number>
-                 </property>
-                 <property name="value">
-                  <number>50</number>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="tickPosition">
-                  <enum>QSlider::TicksBothSides</enum>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="vol_spin_ali_3">
-                 <property name="minimumSize">
-                  <size>
-                   <width>55</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximum">
-                  <number>100</number>
-                 </property>
-                 <property name="value">
-                  <number>50</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item>
-              <layout class="QHBoxLayout" name="horizontalLayout_18">
-               <item>
-                <widget class="QLabel" name="label_16">
-                 <property name="text">
-                  <string>音量</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSlider" name="vol_xf">
-                 <property name="maximum">
-                  <number>100</number>
-                 </property>
-                 <property name="singleStep">
-                  <number>10</number>
-                 </property>
-                 <property name="pageStep">
-                  <number>10</number>
-                 </property>
-                 <property name="value">
-                  <number>50</number>
-                 </property>
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="tickPosition">
-                  <enum>QSlider::TicksBothSides</enum>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QSpinBox" name="vol_spin_ali_4">
-                 <property name="minimumSize">
-                  <size>
-                   <width>55</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximum">
-                  <number>100</number>
-                 </property>
-                 <property name="value">
-                  <number>50</number>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-            </layout>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QWidget" name="bal">
-          <attribute name="title">
-           <string>Balabolka</string>
-          </attribute>
-          <layout class="QVBoxLayout" name="verticalLayout_7">
-           <item>
-            <widget class="QGroupBox" name="service_group">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>1</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="statusTip">
-              <string>不是所有语音都好使</string>
-             </property>
+            <widget class="QGroupBox" name="groupBox_8">
              <property name="title">
-              <string>发音</string>
+              <string/>
              </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_11">
+             <layout class="QVBoxLayout" name="verticalLayout_16">
               <item>
-               <widget class="QRadioButton" name="google">
-                <property name="text">
-                 <string>谷歌</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-                <property name="service" stdset="0">
-                 <string>google</string>
-                </property>
-                <attribute name="buttonGroup">
-                 <string notr="true">service</string>
-                </attribute>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="baidu_2">
-                <property name="text">
-                 <string>百度</string>
-                </property>
-                <property name="service" stdset="0">
-                 <string>baidu</string>
-                </property>
-                <attribute name="buttonGroup">
-                 <string notr="true">service</string>
-                </attribute>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="youdao">
-                <property name="text">
-                 <string>有道</string>
-                </property>
-                <property name="service" stdset="0">
-                 <string>youdao</string>
-                </property>
-                <attribute name="buttonGroup">
-                 <string notr="true">service</string>
-                </attribute>
-               </widget>
+               <layout class="QVBoxLayout" name="verticalLayout_2">
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_6">
+                  <item>
+                   <widget class="QLabel" name="label_17">
+                    <property name="text">
+                     <string>语速</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QSlider" name="spd_xf">
+                    <property name="maximum">
+                     <number>100</number>
+                    </property>
+                    <property name="singleStep">
+                     <number>10</number>
+                    </property>
+                    <property name="pageStep">
+                     <number>10</number>
+                    </property>
+                    <property name="value">
+                     <number>50</number>
+                    </property>
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="tickPosition">
+                     <enum>QSlider::TicksBothSides</enum>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QSpinBox" name="vol_spin_ali_2">
+                    <property name="minimumSize">
+                     <size>
+                      <width>55</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximum">
+                     <number>100</number>
+                    </property>
+                    <property name="value">
+                     <number>50</number>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_9">
+                  <item>
+                   <widget class="QLabel" name="label_15">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>音调</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QSlider" name="pit_xf">
+                    <property name="maximum">
+                     <number>100</number>
+                    </property>
+                    <property name="singleStep">
+                     <number>10</number>
+                    </property>
+                    <property name="pageStep">
+                     <number>10</number>
+                    </property>
+                    <property name="value">
+                     <number>50</number>
+                    </property>
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="tickPosition">
+                     <enum>QSlider::TicksBothSides</enum>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QSpinBox" name="vol_spin_ali_3">
+                    <property name="minimumSize">
+                     <size>
+                      <width>55</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximum">
+                     <number>100</number>
+                    </property>
+                    <property name="value">
+                     <number>50</number>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item>
+                 <layout class="QHBoxLayout" name="horizontalLayout_18">
+                  <item>
+                   <widget class="QLabel" name="label_16">
+                    <property name="text">
+                     <string>音量</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QSlider" name="vol_xf">
+                    <property name="maximum">
+                     <number>100</number>
+                    </property>
+                    <property name="singleStep">
+                     <number>10</number>
+                    </property>
+                    <property name="pageStep">
+                     <number>10</number>
+                    </property>
+                    <property name="value">
+                     <number>50</number>
+                    </property>
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                    <property name="tickPosition">
+                     <enum>QSlider::TicksBothSides</enum>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QSpinBox" name="vol_spin_ali_4">
+                    <property name="minimumSize">
+                     <size>
+                      <width>55</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximum">
+                     <number>100</number>
+                    </property>
+                    <property name="value">
+                     <number>50</number>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
               </item>
              </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="language_group">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>2</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="title">
-              <string>语言</string>
-             </property>
-             <layout class="QGridLayout" name="gridLayout_5">
-              <item row="0" column="1">
-               <widget class="QRadioButton" name="zh_HK">
-                <property name="text">
-                 <string>中文-香港</string>
-                </property>
-                <property name="language" stdset="0">
-                 <string>zh-HK</string>
-                </property>
-                <attribute name="buttonGroup">
-                 <string notr="true">language</string>
-                </attribute>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QRadioButton" name="en_GB">
-                <property name="text">
-                 <string>英文-英国</string>
-                </property>
-                <property name="language" stdset="0">
-                 <string>en-GB</string>
-                </property>
-                <attribute name="buttonGroup">
-                 <string notr="true">language</string>
-                </attribute>
-               </widget>
-              </item>
-              <item row="0" column="0">
-               <widget class="QRadioButton" name="zh_CN">
-                <property name="text">
-                 <string>中文-简体</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-                <property name="language" stdset="0">
-                 <string>zh-CN</string>
-                </property>
-                <attribute name="buttonGroup">
-                 <string notr="true">language</string>
-                </attribute>
-               </widget>
-              </item>
-              <item row="0" column="2">
-               <widget class="QRadioButton" name="zh_TW">
-                <property name="text">
-                 <string>中文-台湾</string>
-                </property>
-                <property name="language" stdset="0">
-                 <string>zh-TW</string>
-                </property>
-                <attribute name="buttonGroup">
-                 <string notr="true">language</string>
-                </attribute>
-               </widget>
-              </item>
-              <item row="1" column="2">
-               <widget class="QRadioButton" name="en_AU">
-                <property name="text">
-                 <string>英文-澳大利亚</string>
-                </property>
-                <property name="language" stdset="0">
-                 <string>en-AU</string>
-                </property>
-                <attribute name="buttonGroup">
-                 <string notr="true">language</string>
-                </attribute>
-               </widget>
-              </item>
-              <item row="1" column="0">
-               <widget class="QRadioButton" name="en_US">
-                <property name="text">
-                 <string>英文-美国</string>
-                </property>
-                <property name="language" stdset="0">
-                 <string>en-US</string>
-                </property>
-                <attribute name="buttonGroup">
-                 <string notr="true">language</string>
-                </attribute>
-               </widget>
-              </item>
-              <item row="2" column="0">
-               <widget class="QRadioButton" name="ja_JP">
-                <property name="text">
-                 <string>日语</string>
-                </property>
-                <property name="language" stdset="0">
-                 <string>ja-JP</string>
-                </property>
-                <attribute name="buttonGroup">
-                 <string notr="true">language</string>
-                </attribute>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QGroupBox" name="gender_group">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>1</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="statusTip">
-              <string>性别选项只对谷歌的部分语言有效</string>
-             </property>
-             <property name="title">
-              <string>性别</string>
-             </property>
-             <layout class="QHBoxLayout" name="horizontalLayout_17">
-              <item>
-               <widget class="QRadioButton" name="male">
-                <property name="toolTip">
-                 <string>此选项只对部分语言有效</string>
-                </property>
-                <property name="text">
-                 <string>男</string>
-                </property>
-                <property name="checked">
-                 <bool>true</bool>
-                </property>
-                <attribute name="buttonGroup">
-                 <string notr="true">gender</string>
-                </attribute>
-               </widget>
-              </item>
-              <item>
-               <widget class="QRadioButton" name="female">
-                <property name="toolTip">
-                 <string>此选项只对部分语言有效</string>
-                </property>
-                <property name="text">
-                 <string>女</string>
-                </property>
-                <attribute name="buttonGroup">
-                 <string notr="true">gender</string>
-                </attribute>
-               </widget>
-              </item>
-             </layout>
-            </widget>
-           </item>
-           <item>
-            <widget class="QCheckBox" name="bal_multi">
-             <property name="text">
-              <string>开启多线程</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="verticalSpacer_3">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-           <item>
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string>注意！本语音库来自：http://balabolka.site/bconsole.htm 遵循自由软件许可，请勿商用</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_4">
-             <property name="text">
-              <string>本语音库无需注册相关平台账号，但不是所有选项可用，不保证所有文本和网络环境下均可用</string>
-             </property>
             </widget>
            </item>
           </layout>
@@ -2156,9 +2103,6 @@
     <property name="title">
      <string>文件</string>
     </property>
-    <addaction name="openfile"/>
-    <addaction name="separator"/>
-    <addaction name="opensrt"/>
     <addaction name="opendir"/>
    </widget>
    <widget class="QMenu" name="menu_2">
@@ -2224,25 +2168,19 @@
    <extends>QPlainTextEdit</extends>
    <header>MyWidget</header>
   </customwidget>
+  <customwidget>
+   <class>MyTXTLine</class>
+   <extends>QLineEdit</extends>
+   <header>MyWidget</header>
+  </customwidget>
+  <customwidget>
+   <class>MyTXText</class>
+   <extends>QPlainTextEdit</extends>
+   <header>MyWidget</header>
+  </customwidget>
  </customwidgets>
  <resources/>
  <connections>
-  <connection>
-   <sender>spd_bd</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>spd_spin_bd</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>978</x>
-     <y>412</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1083</x>
-     <y>406</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>spd_spin_bd</sender>
    <signal>valueChanged(int)</signal>
@@ -2256,54 +2194,6 @@
     <hint type="destinationlabel">
      <x>1032</x>
      <y>412</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pit_bd</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>pit_spin_bd</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1026</x>
-     <y>452</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1083</x>
-     <y>446</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pit_spin_bd</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>pit_bd</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1083</x>
-     <y>446</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1032</x>
-     <y>452</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>vol_bd</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>vol_spin_bd</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1032</x>
-     <y>492</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1083</x>
-     <y>486</y>
     </hint>
    </hints>
   </connection>
@@ -2324,38 +2214,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>spd_ali</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>spd_spin_ali</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1022</x>
-     <y>384</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1083</x>
-     <y>378</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spd_spin_ali</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>spd_ali</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1083</x>
-     <y>378</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1022</x>
-     <y>384</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>pit_ali</sender>
    <signal>valueChanged(int)</signal>
    <receiver>pit_spin_ali</receiver>
@@ -2372,70 +2230,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>pit_spin_ali</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>pit_ali</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1083</x>
-     <y>418</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1022</x>
-     <y>424</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>vol_ali</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>vol_spin_ali</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1022</x>
-     <y>464</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1083</x>
-     <y>458</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>vol_spin_ali</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>vol_ali</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1083</x>
-     <y>458</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1022</x>
-     <y>464</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>spd_xf</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>vol_spin_ali_2</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1031</x>
-     <y>421</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1092</x>
-     <y>415</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>vol_spin_ali_2</sender>
    <signal>valueChanged(int)</signal>
    <receiver>spd_xf</receiver>
@@ -2448,22 +2242,6 @@
     <hint type="destinationlabel">
      <x>1031</x>
      <y>421</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>pit_xf</sender>
-   <signal>valueChanged(int)</signal>
-   <receiver>vol_spin_ali_3</receiver>
-   <slot>setValue(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>1031</x>
-     <y>461</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>1092</x>
-     <y>455</y>
     </hint>
    </hints>
   </connection>
@@ -2500,6 +2278,134 @@
    </hints>
   </connection>
   <connection>
+   <sender>vol_ali</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>vol_spin_ali</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1022</x>
+     <y>464</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1083</x>
+     <y>458</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pit_bd</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>pit_spin_bd</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1026</x>
+     <y>452</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1083</x>
+     <y>446</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pit_spin_ali</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>pit_ali</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1083</x>
+     <y>418</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1022</x>
+     <y>424</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spd_xf</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>vol_spin_ali_2</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1031</x>
+     <y>421</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1092</x>
+     <y>415</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pit_spin_bd</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>pit_bd</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1083</x>
+     <y>446</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1032</x>
+     <y>452</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spd_bd</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spd_spin_bd</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>978</x>
+     <y>412</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1083</x>
+     <y>406</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pit_xf</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>vol_spin_ali_3</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1031</x>
+     <y>461</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1092</x>
+     <y>455</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>vol_spin_ali</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>vol_ali</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1083</x>
+     <y>458</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1022</x>
+     <y>464</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>vol_spin_ali_4</sender>
    <signal>valueChanged(int)</signal>
    <receiver>vol_xf</receiver>
@@ -2515,13 +2421,61 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>vol_bd</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>vol_spin_bd</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1032</x>
+     <y>492</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1083</x>
+     <y>486</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spd_ali</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spd_spin_ali</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1022</x>
+     <y>384</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1083</x>
+     <y>378</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>spd_spin_ali</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>spd_ali</receiver>
+   <slot>setValue(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1083</x>
+     <y>378</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>1022</x>
+     <y>384</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <buttongroups>
-  <buttongroup name="gender"/>
   <buttongroup name="per_xf"/>
   <buttongroup name="service"/>
-  <buttongroup name="language"/>
-  <buttongroup name="per_ali"/>
   <buttongroup name="per"/>
+  <buttongroup name="language"/>
+  <buttongroup name="gender"/>
+  <buttongroup name="per_ali"/>
  </buttongroups>
 </ui>

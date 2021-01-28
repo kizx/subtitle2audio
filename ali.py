@@ -55,7 +55,7 @@ def processPOSTRequest(appkey, token, text, audioSaveFile, options):
     if 'audio/mpeg' == contentType:
         with open(audioSaveFile, mode='wb') as f:
             f.write(body)
-        print(text, 'Save succeed!')
+        # print(text, 'Save succeed!')
     else:
         print('The POST request failed: ' + str(body))
     conn.close()
