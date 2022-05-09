@@ -15,7 +15,7 @@ from ali import Ali
 from baidu import Baidu
 from mainwindow import Ui_MainWindow
 from xfyun import XF
-
+from azurepy import Azu
 
 def web(*url):
     for i in url:
@@ -69,6 +69,7 @@ class MainWindow(QMainWindow):
         self.ui.save_bd.clicked.connect(self.save_setting)
         self.ui.save_ali.clicked.connect(self.save_setting)
         self.ui.save_xf.clicked.connect(self.save_setting)
+        self.ui.save_azu.clicked.connect(self.save_setting)
         # 字幕文件
         self.ui.open_srt.clicked.connect(self.opensrt)
         self.ui.edit_srt.clicked.connect(self.editsrt)
@@ -116,6 +117,11 @@ class MainWindow(QMainWindow):
                 api_key = self.ui.api_key_xf.text()
                 xf_setting = {'app_id': app_id, 'api_secret': api_secret, 'api_key': api_key}
                 setting['xf'] = xf_setting
+            if sender.objectName() == 'save_azu':
+                azutoken = self.ui.azu_token.text()
+                azuregion = self.ui.azu_region.text()      
+                azu_setting = {'token': azutoken, 'region': azuregion}
+                setting['azu'] = azu_setting
             f.seek(0)
             f.truncate()
             json.dump(setting, f, indent=2)
@@ -259,6 +265,8 @@ class MainWindow(QMainWindow):
             self.ali_process()
         elif index == 2:
             self.xf_process()
+        elif index == 3:
+            self.azu_process()
         end = time.perf_counter()
         self.note(f"完成！\n共计用时{round(end - start, 2)}秒")
 
@@ -387,7 +395,31 @@ class MainWindow(QMainWindow):
             self.statusBar().showMessage(f'正在下载第{index + 1}句：{i}')
             xf.process(i, file_name)
         self.statusBar().showMessage(f'下载完成！')
+        
+    def azu_process(self):
+        file_path = self.file_path
+        subtitle = self.sub
+        per = self.ui.per_xf.checkedButton().objectName()
+        if per == 'tsvcn':
+             per = self.ui.xfvcn.text()
+             if per == '':
+                 self.note('特色发音人参数为空')
+                 return
+        spd = self.ui.spd_xf.value()
+        vol = self.ui.vol_xf.value()
+        pit = self.ui.pit_xf.value()
+        options = {'per': per, 'spd': spd, 'vol': vol, 'pit': pit}
 
+        with open('setting.json', 'r') as ff:
+             setting = json.load(ff)
+             xf_setting = setting.get('xf', {})
+
+        xf = XF(xf_setting, options)
+        for index, i in enumerate(subtitle):
+             file_name = f'{file_path}/audio/{index + 1}.mp3'
+             self.statusBar().showMessage(f'正在下载第{index + 1}句：{i}')
+             xf.process(i, file_name)
+        self.statusBar().showMessage(f'下载完成！')
     # def bal_process(self):
     #     file_path = self.file_path
     #     subtitle = self.sub

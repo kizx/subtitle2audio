@@ -22,7 +22,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1097, 606)
+        MainWindow.resize(1097, 611)
         self.openfile = QAction(MainWindow)
         self.openfile.setObjectName(u"openfile")
         self.about = QAction(MainWindow)
@@ -1245,6 +1245,170 @@ class Ui_MainWindow(object):
         self.verticalLayout_8.addWidget(self.groupBox_8)
 
         self.tabWidget.addTab(self.xf, "")
+        self.azure = QWidget()
+        self.azure.setObjectName(u"azure")
+        self.groupBox_9 = QGroupBox(self.azure)
+        self.groupBox_9.setObjectName(u"groupBox_9")
+        self.groupBox_9.setGeometry(QRect(10, 10, 562, 132))
+        self.verticalLayout_17 = QVBoxLayout(self.groupBox_9)
+        self.verticalLayout_17.setObjectName(u"verticalLayout_17")
+        self.formLayout_6 = QFormLayout()
+        self.formLayout_6.setObjectName(u"formLayout_6")
+        self.label_21 = QLabel(self.groupBox_9)
+        self.label_21.setObjectName(u"label_21")
+
+        self.formLayout_6.setWidget(0, QFormLayout.LabelRole, self.label_21)
+
+        self.azu_region = QLineEdit(self.groupBox_9)
+        self.azu_region.setObjectName(u"azu_region")
+
+        self.formLayout_6.setWidget(0, QFormLayout.FieldRole, self.azu_region)
+
+        self.label_22 = QLabel(self.groupBox_9)
+        self.label_22.setObjectName(u"label_22")
+
+        self.formLayout_6.setWidget(1, QFormLayout.LabelRole, self.label_22)
+
+        self.azu_token = QLineEdit(self.groupBox_9)
+        self.azu_token.setObjectName(u"azu_token")
+        self.azu_token.setEchoMode(QLineEdit.PasswordEchoOnEdit)
+
+        self.formLayout_6.setWidget(1, QFormLayout.FieldRole, self.azu_token)
+
+
+        self.verticalLayout_17.addLayout(self.formLayout_6)
+
+        self.horizontalLayout_11 = QHBoxLayout()
+        self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
+        self.xfai_2 = QPushButton(self.groupBox_9)
+        self.xfai_2.setObjectName(u"xfai_2")
+        sizePolicy1.setHeightForWidth(self.xfai_2.sizePolicy().hasHeightForWidth())
+        self.xfai_2.setSizePolicy(sizePolicy1)
+        self.xfai_2.setMinimumSize(QSize(100, 30))
+
+        self.horizontalLayout_11.addWidget(self.xfai_2)
+
+        self.xfapi_2 = QPushButton(self.groupBox_9)
+        self.xfapi_2.setObjectName(u"xfapi_2")
+        sizePolicy1.setHeightForWidth(self.xfapi_2.sizePolicy().hasHeightForWidth())
+        self.xfapi_2.setSizePolicy(sizePolicy1)
+        self.xfapi_2.setMinimumSize(QSize(100, 30))
+
+        self.horizontalLayout_11.addWidget(self.xfapi_2)
+
+        self.save_azu = QPushButton(self.groupBox_9)
+        self.save_azu.setObjectName(u"save_azu")
+        sizePolicy1.setHeightForWidth(self.save_azu.sizePolicy().hasHeightForWidth())
+        self.save_azu.setSizePolicy(sizePolicy1)
+        self.save_azu.setMinimumSize(QSize(100, 30))
+
+        self.horizontalLayout_11.addWidget(self.save_azu)
+
+
+        self.verticalLayout_17.addLayout(self.horizontalLayout_11)
+
+        self.groupBox_10 = QGroupBox(self.azure)
+        self.groupBox_10.setObjectName(u"groupBox_10")
+        self.groupBox_10.setGeometry(QRect(10, 290, 562, 136))
+        self.verticalLayout_18 = QVBoxLayout(self.groupBox_10)
+        self.verticalLayout_18.setObjectName(u"verticalLayout_18")
+        self.verticalLayout_19 = QVBoxLayout()
+        self.verticalLayout_19.setObjectName(u"verticalLayout_19")
+        self.horizontalLayout_17 = QHBoxLayout()
+        self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
+        self.label_24 = QLabel(self.groupBox_10)
+        self.label_24.setObjectName(u"label_24")
+        self.label_24.setAlignment(Qt.AlignLeading|Qt.AlignLeft|Qt.AlignVCenter)
+
+        self.horizontalLayout_17.addWidget(self.label_24)
+
+        self.spd_azu = QSlider(self.groupBox_10)
+        self.spd_azu.setObjectName(u"spd_azu")
+        self.spd_azu.setMaximum(100)
+        self.spd_azu.setSingleStep(10)
+        self.spd_azu.setPageStep(10)
+        self.spd_azu.setValue(50)
+        self.spd_azu.setOrientation(Qt.Horizontal)
+        self.spd_azu.setTickPosition(QSlider.TicksBothSides)
+
+        self.horizontalLayout_17.addWidget(self.spd_azu)
+
+        self.vol_spin_ali_5 = QSpinBox(self.groupBox_10)
+        self.vol_spin_ali_5.setObjectName(u"vol_spin_ali_5")
+        self.vol_spin_ali_5.setMinimumSize(QSize(55, 0))
+        self.vol_spin_ali_5.setMaximum(100)
+        self.vol_spin_ali_5.setValue(50)
+
+        self.horizontalLayout_17.addWidget(self.vol_spin_ali_5)
+
+
+        self.verticalLayout_19.addLayout(self.horizontalLayout_17)
+
+        self.horizontalLayout_25 = QHBoxLayout()
+        self.horizontalLayout_25.setObjectName(u"horizontalLayout_25")
+        self.label_25 = QLabel(self.groupBox_10)
+        self.label_25.setObjectName(u"label_25")
+        sizePolicy6.setHeightForWidth(self.label_25.sizePolicy().hasHeightForWidth())
+        self.label_25.setSizePolicy(sizePolicy6)
+        self.label_25.setAlignment(Qt.AlignCenter)
+
+        self.horizontalLayout_25.addWidget(self.label_25)
+
+        self.pit_azu = QSlider(self.groupBox_10)
+        self.pit_azu.setObjectName(u"pit_azu")
+        self.pit_azu.setMaximum(100)
+        self.pit_azu.setSingleStep(10)
+        self.pit_azu.setPageStep(10)
+        self.pit_azu.setValue(50)
+        self.pit_azu.setOrientation(Qt.Horizontal)
+        self.pit_azu.setTickPosition(QSlider.TicksBothSides)
+
+        self.horizontalLayout_25.addWidget(self.pit_azu)
+
+        self.vol_spin_ali_6 = QSpinBox(self.groupBox_10)
+        self.vol_spin_ali_6.setObjectName(u"vol_spin_ali_6")
+        self.vol_spin_ali_6.setMinimumSize(QSize(55, 0))
+        self.vol_spin_ali_6.setMaximum(100)
+        self.vol_spin_ali_6.setValue(50)
+
+        self.horizontalLayout_25.addWidget(self.vol_spin_ali_6)
+
+
+        self.verticalLayout_19.addLayout(self.horizontalLayout_25)
+
+        self.horizontalLayout_26 = QHBoxLayout()
+        self.horizontalLayout_26.setObjectName(u"horizontalLayout_26")
+        self.label_26 = QLabel(self.groupBox_10)
+        self.label_26.setObjectName(u"label_26")
+
+        self.horizontalLayout_26.addWidget(self.label_26)
+
+        self.vol_azu = QSlider(self.groupBox_10)
+        self.vol_azu.setObjectName(u"vol_azu")
+        self.vol_azu.setMaximum(100)
+        self.vol_azu.setSingleStep(10)
+        self.vol_azu.setPageStep(10)
+        self.vol_azu.setValue(50)
+        self.vol_azu.setOrientation(Qt.Horizontal)
+        self.vol_azu.setTickPosition(QSlider.TicksBothSides)
+
+        self.horizontalLayout_26.addWidget(self.vol_azu)
+
+        self.vol_spin_ali_7 = QSpinBox(self.groupBox_10)
+        self.vol_spin_ali_7.setObjectName(u"vol_spin_ali_7")
+        self.vol_spin_ali_7.setMinimumSize(QSize(55, 0))
+        self.vol_spin_ali_7.setMaximum(100)
+        self.vol_spin_ali_7.setValue(50)
+
+        self.horizontalLayout_26.addWidget(self.vol_spin_ali_7)
+
+
+        self.verticalLayout_19.addLayout(self.horizontalLayout_26)
+
+
+        self.verticalLayout_18.addLayout(self.verticalLayout_19)
+
+        self.tabWidget.addTab(self.azure, "")
 
         self.verticalLayout_10.addWidget(self.tabWidget)
 
@@ -1275,7 +1439,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 1097, 23))
+        self.menubar.setGeometry(QRect(0, 0, 1097, 22))
         self.menu = QMenu(self.menubar)
         self.menu.setObjectName(u"menu")
         self.menu_2 = QMenu(self.menubar)
@@ -1311,7 +1475,7 @@ class Ui_MainWindow(object):
         self.spd_spin_ali.valueChanged.connect(self.spd_ali.setValue)
 
         self.subtab.setCurrentIndex(0)
-        self.tabWidget.setCurrentIndex(0)
+        self.tabWidget.setCurrentIndex(3)
         self.save_ali.setDefault(False)
         self.PerTab.setCurrentIndex(0)
         self.tabWidget_2.setCurrentIndex(0)
@@ -1528,6 +1692,20 @@ class Ui_MainWindow(object):
         self.label_15.setText(QCoreApplication.translate("MainWindow", u"\u97f3\u8c03", None))
         self.label_16.setText(QCoreApplication.translate("MainWindow", u"\u97f3\u91cf", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.xf), QCoreApplication.translate("MainWindow", u"\u8baf\u98de", None))
+        self.groupBox_9.setTitle("")
+        self.label_21.setText(QCoreApplication.translate("MainWindow", u"region", None))
+        self.label_22.setText(QCoreApplication.translate("MainWindow", u"token", None))
+        self.xfai_2.setText(QCoreApplication.translate("MainWindow", u"\u5728\u7ebf\u8bd5\u542c", None))
+        self.xfapi_2.setText(QCoreApplication.translate("MainWindow", u"\u524d\u5f80\u63a7\u5236\u53f0", None))
+#if QT_CONFIG(statustip)
+        self.save_azu.setStatusTip(QCoreApplication.translate("MainWindow", u"\u5fc5\u987b\u5148\u4fdd\u5b58", None))
+#endif // QT_CONFIG(statustip)
+        self.save_azu.setText(QCoreApplication.translate("MainWindow", u"\u4fdd\u5b58", None))
+        self.groupBox_10.setTitle("")
+        self.label_24.setText(QCoreApplication.translate("MainWindow", u"\u8bed\u901f", None))
+        self.label_25.setText(QCoreApplication.translate("MainWindow", u"\u97f3\u8c03", None))
+        self.label_26.setText(QCoreApplication.translate("MainWindow", u"\u97f3\u91cf", None))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.azure), QCoreApplication.translate("MainWindow", u"azure", None))
         self.download.setText(QCoreApplication.translate("MainWindow", u"\u5148\u70b9\u4e0b\u8f7d", None))
         self.generate.setText(QCoreApplication.translate("MainWindow", u"\u518d\u70b9\u5408\u6210", None))
         self.menu.setTitle(QCoreApplication.translate("MainWindow", u"\u6587\u4ef6", None))
