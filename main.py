@@ -119,7 +119,7 @@ class MainWindow(QMainWindow):
                 setting['xf'] = xf_setting
             if sender.objectName() == 'save_azu':
                 azutoken = self.ui.azu_token.text()
-                azuregion = self.ui.azu_region.text()      
+                azuregion = self.ui.azu_region.text()                    
                 azu_setting = {'token': azutoken, 'region': azuregion}
                 setting['azu'] = azu_setting
             f.seek(0)
@@ -136,6 +136,7 @@ class MainWindow(QMainWindow):
             baidu_setting = setting.get('baidu', {})
             ali_setting = setting.get('ali', {})
             xf_setting = setting.get('xf', {})
+            azu_setting = setting.get('azu', {})
 
         self.ui.app_id_bd.setText(baidu_setting.get('app_id', ''))
         self.ui.app_key_bd.setText(baidu_setting.get('app_key', ''))
@@ -148,6 +149,10 @@ class MainWindow(QMainWindow):
         self.ui.app_id_xf.setText(xf_setting.get('app_id', ''))
         self.ui.api_secret_xf.setText(xf_setting.get('api_secret', ''))
         self.ui.api_key_xf.setText(xf_setting.get('api_key', ''))
+        
+        self.ui.azu_token.setText(azu_setting.get('token', ''))
+        self.ui.azu_region.setText(azu_setting.get('region', ''))
+
 
     def opensrt(self):
         """打开字幕文件路径"""
@@ -275,7 +280,7 @@ class MainWindow(QMainWindow):
         """合成"""
         start = time.perf_counter()
         index = self.ui.tabWidget.currentIndex()
-        if index == 3:
+        if index == 4:
             self.corn(wav=1)
         else:
             self.corn()
@@ -399,26 +404,21 @@ class MainWindow(QMainWindow):
     def azu_process(self):
         file_path = self.file_path
         subtitle = self.sub
-        per = self.ui.per_xf.checkedButton().objectName()
-        if per == 'tsvcn':
-             per = self.ui.xfvcn.text()
-             if per == '':
-                 self.note('特色发音人参数为空')
-                 return
-        spd = self.ui.spd_xf.value()
-        vol = self.ui.vol_xf.value()
-        pit = self.ui.pit_xf.value()
+        per = self.ui.per_azu.checkedButton().accessibleDescription()
+        spd = self.ui.spd_azu.value()
+        vol = self.ui.vol_azu.value()
+        pit = self.ui.pit_azu.value()
         options = {'per': per, 'spd': spd, 'vol': vol, 'pit': pit}
 
         with open('setting.json', 'r') as ff:
              setting = json.load(ff)
-             xf_setting = setting.get('xf', {})
+             azu_setting = setting.get('azu', {})
 
-        xf = XF(xf_setting, options)
+        azu = Azu(azu_setting, options)
         for index, i in enumerate(subtitle):
              file_name = f'{file_path}/audio/{index + 1}.mp3'
              self.statusBar().showMessage(f'正在下载第{index + 1}句：{i}')
-             xf.process(i, file_name)
+             azu.process(i, file_name)
         self.statusBar().showMessage(f'下载完成！')
     # def bal_process(self):
     #     file_path = self.file_path

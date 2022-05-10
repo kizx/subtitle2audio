@@ -1309,7 +1309,7 @@ class Ui_MainWindow(object):
 
         self.groupBox_10 = QGroupBox(self.azure)
         self.groupBox_10.setObjectName(u"groupBox_10")
-        self.groupBox_10.setGeometry(QRect(10, 290, 562, 136))
+        self.groupBox_10.setGeometry(QRect(10, 320, 562, 136))
         self.verticalLayout_18 = QVBoxLayout(self.groupBox_10)
         self.verticalLayout_18.setObjectName(u"verticalLayout_18")
         self.verticalLayout_19 = QVBoxLayout()
@@ -1407,6 +1407,74 @@ class Ui_MainWindow(object):
 
 
         self.verticalLayout_18.addLayout(self.verticalLayout_19)
+
+        self.gridWidget = QWidget(self.azure)
+        self.gridWidget.setObjectName(u"gridWidget")
+        self.gridWidget.setGeometry(QRect(20, 155, 531, 161))
+        self.gridLayout_5 = QGridLayout(self.gridWidget)
+        self.gridLayout_5.setObjectName(u"gridLayout_5")
+        self.radioButton_5 = QRadioButton(self.gridWidget)
+        self.per_azu = QButtonGroup(MainWindow)
+        self.per_azu.setObjectName(u"per_azu")
+        self.per_azu.addButton(self.radioButton_5)
+        self.radioButton_5.setObjectName(u"radioButton_5")
+
+        self.gridLayout_5.addWidget(self.radioButton_5, 2, 0, 1, 1)
+
+        self.radioButton = QRadioButton(self.gridWidget)
+        self.per_azu.addButton(self.radioButton)
+        self.radioButton.setObjectName(u"radioButton")
+
+        self.gridLayout_5.addWidget(self.radioButton, 7, 0, 1, 1)
+
+        self.radioButton_10 = QRadioButton(self.gridWidget)
+        self.per_azu.addButton(self.radioButton_10)
+        self.radioButton_10.setObjectName(u"radioButton_10")
+
+        self.gridLayout_5.addWidget(self.radioButton_10, 4, 1, 1, 1)
+
+        self.radioButton_9 = QRadioButton(self.gridWidget)
+        self.per_azu.addButton(self.radioButton_9)
+        self.radioButton_9.setObjectName(u"radioButton_9")
+
+        self.gridLayout_5.addWidget(self.radioButton_9, 4, 0, 1, 1)
+
+        self.radioButton_4 = QRadioButton(self.gridWidget)
+        self.per_azu.addButton(self.radioButton_4)
+        self.radioButton_4.setObjectName(u"radioButton_4")
+
+        self.gridLayout_5.addWidget(self.radioButton_4, 6, 0, 1, 1)
+
+        self.radioButton_6 = QRadioButton(self.gridWidget)
+        self.per_azu.addButton(self.radioButton_6)
+        self.radioButton_6.setObjectName(u"radioButton_6")
+
+        self.gridLayout_5.addWidget(self.radioButton_6, 1, 1, 1, 1)
+
+        self.radioButton_7 = QRadioButton(self.gridWidget)
+        self.per_azu.addButton(self.radioButton_7)
+        self.radioButton_7.setObjectName(u"radioButton_7")
+
+        self.gridLayout_5.addWidget(self.radioButton_7, 2, 1, 1, 1)
+
+        self.radioButton_8 = QRadioButton(self.gridWidget)
+        self.per_azu.addButton(self.radioButton_8)
+        self.radioButton_8.setObjectName(u"radioButton_8")
+
+        self.gridLayout_5.addWidget(self.radioButton_8, 6, 1, 1, 1)
+
+        self.radioButton_2 = QRadioButton(self.gridWidget)
+        self.per_azu.addButton(self.radioButton_2)
+        self.radioButton_2.setObjectName(u"radioButton_2")
+
+        self.gridLayout_5.addWidget(self.radioButton_2, 1, 0, 1, 1)
+
+        self.radioButton_11 = QRadioButton(self.gridWidget)
+        self.per_azu.addButton(self.radioButton_11)
+        self.radioButton_11.setObjectName(u"radioButton_11")
+        self.radioButton_11.setChecked(True)
+
+        self.gridLayout_5.addWidget(self.radioButton_11, 7, 1, 1, 1)
 
         self.tabWidget.addTab(self.azure, "")
 
@@ -1705,6 +1773,46 @@ class Ui_MainWindow(object):
         self.label_24.setText(QCoreApplication.translate("MainWindow", u"\u8bed\u901f", None))
         self.label_25.setText(QCoreApplication.translate("MainWindow", u"\u97f3\u8c03", None))
         self.label_26.setText(QCoreApplication.translate("MainWindow", u"\u97f3\u91cf", None))
+#if QT_CONFIG(accessibility)
+        self.radioButton_5.setAccessibleDescription(QCoreApplication.translate("MainWindow", u"zh-CN-XiaomoNeural", None))
+#endif // QT_CONFIG(accessibility)
+        self.radioButton_5.setText(QCoreApplication.translate("MainWindow", u"\u6653\u58a8 \u591a\u79cd\u89d2\u8272\u626e\u6f14", None))
+#if QT_CONFIG(accessibility)
+        self.radioButton.setAccessibleDescription(QCoreApplication.translate("MainWindow", u"zh-CN-YunyangNeural", None))
+#endif // QT_CONFIG(accessibility)
+        self.radioButton.setText(QCoreApplication.translate("MainWindow", u"\u4e91\u626c \u65b0\u95fb\u4f18\u5316", None))
+#if QT_CONFIG(accessibility)
+        self.radioButton_10.setAccessibleDescription(QCoreApplication.translate("MainWindow", u"zh-CN-XiaoshuangNeural", None))
+#endif // QT_CONFIG(accessibility)
+        self.radioButton_10.setText(QCoreApplication.translate("MainWindow", u"\u6653\u53cc \u513f\u7ae5 \u6545\u4e8b\uff0c\u804a\u5929\u4f18\u5316", None))
+#if QT_CONFIG(accessibility)
+        self.radioButton_9.setAccessibleDescription(QCoreApplication.translate("MainWindow", u"zh-CN-XiaoruiNeural", None))
+#endif // QT_CONFIG(accessibility)
+        self.radioButton_9.setText(QCoreApplication.translate("MainWindow", u"\u6653\u745e", None))
+#if QT_CONFIG(accessibility)
+        self.radioButton_4.setAccessibleDescription(QCoreApplication.translate("MainWindow", u"zh-CN-XiaoyouNeural", None))
+#endif // QT_CONFIG(accessibility)
+        self.radioButton_4.setText(QCoreApplication.translate("MainWindow", u"\u6653\u60a0 \u513f\u7ae5\u8bed\u97f3\u6545\u4e8b\u4f18\u5316", None))
+#if QT_CONFIG(accessibility)
+        self.radioButton_6.setAccessibleDescription(QCoreApplication.translate("MainWindow", u"zh-CN-XiaohanNeural", None))
+#endif // QT_CONFIG(accessibility)
+        self.radioButton_6.setText(QCoreApplication.translate("MainWindow", u"\u6653\u6db5", None))
+#if QT_CONFIG(accessibility)
+        self.radioButton_7.setAccessibleDescription(QCoreApplication.translate("MainWindow", u"zh-CN-XiaoqiuNeural", None))
+#endif // QT_CONFIG(accessibility)
+        self.radioButton_7.setText(QCoreApplication.translate("MainWindow", u"\u6653\u79cb \u53d9\u4e8b\u4f18\u5316", None))
+#if QT_CONFIG(accessibility)
+        self.radioButton_8.setAccessibleDescription(QCoreApplication.translate("MainWindow", u"zh-CN-YunxiNeural", None))
+#endif // QT_CONFIG(accessibility)
+        self.radioButton_8.setText(QCoreApplication.translate("MainWindow", u"\u4e91\u6eaa \u6700\u5e38\u89c1\u8425\u9500\u53f7\u7528", None))
+#if QT_CONFIG(accessibility)
+        self.radioButton_2.setAccessibleDescription(QCoreApplication.translate("MainWindow", u"zh-CN-XiaochenNeural", None))
+#endif // QT_CONFIG(accessibility)
+        self.radioButton_2.setText(QCoreApplication.translate("MainWindow", u"\u6653\u8fb0 \u81ea\u53d1\u5bf9\u8bdd\u4f18\u5316", None))
+#if QT_CONFIG(accessibility)
+        self.radioButton_11.setAccessibleDescription(QCoreApplication.translate("MainWindow", u"zh-CN-YunyeNeural", None))
+#endif // QT_CONFIG(accessibility)
+        self.radioButton_11.setText(QCoreApplication.translate("MainWindow", u"\u4e91\u91ce \u6545\u4e8b\u4f18\u5316", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.azure), QCoreApplication.translate("MainWindow", u"azure", None))
         self.download.setText(QCoreApplication.translate("MainWindow", u"\u5148\u70b9\u4e0b\u8f7d", None))
         self.generate.setText(QCoreApplication.translate("MainWindow", u"\u518d\u70b9\u5408\u6210", None))

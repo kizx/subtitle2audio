@@ -2156,7 +2156,7 @@
            <property name="geometry">
             <rect>
              <x>10</x>
-             <y>290</y>
+             <y>320</y>
              <width>562</width>
              <height>136</height>
             </rect>
@@ -2327,6 +2327,151 @@
                </layout>
               </item>
              </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QWidget" name="gridWidget" native="true">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>155</y>
+             <width>531</width>
+             <height>161</height>
+            </rect>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_5">
+            <item row="2" column="0">
+             <widget class="QRadioButton" name="radioButton_5">
+              <property name="accessibleDescription">
+               <string>zh-CN-XiaomoNeural</string>
+              </property>
+              <property name="text">
+               <string>晓墨 多种角色扮演</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">per_azu</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="7" column="0">
+             <widget class="QRadioButton" name="radioButton">
+              <property name="accessibleDescription">
+               <string>zh-CN-YunyangNeural</string>
+              </property>
+              <property name="text">
+               <string>云扬 新闻优化</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">per_azu</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="4" column="1">
+             <widget class="QRadioButton" name="radioButton_10">
+              <property name="accessibleDescription">
+               <string>zh-CN-XiaoshuangNeural</string>
+              </property>
+              <property name="text">
+               <string>晓双 儿童 故事，聊天优化</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">per_azu</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="4" column="0">
+             <widget class="QRadioButton" name="radioButton_9">
+              <property name="accessibleDescription">
+               <string>zh-CN-XiaoruiNeural</string>
+              </property>
+              <property name="text">
+               <string>晓瑞</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">per_azu</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="6" column="0">
+             <widget class="QRadioButton" name="radioButton_4">
+              <property name="accessibleDescription">
+               <string>zh-CN-XiaoyouNeural</string>
+              </property>
+              <property name="text">
+               <string>晓悠 儿童语音故事优化</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">per_azu</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="1" column="1">
+             <widget class="QRadioButton" name="radioButton_6">
+              <property name="accessibleDescription">
+               <string>zh-CN-XiaohanNeural</string>
+              </property>
+              <property name="text">
+               <string>晓涵</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">per_azu</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="2" column="1">
+             <widget class="QRadioButton" name="radioButton_7">
+              <property name="accessibleDescription">
+               <string>zh-CN-XiaoqiuNeural</string>
+              </property>
+              <property name="text">
+               <string>晓秋 叙事优化</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">per_azu</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="6" column="1">
+             <widget class="QRadioButton" name="radioButton_8">
+              <property name="accessibleDescription">
+               <string>zh-CN-YunxiNeural</string>
+              </property>
+              <property name="text">
+               <string>云溪 最常见营销号用</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">per_azu</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QRadioButton" name="radioButton_2">
+              <property name="accessibleDescription">
+               <string>zh-CN-XiaochenNeural</string>
+              </property>
+              <property name="text">
+               <string>晓辰 自发对话优化</string>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">per_azu</string>
+              </attribute>
+             </widget>
+            </item>
+            <item row="7" column="1">
+             <widget class="QRadioButton" name="radioButton_11">
+              <property name="accessibleDescription">
+               <string>zh-CN-YunyeNeural</string>
+              </property>
+              <property name="text">
+               <string>云野 故事优化</string>
+              </property>
+              <property name="checked">
+               <bool>true</bool>
+              </property>
+              <attribute name="buttonGroup">
+               <string notr="true">per_azu</string>
+              </attribute>
+             </widget>
             </item>
            </layout>
           </widget>
@@ -2762,7 +2907,8 @@
  </connections>
  <buttongroups>
   <buttongroup name="per_xf"/>
-  <buttongroup name="per"/>
   <buttongroup name="per_ali"/>
+  <buttongroup name="per"/>
+  <buttongroup name="per_azu"/>
  </buttongroups>
 </ui>
