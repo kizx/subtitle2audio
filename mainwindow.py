@@ -1309,7 +1309,7 @@ class Ui_MainWindow(object):
 
         self.groupBox_10 = QGroupBox(self.azure)
         self.groupBox_10.setObjectName(u"groupBox_10")
-        self.groupBox_10.setGeometry(QRect(10, 320, 562, 136))
+        self.groupBox_10.setGeometry(QRect(10, 365, 562, 91))
         self.verticalLayout_18 = QVBoxLayout(self.groupBox_10)
         self.verticalLayout_18.setObjectName(u"verticalLayout_18")
         self.verticalLayout_19 = QVBoxLayout()
@@ -1424,6 +1424,7 @@ class Ui_MainWindow(object):
         self.radioButton = QRadioButton(self.gridWidget)
         self.per_azu.addButton(self.radioButton)
         self.radioButton.setObjectName(u"radioButton")
+        self.radioButton.setChecked(True)
 
         self.gridLayout_5.addWidget(self.radioButton, 7, 0, 1, 1)
 
@@ -1472,9 +1473,43 @@ class Ui_MainWindow(object):
         self.radioButton_11 = QRadioButton(self.gridWidget)
         self.per_azu.addButton(self.radioButton_11)
         self.radioButton_11.setObjectName(u"radioButton_11")
-        self.radioButton_11.setChecked(True)
+        self.radioButton_11.setChecked(False)
 
         self.gridLayout_5.addWidget(self.radioButton_11, 7, 1, 1, 1)
+
+        self.layoutWidget = QWidget(self.azure)
+        self.layoutWidget.setObjectName(u"layoutWidget")
+        self.layoutWidget.setGeometry(QRect(20, 320, 531, 41))
+        self.horizontalLayout_27 = QHBoxLayout(self.layoutWidget)
+        self.horizontalLayout_27.setObjectName(u"horizontalLayout_27")
+        self.horizontalLayout_27.setContentsMargins(0, 0, 0, 0)
+        self.azu_multi = QCheckBox(self.layoutWidget)
+        self.azu_multi.setObjectName(u"azu_multi")
+        self.azu_multi.setChecked(True)
+
+        self.horizontalLayout_27.addWidget(self.azu_multi)
+
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+
+        self.horizontalLayout_27.addItem(self.horizontalSpacer_2)
+
+        self.label_4 = QLabel(self.layoutWidget)
+        self.label_4.setObjectName(u"label_4")
+        sizePolicy8.setHeightForWidth(self.label_4.sizePolicy().hasHeightForWidth())
+        self.label_4.setSizePolicy(sizePolicy8)
+
+        self.horizontalLayout_27.addWidget(self.label_4)
+
+        self.sleeptime_2 = QDoubleSpinBox(self.layoutWidget)
+        self.sleeptime_2.setObjectName(u"sleeptime_2")
+        sizePolicy9.setHeightForWidth(self.sleeptime_2.sizePolicy().hasHeightForWidth())
+        self.sleeptime_2.setSizePolicy(sizePolicy9)
+        self.sleeptime_2.setMinimum(0.500000000000000)
+        self.sleeptime_2.setMaximum(10.000000000000000)
+        self.sleeptime_2.setSingleStep(0.050000000000000)
+        self.sleeptime_2.setValue(1.000000000000000)
+
+        self.horizontalLayout_27.addWidget(self.sleeptime_2)
 
         self.tabWidget.addTab(self.azure, "")
 
@@ -1813,6 +1848,11 @@ class Ui_MainWindow(object):
         self.radioButton_11.setAccessibleDescription(QCoreApplication.translate("MainWindow", u"zh-CN-YunyeNeural", None))
 #endif // QT_CONFIG(accessibility)
         self.radioButton_11.setText(QCoreApplication.translate("MainWindow", u"\u4e91\u91ce \u6545\u4e8b\u4f18\u5316", None))
+        self.azu_multi.setText(QCoreApplication.translate("MainWindow", u"\u5f00\u542f\u591a\u7ebf\u7a0b\u52a0\u901f", None))
+        self.label_4.setText(QCoreApplication.translate("MainWindow", u"\u7ebf\u7a0b\u4f11\u7720\u65f6\u95f4", None))
+#if QT_CONFIG(statustip)
+        self.sleeptime_2.setStatusTip(QCoreApplication.translate("MainWindow", u"\u8d8a\u5c0f\u8d8a\u5feb\uff0c\u592a\u5feb\u4f1a\u88ab\u963f\u91cc\u9650\u5236\u53d1\u751f\u4e0b\u8f7d\u9519\u8bef", None))
+#endif // QT_CONFIG(statustip)
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.azure), QCoreApplication.translate("MainWindow", u"azure", None))
         self.download.setText(QCoreApplication.translate("MainWindow", u"\u5148\u70b9\u4e0b\u8f7d", None))
         self.generate.setText(QCoreApplication.translate("MainWindow", u"\u518d\u70b9\u5408\u6210", None))
