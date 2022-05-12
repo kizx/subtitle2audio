@@ -64,6 +64,8 @@ class MainWindow(QMainWindow):
         self.ui.aliai.clicked.connect(lambda: web('https://ai.aliyun.com/nls/tts'))
         self.ui.xfai.clicked.connect(lambda: web('https://www.xfyun.cn/services/online_tts'))
         self.ui.xfapi.clicked.connect(lambda: web('https://console.xfyun.cn/app/myapp'))
+        self.ui.azuai.clicked.connect(lambda: web('https://azure.microsoft.com/zh-cn/services/cognitive-services/text-to-speech/?cdn=disable#overview'))
+        self.ui.azuapi.clicked.connect(lambda: web('https://portal.azure.com/#home'))
         # 保存设置
         self.load_setting()
         self.ui.save_bd.clicked.connect(self.save_setting)

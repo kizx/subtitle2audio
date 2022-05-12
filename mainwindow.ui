@@ -2089,7 +2089,7 @@
             <item>
              <layout class="QHBoxLayout" name="horizontalLayout_11">
               <item>
-               <widget class="QPushButton" name="xfai_2">
+               <widget class="QPushButton" name="azuai">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -2108,7 +2108,7 @@
                </widget>
               </item>
               <item>
-               <widget class="QPushButton" name="xfapi_2">
+               <widget class="QPushButton" name="azuapi">
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                   <horstretch>0</horstretch>
@@ -2155,9 +2155,9 @@
           <widget class="QGroupBox" name="groupBox_10">
            <property name="geometry">
             <rect>
-             <x>10</x>
+             <x>81</x>
              <y>365</y>
-             <width>562</width>
+             <width>491</width>
              <height>91</height>
             </rect>
            </property>
@@ -2482,9 +2482,9 @@
            <property name="geometry">
             <rect>
              <x>20</x>
-             <y>320</y>
+             <y>310</y>
              <width>531</width>
-             <height>41</height>
+             <height>31</height>
             </rect>
            </property>
            <layout class="QHBoxLayout" name="horizontalLayout_27">
@@ -2550,6 +2550,25 @@
              </widget>
             </item>
            </layout>
+          </widget>
+          <widget class="QLabel" name="label_23">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>380</y>
+             <width>51</width>
+             <height>61</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>暂未实现调节功能</string>
+           </property>
+           <property name="scaledContents">
+            <bool>false</bool>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
           </widget>
          </widget>
         </widget>

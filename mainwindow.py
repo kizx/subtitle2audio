@@ -1280,21 +1280,21 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_11 = QHBoxLayout()
         self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
-        self.xfai_2 = QPushButton(self.groupBox_9)
-        self.xfai_2.setObjectName(u"xfai_2")
-        sizePolicy1.setHeightForWidth(self.xfai_2.sizePolicy().hasHeightForWidth())
-        self.xfai_2.setSizePolicy(sizePolicy1)
-        self.xfai_2.setMinimumSize(QSize(100, 30))
+        self.azuai = QPushButton(self.groupBox_9)
+        self.azuai.setObjectName(u"azuai")
+        sizePolicy1.setHeightForWidth(self.azuai.sizePolicy().hasHeightForWidth())
+        self.azuai.setSizePolicy(sizePolicy1)
+        self.azuai.setMinimumSize(QSize(100, 30))
 
-        self.horizontalLayout_11.addWidget(self.xfai_2)
+        self.horizontalLayout_11.addWidget(self.azuai)
 
-        self.xfapi_2 = QPushButton(self.groupBox_9)
-        self.xfapi_2.setObjectName(u"xfapi_2")
-        sizePolicy1.setHeightForWidth(self.xfapi_2.sizePolicy().hasHeightForWidth())
-        self.xfapi_2.setSizePolicy(sizePolicy1)
-        self.xfapi_2.setMinimumSize(QSize(100, 30))
+        self.azuapi = QPushButton(self.groupBox_9)
+        self.azuapi.setObjectName(u"azuapi")
+        sizePolicy1.setHeightForWidth(self.azuapi.sizePolicy().hasHeightForWidth())
+        self.azuapi.setSizePolicy(sizePolicy1)
+        self.azuapi.setMinimumSize(QSize(100, 30))
 
-        self.horizontalLayout_11.addWidget(self.xfapi_2)
+        self.horizontalLayout_11.addWidget(self.azuapi)
 
         self.save_azu = QPushButton(self.groupBox_9)
         self.save_azu.setObjectName(u"save_azu")
@@ -1309,7 +1309,7 @@ class Ui_MainWindow(object):
 
         self.groupBox_10 = QGroupBox(self.azure)
         self.groupBox_10.setObjectName(u"groupBox_10")
-        self.groupBox_10.setGeometry(QRect(10, 365, 562, 91))
+        self.groupBox_10.setGeometry(QRect(81, 365, 491, 91))
         self.verticalLayout_18 = QVBoxLayout(self.groupBox_10)
         self.verticalLayout_18.setObjectName(u"verticalLayout_18")
         self.verticalLayout_19 = QVBoxLayout()
@@ -1479,7 +1479,7 @@ class Ui_MainWindow(object):
 
         self.layoutWidget = QWidget(self.azure)
         self.layoutWidget.setObjectName(u"layoutWidget")
-        self.layoutWidget.setGeometry(QRect(20, 320, 531, 41))
+        self.layoutWidget.setGeometry(QRect(20, 310, 531, 31))
         self.horizontalLayout_27 = QHBoxLayout(self.layoutWidget)
         self.horizontalLayout_27.setObjectName(u"horizontalLayout_27")
         self.horizontalLayout_27.setContentsMargins(0, 0, 0, 0)
@@ -1511,6 +1511,11 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_27.addWidget(self.sleeptime_2)
 
+        self.label_23 = QLabel(self.azure)
+        self.label_23.setObjectName(u"label_23")
+        self.label_23.setGeometry(QRect(30, 380, 51, 61))
+        self.label_23.setScaledContents(False)
+        self.label_23.setWordWrap(True)
         self.tabWidget.addTab(self.azure, "")
 
         self.verticalLayout_10.addWidget(self.tabWidget)
@@ -1798,8 +1803,8 @@ class Ui_MainWindow(object):
         self.groupBox_9.setTitle("")
         self.label_21.setText(QCoreApplication.translate("MainWindow", u"region", None))
         self.label_22.setText(QCoreApplication.translate("MainWindow", u"token", None))
-        self.xfai_2.setText(QCoreApplication.translate("MainWindow", u"\u5728\u7ebf\u8bd5\u542c", None))
-        self.xfapi_2.setText(QCoreApplication.translate("MainWindow", u"\u524d\u5f80\u63a7\u5236\u53f0", None))
+        self.azuai.setText(QCoreApplication.translate("MainWindow", u"\u5728\u7ebf\u8bd5\u542c", None))
+        self.azuapi.setText(QCoreApplication.translate("MainWindow", u"\u524d\u5f80\u63a7\u5236\u53f0", None))
 #if QT_CONFIG(statustip)
         self.save_azu.setStatusTip(QCoreApplication.translate("MainWindow", u"\u5fc5\u987b\u5148\u4fdd\u5b58", None))
 #endif // QT_CONFIG(statustip)
@@ -1853,6 +1858,7 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(statustip)
         self.sleeptime_2.setStatusTip(QCoreApplication.translate("MainWindow", u"\u8d8a\u5c0f\u8d8a\u5feb\uff0c\u592a\u5feb\u4f1a\u88ab\u963f\u91cc\u9650\u5236\u53d1\u751f\u4e0b\u8f7d\u9519\u8bef", None))
 #endif // QT_CONFIG(statustip)
+        self.label_23.setText(QCoreApplication.translate("MainWindow", u"\u6682\u672a\u5b9e\u73b0\u8c03\u8282\u529f\u80fd", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.azure), QCoreApplication.translate("MainWindow", u"azure", None))
         self.download.setText(QCoreApplication.translate("MainWindow", u"\u5148\u70b9\u4e0b\u8f7d", None))
         self.generate.setText(QCoreApplication.translate("MainWindow", u"\u518d\u70b9\u5408\u6210", None))
