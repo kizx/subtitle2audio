@@ -410,23 +410,35 @@ class MainWindow(QMainWindow):
         spd = self.ui.spd_azu.value()
         vol = self.ui.vol_azu.value()
         pit = self.ui.pit_azu.value()
+        single = self.ui.lineEdit.text()
         options = {'per': per, 'spd': spd, 'vol': vol, 'pit': pit}
 
+       
         with open('setting.json', 'r') as ff:
              setting = json.load(ff)
              azu_setting = setting.get('azu', {})
 
         azu = Azu(azu_setting, options)
         is_multi = self.ui.azu_multi.isChecked()
-        if is_multi:  # 多线程
-            sleeptime = self.ui.sleeptime_2.value()
-            self.process_multithread(azu, subtitle, f'{file_path}/audio/', sleeptime=sleeptime)
-        else:  # 单线程
-            for index, i in enumerate(subtitle):
-                 file_name = f'{file_path}/audio/{index + 1}.mp3'
-                 self.statusBar().showMessage(f'正在下载第{index + 1}句：{i}')
-                 azu.process(i, file_name)
-        self.statusBar().showMessage(f'下载完成！')
+        
+        if single == '':
+            if is_multi:  # 多线程
+                sleeptime = self.ui.sleeptime_2.value()
+                self.process_multithread(azu, subtitle, f'{file_path}/audio/', sleeptime=sleeptime)
+            else:  # 单线程
+                for index, i in enumerate(subtitle):
+                     file_name = f'{file_path}/audio/{index + 1}.mp3'
+                     self.statusBar().showMessage(f'正在下载第{index + 1}句：{i}')
+                     azu.process(i, file_name)
+            self.statusBar().showMessage(f'下载完成！')
+        else:
+            file_name = f'{file_path}/audio/{single}.mp3'
+            self.statusBar().showMessage(f'正在下载第{single}句')
+            azu.process(subtitle[int(single)-1], file_name)
+
+        
+        
+        
     # def bal_process(self):
     #     file_path = self.file_path
     #     subtitle = self.sub
