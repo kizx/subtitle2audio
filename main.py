@@ -15,7 +15,7 @@ from ali import Ali
 from baidu import Baidu
 from mainwindow import Ui_MainWindow
 from xfyun import XF
-
+from azurepy import Azu
 
 def web(*url):
     for i in url:
@@ -64,11 +64,14 @@ class MainWindow(QMainWindow):
         self.ui.aliai.clicked.connect(lambda: web('https://ai.aliyun.com/nls/tts'))
         self.ui.xfai.clicked.connect(lambda: web('https://www.xfyun.cn/services/online_tts'))
         self.ui.xfapi.clicked.connect(lambda: web('https://console.xfyun.cn/app/myapp'))
+        self.ui.azuai.clicked.connect(lambda: web('https://azure.microsoft.com/zh-cn/services/cognitive-services/text-to-speech/?cdn=disable#overview'))
+        self.ui.azuapi.clicked.connect(lambda: web('https://portal.azure.com/#home'))
         # 保存设置
         self.load_setting()
         self.ui.save_bd.clicked.connect(self.save_setting)
         self.ui.save_ali.clicked.connect(self.save_setting)
         self.ui.save_xf.clicked.connect(self.save_setting)
+        self.ui.save_azu.clicked.connect(self.save_setting)
         # 字幕文件
         self.ui.open_srt.clicked.connect(self.opensrt)
         self.ui.edit_srt.clicked.connect(self.editsrt)
@@ -116,6 +119,11 @@ class MainWindow(QMainWindow):
                 api_key = self.ui.api_key_xf.text()
                 xf_setting = {'app_id': app_id, 'api_secret': api_secret, 'api_key': api_key}
                 setting['xf'] = xf_setting
+            if sender.objectName() == 'save_azu':
+                azutoken = self.ui.azu_token.text()
+                azuregion = self.ui.azu_region.text()                    
+                azu_setting = {'token': azutoken, 'region': azuregion}
+                setting['azu'] = azu_setting
             f.seek(0)
             f.truncate()
             json.dump(setting, f, indent=2)
@@ -130,6 +138,7 @@ class MainWindow(QMainWindow):
             baidu_setting = setting.get('baidu', {})
             ali_setting = setting.get('ali', {})
             xf_setting = setting.get('xf', {})
+            azu_setting = setting.get('azu', {})
 
         self.ui.app_id_bd.setText(baidu_setting.get('app_id', ''))
         self.ui.app_key_bd.setText(baidu_setting.get('app_key', ''))
@@ -142,6 +151,10 @@ class MainWindow(QMainWindow):
         self.ui.app_id_xf.setText(xf_setting.get('app_id', ''))
         self.ui.api_secret_xf.setText(xf_setting.get('api_secret', ''))
         self.ui.api_key_xf.setText(xf_setting.get('api_key', ''))
+        
+        self.ui.azu_token.setText(azu_setting.get('token', ''))
+        self.ui.azu_region.setText(azu_setting.get('region', ''))
+
 
     def opensrt(self):
         """打开字幕文件路径"""
@@ -259,6 +272,8 @@ class MainWindow(QMainWindow):
             self.ali_process()
         elif index == 2:
             self.xf_process()
+        elif index == 3:
+            self.azu_process()
         end = time.perf_counter()
         self.note(f"完成！\n共计用时{round(end - start, 2)}秒")
 
@@ -267,7 +282,7 @@ class MainWindow(QMainWindow):
         """合成"""
         start = time.perf_counter()
         index = self.ui.tabWidget.currentIndex()
-        if index == 3:
+        if index == 4:
             self.corn(wav=1)
         else:
             self.corn()
@@ -387,7 +402,43 @@ class MainWindow(QMainWindow):
             self.statusBar().showMessage(f'正在下载第{index + 1}句：{i}')
             xf.process(i, file_name)
         self.statusBar().showMessage(f'下载完成！')
+        
+    def azu_process(self):
+        file_path = self.file_path
+        subtitle = self.sub
+        per = self.ui.per_azu.checkedButton().accessibleDescription()
+        spd = self.ui.spd_azu.value()
+        vol = self.ui.vol_azu.value()
+        pit = self.ui.pit_azu.value()
+        single = self.ui.lineEdit.text()
+        options = {'per': per, 'spd': spd, 'vol': vol, 'pit': pit}
 
+       
+        with open('setting.json', 'r') as ff:
+             setting = json.load(ff)
+             azu_setting = setting.get('azu', {})
+
+        azu = Azu(azu_setting, options)
+        is_multi = self.ui.azu_multi.isChecked()
+        
+        if single == '':
+            if is_multi:  # 多线程
+                sleeptime = self.ui.sleeptime_2.value()
+                self.process_multithread(azu, subtitle, f'{file_path}/audio/', sleeptime=sleeptime)
+            else:  # 单线程
+                for index, i in enumerate(subtitle):
+                     file_name = f'{file_path}/audio/{index + 1}.mp3'
+                     self.statusBar().showMessage(f'正在下载第{index + 1}句：{i}')
+                     azu.process(i, file_name)
+            self.statusBar().showMessage(f'下载完成！')
+        else:
+            file_name = f'{file_path}/audio/{single}.mp3'
+            self.statusBar().showMessage(f'正在下载第{single}句')
+            azu.process(subtitle[int(single)-1], file_name)
+
+        
+        
+        
     # def bal_process(self):
     #     file_path = self.file_path
     #     subtitle = self.sub
